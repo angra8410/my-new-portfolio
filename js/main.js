@@ -1,530 +1,283 @@
-// ===================================
-// Navigation Toggle for Mobile
-// ===================================
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
+const navbar = document.getElementById('navbar');
+const sections = document.querySelectorAll('section[id]');
+const themeToggle = document.getElementById('themeToggle');
+const langToggle = document.getElementById('langToggle');
 
-navToggle.addEventListener('click', () => {
+let currentLang = 'es';
+
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
     navToggle.classList.toggle('active');
-});
+  });
+}
 
-// Close mobile menu when clicking on a link
 navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-    });
+  link.addEventListener('click', () => {
+    if (navMenu && navToggle) {
+      navMenu.classList.remove('active');
+      navToggle.classList.remove('active');
+    }
+  });
 });
-
-// ===================================
-// Navbar Scroll Effect
-// ===================================
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
+  const currentScroll = window.pageYOffset;
+  if (currentScroll > 50) navbar?.classList.add('scrolled');
+  else navbar?.classList.remove('scrolled');
 });
 
-// ===================================
-// Active Navigation Link on Scroll
-// ===================================
-const sections = document.querySelectorAll('section[id]');
+function setActiveNav(sectionId) {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${sectionId}`) link.classList.add('active');
+  });
+}
 
 function activateNavLink() {
-    const scrollY = window.pageYOffset;
-    
-    sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-        
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-    });
+  const offset = 140;
+  const scrollPosition = window.scrollY + offset;
+  const docHeight = document.documentElement.scrollHeight;
+  const viewportBottom = window.scrollY + window.innerHeight;
+
+  if (viewportBottom >= docHeight - 8) {
+    setActiveNav('contact');
+    return;
+  }
+
+  let currentSection = 'home';
+  sections.forEach(section => {
+    if (scrollPosition >= section.offsetTop) currentSection = section.getAttribute('id');
+  });
+  setActiveNav(currentSection);
 }
 
 window.addEventListener('scroll', activateNavLink);
 
-// ===================================
-// Smooth Scroll with Offset
-// ===================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offset = 80;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
+  anchor.addEventListener('click', function (e) {
+    const targetSelector = this.getAttribute('href');
+    const target = document.querySelector(targetSelector);
+    if (!target) return;
+    e.preventDefault();
+    const offset = 80;
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
 });
 
-// ===================================
-// Blog Posts Management
-// ===================================
 const blogPosts = [
-    {
-        title: 'Construyendo Aplicaciones Modernas con React',
-        date: '2024-03-15',
-        excerpt: 'Exploramos las mejores prácticas para desarrollar aplicaciones React escalables y mantenibles, incluyendo hooks personalizados, optimización de rendimiento y gestión de estado.',
-        slug: 'construyendo-aplicaciones-modernas-react',
-        lang: 'es',
-        translations: { en: 'building-modern-react-apps' },
-        title_en: 'Building Modern Applications with React',
-        excerpt_en: 'We explore best practices for building scalable, maintainable React applications, including custom hooks, performance optimization and state management.'
-    },
-    {
-        title: 'Guía Completa de CSS Grid y Flexbox',
-        date: '2024-03-10',
-        excerpt: 'Un tutorial detallado sobre cómo utilizar CSS Grid y Flexbox para crear layouts responsivos y modernos. Aprende cuándo usar cada uno y cómo combinarlos efectivamente.',
-        slug: 'guia-completa-css-grid-flexbox',
-        lang: 'es',
-        translations: { en: 'complete-guide-css-grid-flexbox' },
-        title_en: 'Complete Guide to CSS Grid and Flexbox',
-        excerpt_en: 'A detailed tutorial on using CSS Grid and Flexbox to create responsive, modern layouts. Learn when to use each and how to combine them effectively.'
-    },
-    {
-        title: 'Introducción a TypeScript para JavaScript Developers',
-        date: '2024-03-05',
-        excerpt: 'Descubre cómo TypeScript puede mejorar tu código JavaScript con tipado estático, interfaces y características avanzadas que aumentan la productividad.',
-        slug: 'introduccion-typescript-javascript',
-        lang: 'es',
-        translations: { en: 'introduction-to-typescript' },
-        title_en: 'Introduction to TypeScript for JavaScript Developers',
-        excerpt_en: 'Discover how TypeScript can improve your JavaScript with static typing, interfaces and advanced features that boost productivity.'
-    },
-    {
-        title: 'Mejores Prácticas de Accesibilidad Web',
-        date: '2024-02-28',
-        excerpt: 'La accesibilidad es fundamental en el desarrollo web moderno. Aprende técnicas esenciales para hacer tus sitios web más inclusivos y accesibles para todos.',
-        slug: 'mejores-practicas-accesibilidad-web',
-        lang: 'es',
-        translations: { en: 'web-accessibility-best-practices' },
-        title_en: 'Web Accessibility Best Practices',
-        excerpt_en: 'Accessibility is essential in modern web development. Learn core techniques to make your websites more inclusive and accessible for everyone.'
-    },
-    {
-        title: 'Optimización de Rendimiento en Aplicaciones Web',
-        date: '2024-02-20',
-        excerpt: 'Técnicas avanzadas para mejorar el rendimiento de tus aplicaciones web, incluyendo lazy loading, code splitting, y optimización de imágenes.',
-        slug: 'optimizacion-rendimiento-aplicaciones-web',
-        lang: 'es',
-        translations: { en: 'web-performance-optimization' },
-        title_en: 'Web Performance Optimization',
-        excerpt_en: 'Advanced techniques to improve the performance of your web applications, including lazy loading, code splitting and image optimization.'
-    },
-    {
-        title: 'Deploy Continuo con GitHub Actions',
-        date: '2024-02-15',
-        excerpt: 'Automatiza tu flujo de trabajo con GitHub Actions. Aprende a configurar pipelines de CI/CD para testing, building y deployment automático.',
-        slug: 'deploy-continuo-github-actions',
-        lang: 'es',
-        translations: { en: 'continuous-deployment-github-actions' },
-        title_en: 'Continuous Deployment with GitHub Actions',
-        excerpt_en: 'Automate your workflow with GitHub Actions. Learn to configure CI/CD pipelines for testing, building and automated deployment.'
-    }
+  { title: 'Construyendo Aplicaciones Modernas con React', title_en: 'Building Modern Applications with React', date: '2024-03-15', excerpt: 'Exploramos las mejores prácticas para desarrollar aplicaciones React escalables y mantenibles, incluyendo hooks personalizados, optimización de rendimiento y gestión de estado.', excerpt_en: 'We explore best practices for building scalable, maintainable React applications, including custom hooks, performance optimization and state management.', slug: 'construyendo-aplicaciones-modernas-react', translations: { en: 'building-modern-react-apps' }, lang: 'es' },
+  { title: 'Guía Completa de CSS Grid y Flexbox', title_en: 'Complete Guide to CSS Grid and Flexbox', date: '2024-03-10', excerpt: 'Un tutorial detallado sobre cómo utilizar CSS Grid y Flexbox para crear layouts responsivos y modernos. Aprende cuándo usar cada uno y cómo combinarlos efectivamente.', excerpt_en: 'A detailed tutorial on using CSS Grid and Flexbox to create responsive, modern layouts. Learn when to use each and how to combine them effectively.', slug: 'guia-completa-css-grid-flexbox', translations: { en: 'complete-guide-css-grid-flexbox' }, lang: 'es' },
+  { title: 'Introducción a TypeScript para JavaScript Developers', title_en: 'Introduction to TypeScript for JavaScript Developers', date: '2024-03-05', excerpt: 'Descubre cómo TypeScript puede mejorar tu código JavaScript con tipado estático, interfaces y características avanzadas que aumentan la productividad.', excerpt_en: 'Discover how TypeScript can improve your JavaScript with static typing, interfaces and advanced features that boost productivity.', slug: 'introduccion-typescript-javascript', translations: { en: 'introduction-to-typescript' }, lang: 'es' },
+  { title: 'Mejores Prácticas de Accesibilidad Web', title_en: 'Web Accessibility Best Practices', date: '2024-02-28', excerpt: 'La accesibilidad es fundamental en el desarrollo web moderno. Aprende técnicas esenciales para hacer tus sitios web más inclusivos y accesibles para todos.', excerpt_en: 'Accessibility is essential in modern web development. Learn core techniques to make your websites more inclusive and accessible for everyone.', slug: 'mejores-practicas-accesibilidad-web', translations: { en: 'web-accessibility-best-practices' }, lang: 'es' },
+  { title: 'Optimización de Rendimiento en Aplicaciones Web', title_en: 'Web Performance Optimization', date: '2024-02-20', excerpt: 'Técnicas avanzadas para mejorar el rendimiento de tus aplicaciones web, incluyendo lazy loading, code splitting y optimización de imágenes.', excerpt_en: 'Advanced techniques to improve the performance of your web applications, including lazy loading, code splitting and image optimization.', slug: 'optimizacion-rendimiento-aplicaciones-web', translations: { en: 'web-performance-optimization' }, lang: 'es' },
+  { title: 'Deploy Continuo con GitHub Actions', title_en: 'Continuous Deployment with GitHub Actions', date: '2024-02-15', excerpt: 'Automatiza tu flujo de trabajo con GitHub Actions. Aprende a configurar pipelines de CI/CD para testing, building y deployment automático.', excerpt_en: 'Automate your workflow with GitHub Actions. Learn to configure CI/CD pipelines for testing, building and automated deployment.', slug: 'deploy-continuo-github-actions', translations: { en: 'continuous-deployment-github-actions' }, lang: 'es' }
 ];
 
-// Function to format date
+const projects = [
+  {
+    title: 'Bellabeat Smart Device Usage Analysis',
+    title_en: 'Bellabeat Smart Device Usage Analysis',
+    category: 'Caso de estudio',
+    category_en: 'Case Study',
+    excerpt: 'Análisis de uso de dispositivos inteligentes para identificar patrones de comportamiento, segmentación de usuarios y oportunidades de marketing basadas en datos.',
+    excerpt_en: 'Smart device usage analysis to identify behavior patterns, user segmentation, and data-driven marketing opportunities.',
+    tech: ['SQL', 'Power BI', 'Data Cleaning', 'EDA'],
+    metrics: ['Segmentación de usuarios', 'Tendencias de uso', 'Insights de negocio'],
+    metrics_en: ['User segmentation', 'Usage trends', 'Business insights'],
+    detailUrl: 'projects/bellabeat-smart-device-usage-analysis.html',
+    repoUrl: 'https://github.com/angra8410/bellabeat-device-usage-analysis'
+  }
+];
+
 function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date(dateString);
-    const locale = (window.currentLang && window.currentLang === 'en') ? 'en-US' : 'es-ES';
-    return date.toLocaleDateString(locale, options);
+  const locale = currentLang === 'en' ? 'en-US' : 'es-ES';
+  return new Date(dateString).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-// Function to load blog posts
 function loadBlogPosts() {
-    const blogContainer = document.getElementById('blogPosts');
-    
-    if (!blogContainer) return;
-    
-    // Sort posts by date (most recent first)
-    const sortedPosts = blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    // Clear loading message
-    blogContainer.innerHTML = '';
-    
-    // Create blog cards
-    sortedPosts.forEach(post => {
-        const blogCard = document.createElement('article');
-        blogCard.className = 'blog-card';
-        
-        const readMoreText = (window.currentLang === 'en') ? 'Read more' : 'Leer más';
-        const postLang = post.lang || 'es';
-        // if the post has translations mapping, prefer a matching slug for the current language
-        const linkSlug = (post.translations && post.translations[window.currentLang]) ? post.translations[window.currentLang] : post.slug;
-
-        blogCard.innerHTML = `
-            <div class="blog-card-content">
-                <div class="blog-card-meta">
-                    <span class="blog-card-date">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        ${formatDate(post.date)}
-                    </span>
-                </div>
-                <div class="blog-card-lang">${postLang.toUpperCase()}</div>
-                <h3>${post.title}</h3>
-                <p class="blog-card-excerpt">${post.excerpt}</p>
-                <a href="posts/${linkSlug}.html" class="blog-card-link">
-                    ${readMoreText}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a>
-            </div>
-        `;
-        
-        blogContainer.appendChild(blogCard);
-    });
+  const blogContainer = document.getElementById('blogPosts');
+  if (!blogContainer) return;
+  const sortedPosts = [...blogPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+  blogContainer.innerHTML = '';
+  sortedPosts.forEach(post => {
+    const isEnglish = currentLang === 'en';
+    const title = isEnglish ? (post.title_en || post.title) : post.title;
+    const excerpt = isEnglish ? (post.excerpt_en || post.excerpt) : post.excerpt;
+    const readMoreText = isEnglish ? 'Read more' : 'Leer más';
+    const linkSlug = isEnglish && post.translations?.en ? post.translations.en : post.slug;
+    const blogCard = document.createElement('article');
+    blogCard.className = 'blog-card';
+    blogCard.innerHTML = `
+      <div class="blog-meta"><span>${formatDate(post.date)}</span><span>${(post.lang || 'es').toUpperCase()}</span></div>
+      <h3>${title}</h3>
+      <p class="blog-card-excerpt">${excerpt}</p>
+      <a href="posts/${linkSlug}.html" class="blog-card-link">${readMoreText}</a>
+    `;
+    blogContainer.appendChild(blogCard);
+  });
 }
 
-// Load blog posts when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    loadBlogPosts();
-});
-
-// ===================================
-// Theme Toggle (Dark / Light)
-// ===================================
-const themeToggle = document.getElementById('themeToggle');
+function loadProjects() {
+  const projectsGrid = document.getElementById('projectsGrid');
+  if (!projectsGrid) return;
+  const isEnglish = currentLang === 'en';
+  const viewCaseText = isEnglish ? 'View case study' : 'Ver caso de estudio';
+  const viewRepoText = isEnglish ? 'View repository' : 'Ver repositorio';
+  projectsGrid.innerHTML = '';
+  projects.forEach(project => {
+    const title = isEnglish ? (project.title_en || project.title) : project.title;
+    const category = isEnglish ? (project.category_en || project.category) : project.category;
+    const excerpt = isEnglish ? (project.excerpt_en || project.excerpt) : project.excerpt;
+    const metrics = isEnglish ? (project.metrics_en || project.metrics) : project.metrics;
+    const article = document.createElement('article');
+    article.className = 'project-card';
+    article.innerHTML = `
+      <div class="project-card-content">
+        <div class="project-card-header">
+          <span class="project-category">${category}</span>
+          <h3 class="project-title">${title}</h3>
+        </div>
+        <p class="project-excerpt">${excerpt}</p>
+        <div class="project-tech-list">${project.tech.map(item => `<span class="project-tech">${item}</span>`).join('')}</div>
+        <div class="project-metrics">${metrics.map(item => `<span class="project-metric">${item}</span>`).join('')}</div>
+        <div class="project-actions">
+          <a href="${project.detailUrl}" class="btn btn-primary">${viewCaseText}</a>
+          <a href="${project.repoUrl}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">${viewRepoText}</a>
+        </div>
+      </div>
+    `;
+    projectsGrid.appendChild(article);
+  });
+}
 
 function applyTheme(theme) {
-    if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-        if (themeToggle) themeToggle.textContent = '☀️';
-    } else {
-        document.documentElement.classList.remove('dark');
-        if (themeToggle) themeToggle.textContent = '🌙';
-    }
-    try {
-        localStorage.setItem('theme', theme);
-    } catch (e) {
-        // ignore
-    }
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+    if (themeToggle) themeToggle.textContent = '☀️';
+  } else {
+    document.documentElement.classList.remove('dark');
+    if (themeToggle) themeToggle.textContent = '🌙';
+  }
+  try { localStorage.setItem('theme', theme); } catch (e) {}
 }
-
-// Initialize theme on load
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-    applyTheme(theme);
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            // small button animation
-            themeToggle.classList.add('animating');
-            setTimeout(() => themeToggle.classList.remove('animating'), 320);
-
-            const isDark = document.documentElement.classList.contains('dark');
-            applyTheme(isDark ? 'light' : 'dark');
-        });
-    }
-});
-
-// ===================================
-// Language Toggle (ES / IN)
-// ===================================
-const langToggle = document.getElementById('langToggle');
 
 const translations = {
-    es: {
-        navBrand: 'Portafolio',
-        navHome: 'Inicio',
-        navAbout: 'Sobre mí',
-        navExpertise: 'Experticia',
-        navHobbies: 'Hobbies',
-        navBlog: 'Blog',
-        navContact: 'Contacto',
-        heroGreeting: 'Hola, soy',
-        heroName: 'Antonio Gutierrez',
-        heroSubtitle: 'Analista de Datos',
-        ctaPrimary: 'Conocer más',
-        ctaSecondary: 'Contactar',
-        read_more: 'Leer más',
-        titleAbout: 'Sobre mí',
-        titleExpertise: 'Experticia',
-        titleHobbies: 'Hobbies',
-        titleBlog: 'Blog',
-        titleContact: 'Contacto',
-        aboutP1: 'Soy un analista de datos apasionado por crear experiencias digitales excepcionales. Con +5 años de experiencia en el desarrollo de dashboards, me especializo en construir aplicaciones de analítica, escalables y centradas en el usuario.',
-        aboutP2: 'Mi enfoque combina conocimientos técnicos profundos con una comprensión clara de las necesidades del negocio, permitiéndome entregar soluciones que no solo funcionan bien, sino que también generan valor real.',
-        aboutP3: 'Creo firmemente en el aprendizaje continuo, las mejores prácticas de desarrollo y la colaboración efectiva en equipo.',
-        blogSubtitle: 'Artículos sobre desarrollo, tecnología y mejores prácticas',
-        contactSubtitle: '¿Interesado en colaborar? ¡Conectemos!'
-        ,
-        expertiseCards: [
-            {
-                title: 'Power BI Dashboards',
-                desc: 'Power BI, Power Query, DAX, modelado de datos, visualización avanzada',
-                techs: ['Power BI','Power Query','DAX','Modelado de Datos']
-            },
-            {
-                title: 'Analítica en la Nube',
-                desc: 'Power BI Cloud, Azure, Google BigQuery, Automatización de reportes',
-                techs: ['Power BI Cloud','Azure','Google BigQuery','Automatización de reportes']
-            },
-            {
-                title: 'Data Wrangling & Limpieza de Datos',
-                desc: 'Pandas, SQL, Power Query, Excel',
-                techs: ['Pandas','SQL','Power Query','Excel']
-            },
-            {
-                title: 'Integración de Datos con Microsoft Fabric & Lakehouses',
-                desc: 'Fabric, Lakehouse, Dataflows Gen 2, Pipelines',
-                techs: ['Fabric','Lakehouse','Dataflows Gen 2','Pipelines']
-            }
-        ],
-        hobbiesCards: [
-            { title: 'Lectura Técnica', desc: 'Siempre aprendiendo sobre nuevas tecnologías, patrones de diseño y mejores prácticas de desarrollo.' },
-            { title: 'Gaming', desc: 'Disfruto de los videojuegos como forma de relajación y también como inspiración para el diseño de interfaces.' },
-            { title: 'Deportes', desc: 'Mantengo un estilo de vida activo con la natación y ciclismo, fundamentales para mantener la mente clara.' },
-            { title: 'Escritura', desc: 'Comparto conocimientos y experiencias a través de artículos técnicos y tutoriales en mi blog.' }
-        ]
-    },
-    en: {
-        navBrand: 'Portfolio',
-        navHome: 'Home',
-        navAbout: 'About',
-        navExpertise: 'Expertise',
-        navHobbies: 'Hobbies',
-        navBlog: 'Blog',
-        navContact: 'Contact',
-        heroGreeting: 'Hello, I\'m',
-        heroName: 'Antonio Gutierrez',
-        heroSubtitle: 'Data Analyst',
-        ctaPrimary: 'Learn more',
-        ctaSecondary: 'Contact',
-        read_more: 'Read more',
-        titleAbout: 'About',
-        titleExpertise: 'Expertise',
-        titleHobbies: 'Hobbies',
-        titleBlog: 'Blog',
-        titleContact: 'Contact',
-        aboutP1: 'I am a data analyst passionate about creating exceptional digital experiences. With 5+ years of experience building dashboards, I specialize in creating scalable, user-centered analytics applications.',
-        aboutP2: 'My approach combines deep technical knowledge with a clear understanding of business needs, enabling me to deliver solutions that not only work well but also create real value.',
-        aboutP3: 'I strongly believe in continuous learning, development best practices, and effective team collaboration.',
-        blogSubtitle: 'Articles about development, technology and best practices',
-        contactSubtitle: 'Interested in collaborating? Let\'s connect!'
-        ,
-        expertiseCards: [
-            {
-                title: 'Power BI Dashboards',
-                desc: 'Power BI, Power Query, DAX, data modeling, advanced visualization',
-                techs: ['Power BI','Power Query','DAX','Data Modeling']
-            },
-            {
-                title: 'Cloud Analytics',
-                desc: 'Power BI Cloud, Azure, Google BigQuery, report automation',
-                techs: ['Power BI Cloud','Azure','Google BigQuery','Report Automation']
-            },
-            {
-                title: 'Data Wrangling & Cleaning',
-                desc: 'Pandas, SQL, Power Query, Excel',
-                techs: ['Pandas','SQL','Power Query','Excel']
-            },
-            {
-                title: 'Data Integration with Microsoft Fabric & Lakehouses',
-                desc: 'Fabric, Lakehouse, Dataflows Gen 2, Pipelines',
-                techs: ['Fabric','Lakehouse','Dataflows Gen 2','Pipelines']
-            }
-        ],
-        hobbiesCards: [
-            { title: 'Technical Reading', desc: 'Always learning about new technologies, design patterns and development best practices.' },
-            { title: 'Gaming', desc: 'I enjoy video games for relaxation and also as inspiration for UI design.' },
-            { title: 'Sports', desc: 'I maintain an active lifestyle with swimming and cycling, important for keeping a clear mind.' },
-            { title: 'Writing', desc: 'I share knowledge and experiences through technical articles and tutorials on my blog.' }
-        ]
-    }
+  es: {
+    navBrand: 'Portafolio', navHome: 'Inicio', navAbout: 'Sobre mí', navExpertise: 'Experticia', navHobbies: 'Hobbies', navProjects: 'Proyectos', navBlog: 'Blog', navContact: 'Contacto',
+    heroGreeting: 'Hola, soy', heroName: 'Antonio Gutierrez', heroSubtitle: 'Analista de Datos', ctaPrimary: 'Conocer más', ctaSecondary: 'Contactar',
+    titleAbout: 'Sobre mí', titleExpertise: 'Experticia', titleHobbies: 'Hobbies & Intereses', titleProjects: 'Proyectos Destacados', titleBlog: 'Blog & Publicaciones', titleContact: 'Contacto',
+    aboutP1: 'Soy un analista de datos apasionado por crear experiencias digitales excepcionales. Con +5 años de experiencia en el desarrollo de dashboards, me especializo en construir soluciones de analítica escalables y centradas en el usuario.',
+    aboutP2: 'Mi enfoque combina conocimientos técnicos profundos con una comprensión clara de las necesidades del negocio, permitiéndome entregar soluciones que no solo funcionan bien, sino que también generan valor real.',
+    aboutP3: 'Creo firmemente en el aprendizaje continuo, las mejores prácticas de desarrollo y la colaboración efectiva en equipo.',
+    blogSubtitle: 'Artículos sobre desarrollo, tecnología y mejores prácticas', contactSubtitle: '¿Interesado en colaborar? ¡Conectemos!',
+    projectsBadge: 'Casos de Estudio', projectsSubtitle: 'Casos de analítica, visualización y toma de decisiones basadas en datos.', projectsLoading: 'Cargando proyectos...',
+    footerCopyright: '© 2024 Portfolio. Todos los derechos reservados.', footerNote: 'Construido con ❤️ y mucho café',
+    expertiseCards: [
+      { title: 'Power BI Dashboards', desc: 'Power BI, Power Query, DAX, modelado de datos, visualización avanzada', techs: ['Power BI', 'Power Query', 'DAX', 'Modelado de Datos'] },
+      { title: 'Analítica en la Nube', desc: 'Power BI Cloud, Azure, Google BigQuery, automatización de reportes', techs: ['Power BI Cloud', 'Azure', 'Google BigQuery', 'Automatización de reportes'] },
+      { title: 'Data Wrangling & Limpieza de Datos', desc: 'Pandas, SQL, Power Query, Excel', techs: ['Pandas', 'SQL', 'Power Query', 'Excel'] },
+      { title: 'Integración de Datos con Microsoft Fabric & Lakehouses', desc: 'Fabric, Lakehouse, Dataflows Gen 2, Pipelines', techs: ['Fabric', 'Lakehouse', 'Dataflows Gen 2', 'Pipelines'] }
+    ],
+    hobbiesCards: [
+      { title: 'Lectura Técnica', desc: 'Siempre aprendiendo sobre nuevas tecnologías, patrones de diseño y mejores prácticas de desarrollo.' },
+      { title: 'Gaming', desc: 'Disfruto de los videojuegos como forma de relajación y también como inspiración para el diseño de interfaces.' },
+      { title: 'Deportes', desc: 'Mantengo un estilo de vida activo con la natación y ciclismo, fundamentales para mantener la mente clara.' },
+      { title: 'Escritura', desc: 'Comparto conocimientos y experiencias a través de artículos técnicos y tutoriales en mi blog.' }
+    ]
+  },
+  en: {
+    navBrand: 'Portfolio', navHome: 'Home', navAbout: 'About', navExpertise: 'Expertise', navHobbies: 'Hobbies', navProjects: 'Projects', navBlog: 'Blog', navContact: 'Contact',
+    heroGreeting: "Hello, I'm", heroName: 'Antonio Gutierrez', heroSubtitle: 'Data Analyst', ctaPrimary: 'Learn more', ctaSecondary: 'Contact',
+    titleAbout: 'About Me', titleExpertise: 'Expertise', titleHobbies: 'Hobbies & Interests', titleProjects: 'Featured Projects', titleBlog: 'Blog & Publications', titleContact: 'Contact',
+    aboutP1: 'I am a data analyst passionate about creating exceptional digital experiences. With 5+ years of experience building dashboards, I specialize in creating scalable, user-centered analytics solutions.',
+    aboutP2: 'My approach combines strong technical knowledge with a clear understanding of business needs, allowing me to deliver solutions that not only work well, but also create real value.',
+    aboutP3: 'I strongly believe in continuous learning, development best practices, and effective teamwork.',
+    blogSubtitle: 'Articles about development, technology, and best practices', contactSubtitle: 'Interested in collaborating? Let’s connect!',
+    projectsBadge: 'Case Studies', projectsSubtitle: 'Analytics, visualization, and data-driven decision-making projects.', projectsLoading: 'Loading projects...',
+    footerCopyright: '© 2024 Portfolio. All rights reserved.', footerNote: 'Built with ❤️ and lots of coffee',
+    expertiseCards: [
+      { title: 'Power BI Dashboards', desc: 'Power BI, Power Query, DAX, data modeling, advanced visualization', techs: ['Power BI', 'Power Query', 'DAX', 'Data Modeling'] },
+      { title: 'Cloud Analytics', desc: 'Power BI Cloud, Azure, Google BigQuery, report automation', techs: ['Power BI Cloud', 'Azure', 'Google BigQuery', 'Report Automation'] },
+      { title: 'Data Wrangling & Data Cleaning', desc: 'Pandas, SQL, Power Query, Excel', techs: ['Pandas', 'SQL', 'Power Query', 'Excel'] },
+      { title: 'Data Integration with Microsoft Fabric & Lakehouses', desc: 'Fabric, Lakehouse, Dataflows Gen 2, Pipelines', techs: ['Fabric', 'Lakehouse', 'Dataflows Gen 2', 'Pipelines'] }
+    ],
+    hobbiesCards: [
+      { title: 'Technical Reading', desc: 'Always learning about new technologies, design patterns, and development best practices.' },
+      { title: 'Gaming', desc: 'I enjoy video games as a way to relax and also as inspiration for interface design.' },
+      { title: 'Sports', desc: 'I maintain an active lifestyle through swimming and cycling, both essential for keeping a clear mind.' },
+      { title: 'Writing', desc: 'I share knowledge and experience through technical articles and tutorials on my blog.' }
+    ]
+  }
 };
 
-function applyLanguage(lang) {
-    window.currentLang = lang;
-    const dict = translations[lang] || translations.es;
+function updateStaticTexts(lang) {
+  const t = translations[lang];
+  const textMap = {
+    navBrand: t.navBrand, navHome: t.navHome, navAbout: t.navAbout, navExpertise: t.navExpertise, navHobbies: t.navHobbies, navProjects: t.navProjects, navBlog: t.navBlog, navContact: t.navContact,
+    heroGreeting: t.heroGreeting, heroName: t.heroName, heroSubtitle: t.heroSubtitle, ctaPrimary: t.ctaPrimary, ctaSecondary: t.ctaSecondary,
+    titleAbout: t.titleAbout, titleExpertise: t.titleExpertise, titleHobbies: t.titleHobbies, titleProjects: t.titleProjects, titleBlog: t.titleBlog, titleContact: t.titleContact,
+    aboutP1: t.aboutP1, aboutP2: t.aboutP2, aboutP3: t.aboutP3, blogSubtitle: t.blogSubtitle, contactSubtitle: t.contactSubtitle,
+    projectsBadge: t.projectsBadge, projectsSubtitle: t.projectsSubtitle, projectsLoading: t.projectsLoading, footerCopyright: t.footerCopyright, footerNote: t.footerNote
+  };
+  Object.entries(textMap).forEach(([id, value]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  });
 
-    const setText = (id, text) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-    };
+  const expertiseCards = document.querySelectorAll('.expertise-card');
+  expertiseCards.forEach((card, index) => {
+    const data = t.expertiseCards[index];
+    if (!data) return;
+    const title = card.querySelector('h3');
+    const desc = card.querySelector('p');
+    const techs = card.querySelectorAll('.tech-list li');
+    if (title) title.textContent = data.title;
+    if (desc) desc.textContent = data.desc;
+    techs.forEach((tech, i) => { if (data.techs[i]) tech.textContent = data.techs[i]; });
+  });
 
-    setText('navBrand', dict.navBrand);
-    setText('navHome', dict.navHome);
-    setText('navAbout', dict.navAbout);
-    setText('navExpertise', dict.navExpertise);
-    setText('navHobbies', dict.navHobbies);
-    setText('navBlog', dict.navBlog);
-    setText('navContact', dict.navContact);
+  const hobbyCards = document.querySelectorAll('.hobby-card');
+  hobbyCards.forEach((card, index) => {
+    const data = t.hobbiesCards[index];
+    if (!data) return;
+    const title = card.querySelector('h3');
+    const desc = card.querySelector('p');
+    if (title) title.textContent = data.title;
+    if (desc) desc.textContent = data.desc;
+  });
 
-    // Hero: combine greeting + name
-    const heroTitle = document.getElementById('heroTitle');
-    const heroName = document.getElementById('heroName');
-    if (heroTitle && heroName) {
-        heroTitle.innerHTML = `${dict.heroGreeting} <span class="highlight" id="heroName">${dict.heroName}</span>`;
-    }
-    setText('heroSubtitle', dict.heroSubtitle);
-    setText('ctaPrimary', dict.ctaPrimary);
-    setText('ctaSecondary', dict.ctaSecondary);
-
-    // Section titles (if present)
-    setText('titleAbout', dict.titleAbout);
-    setText('titleExpertise', dict.titleExpertise);
-    setText('titleHobbies', dict.titleHobbies);
-    setText('titleBlog', dict.titleBlog);
-    setText('titleContact', dict.titleContact);
-
-    setText('aboutP1', dict.aboutP1);
-    setText('aboutP2', dict.aboutP2);
-    setText('aboutP3', dict.aboutP3);
-    setText('blogSubtitle', dict.blogSubtitle);
-    setText('contactSubtitle', dict.contactSubtitle);
-
-    // Update expertise cards
-    try {
-        const expertiseEls = document.querySelectorAll('.expertise-card');
-        if (expertiseEls && dict.expertiseCards) {
-            expertiseEls.forEach((el, i) => {
-                const card = dict.expertiseCards[i];
-                if (!card) return;
-                const h3 = el.querySelector('h3');
-                const p = el.querySelector('p');
-                const techLis = el.querySelectorAll('.tech-list li');
-                if (h3) h3.textContent = card.title;
-                if (p) p.textContent = card.desc;
-                if (techLis && card.techs) {
-                    card.techs.forEach((t, j) => {
-                        if (techLis[j]) techLis[j].textContent = t;
-                    });
-                }
-            });
-        }
-    } catch (e) {}
-
-    // Update hobbies cards
-    try {
-        const hobbyEls = document.querySelectorAll('.hobby-card');
-        if (hobbyEls && dict.hobbiesCards) {
-            hobbyEls.forEach((el, i) => {
-                const card = dict.hobbiesCards[i];
-                if (!card) return;
-                const h3 = el.querySelector('h3');
-                const p = el.querySelector('p');
-                if (h3) h3.textContent = card.title;
-                if (p) p.textContent = card.desc;
-            });
-        }
-    } catch (e) {}
-
-    // Update lang toggle label to show opposite (action)
-    if (langToggle) {
-        langToggle.textContent = (lang === 'es') ? 'EN' : 'ES';
-    }
-
-    try {
-        localStorage.setItem('lang', lang);
-    } catch (e) {}
-
-    // Re-render blog posts to update "Read more" text
-    loadBlogPosts();
+  document.documentElement.lang = lang;
+  if (langToggle) langToggle.textContent = lang.toUpperCase();
 }
 
-// Initialize language on load
+function setLanguage(lang) {
+  currentLang = lang;
+  updateStaticTexts(lang);
+  loadBlogPosts();
+  loadProjects();
+  try { localStorage.setItem('language', lang); } catch (e) {}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('lang');
-    const lang = savedLang || 'es';
-    applyLanguage(lang);
-
-    if (langToggle) {
-        langToggle.addEventListener('click', () => {
-            // small button animation
-            langToggle.classList.add('animating');
-            setTimeout(() => langToggle.classList.remove('animating'), 320);
-
-            const newLang = (window.currentLang === 'es') ? 'en' : 'es';
-            applyLanguage(newLang);
-        });
-    }
-});
-
-// ===================================
-// Intersection Observer for Animations
-// ===================================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(isDark ? 'light' : 'dark');
     });
-}, observerOptions);
-
-// Observe all cards for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.expertise-card, .hobby-card, .blog-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
+  }
+  setLanguage(localStorage.getItem('language') || 'es');
+  activateNavLink();
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      setLanguage(currentLang === 'en' ? 'es' : 'en');
     });
+  }
 });
-
-// ===================================
-// Utility Functions
-// ===================================
-
-// Add post dynamically (for future use)
-function addBlogPost(post) {
-    blogPosts.unshift(post);
-    loadBlogPosts();
-}
-
-// Search posts (for future implementation)
-function searchPosts(query) {
-    return blogPosts.filter(post => 
-        post.title.toLowerCase().includes(query.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(query.toLowerCase())
-    );
-}
-
-// Export functions for potential module usage
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        blogPosts,
-        addBlogPost,
-        searchPosts,
-        loadBlogPosts
-    };
-}

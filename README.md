@@ -1,249 +1,202 @@
-# Portfolio Minimalista y Profesional
+# Bellabeat Smart Device Usage Analysis
 
-Un portafolio personal moderno, minimalista y responsivo para GitHub Pages, diseñado para desarrolladores que quieren mostrar su trayectoria, habilidades y publicaciones de blog de manera profesional.
-
-## 🎨 Características
-
-- **Diseño Minimalista:** Interfaz limpia y moderna con enfoque en el contenido
-- **Totalmente Responsivo:** Optimizado para dispositivos móviles, tablets y escritorio
-- **Navegación Intuitiva:** Barra de navegación sticky con enlaces suaves entre secciones
-- **Sistema de Blog:** Gestión sencilla de publicaciones con orden cronológico
-- **SEO Optimizado:** Meta tags y estructura semántica HTML5
-- **Accesible:** Cumple con estándares de accesibilidad web (a11y)
-- **Performance:** Optimizado para carga rápida y rendimiento
-
-## 📂 Estructura del Proyecto
-
-```
-my-new-portfolio/
-├── index.html              # Página principal
-├── css/
-│   ├── style.css          # Estilos principales
-│   └── post.css           # Estilos para posts de blog
-├── js/
-│   └── main.js            # JavaScript para interactividad
-├── posts/                 # Directorio de publicaciones del blog
-│   └── [post-slug].html   # Archivos HTML de posts individuales
-├── README.md              # Este archivo
-└── .gitignore            # Archivos a ignorar en Git
-```
-
-## 🚀 Inicio Rápido
-
-### Configuración Local
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/tu-usuario/my-new-portfolio.git
-   cd my-new-portfolio
-   ```
-
-2. **Abrir en tu navegador:**
-   - Simplemente abre `index.html` en tu navegador preferido
-   - O usa un servidor local como [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) en VS Code
-
-### Despliegue en GitHub Pages
-
-1. **Habilitar GitHub Pages:**
-   - Ve a Settings > Pages en tu repositorio
-   - En "Source", selecciona la rama `main` y la carpeta `/ (root)`
-   - Haz clic en "Save"
-
-2. **Acceder a tu sitio:**
-   - Tu sitio estará disponible en `https://tu-usuario.github.io/my-new-portfolio/`
-   - El despliegue puede tardar unos minutos
-
-## ✏️ Personalización
-
-### 1. Información Personal
-
-Edita `index.html` y actualiza:
-
-- **Nombre y título** en la sección hero
-- **Sobre mí** en la sección about
-- **Habilidades técnicas** en la sección expertise
-- **Hobbies e intereses** en la sección hobbies
-- **Enlaces de contacto** en la sección contact (Twitter/X, LinkedIn, GitHub, Email)
-
-### 2. Colores y Estilos
-
-Los colores se definen en variables CSS en `css/style.css`:
-
-```css
-:root {
-    --primary-color: #2563eb;        /* Color principal */
-    --primary-dark: #1e40af;         /* Color principal oscuro */
-    --primary-light: #3b82f6;        /* Color principal claro */
-    --text-primary: #0f172a;         /* Color de texto principal */
-    --text-secondary: #475569;       /* Color de texto secundario */
-    /* ... más variables ... */
-}
-```
-
-Cambia estos valores para personalizar la paleta de colores.
-
-### 3. Tipografía
-
-El sitio usa la fuente [Inter](https://fonts.google.com/specimen/Inter). Para cambiarla:
-
-1. Busca una fuente en [Google Fonts](https://fonts.google.com/)
-2. Reemplaza el link en el `<head>` de `index.html`
-3. Actualiza la variable `--font-family` en `css/style.css`
-
-## 📝 Gestión de Posts del Blog
-
-### Agregar un Nuevo Post
-
-1. **Crear el archivo HTML:**
-   - Copia un post existente de la carpeta `posts/`
-   - Renómbralo según tu nuevo post (ej: `mi-nuevo-post.html`)
-
-2. **Editar el contenido:**
-   - Actualiza el título, fecha y contenido del post
-   - Mantén la estructura HTML existente
-
-3. **Registrar el post en el índice:**
-   - Abre `js/main.js`
-   - Agrega tu post al array `blogPosts`:
-
-   ```javascript
-   const blogPosts = [
-       {
-           title: 'Título de tu Post',
-           date: '2024-03-20',  // Formato YYYY-MM-DD
-           excerpt: 'Breve descripción del post...',
-           slug: 'mi-nuevo-post'  // Nombre del archivo sin .html
-       },
-       // ... posts existentes ...
-   ];
-   ```
-
-4. **Orden cronológico:**
-   - Los posts se ordenan automáticamente por fecha (más reciente primero)
-   - Asegúrate de usar el formato correcto de fecha (YYYY-MM-DD)
-
-### Eliminar un Post
-
-1. Elimina el archivo HTML de la carpeta `posts/`
-2. Elimina la entrada correspondiente del array `blogPosts` en `js/main.js`
-
-### Estructura de un Post
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Descripción del post">
-    <title>Título del Post | Portfolio</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/post.css">
-</head>
-<body>
-    <!-- Navegación -->
-    <nav class="navbar">...</nav>
-    
-    <!-- Contenido del Post -->
-    <article class="post">
-        <div class="container post-container">
-            <header class="post-header">
-                <a href="../index.html#blog" class="back-link">Volver al blog</a>
-                <h1 class="post-title">Título del Post</h1>
-                <div class="post-meta">
-                    <span class="post-date">Fecha</span>
-                    <span class="post-reading-time">• X min de lectura</span>
-                </div>
-            </header>
-            
-            <div class="post-content">
-                <!-- Tu contenido aquí -->
-            </div>
-            
-            <footer class="post-footer">
-                <!-- Tags y botones de compartir -->
-            </footer>
-        </div>
-    </article>
-    
-    <!-- Footer -->
-    <footer class="footer">...</footer>
-    
-    <script src="../js/main.js"></script>
-</body>
-</html>
-```
-
-## 🎯 Secciones del Portfolio
-
-### Inicio (Hero)
-Presentación principal con título y llamadas a la acción.
-
-### Sobre mí
-Presentación profesional y personal. Cuenta tu historia, experiencia y valores.
-
-### Experticia
-Muestra tus habilidades técnicas, tecnologías que dominas y áreas de especialización.
-
-### Hobbies
-Comparte tus intereses personales, pasatiempos y actividades extracurriculares.
-
-### Blog
-Publicaciones organizadas cronológicamente. Comparte tutoriales, experiencias y conocimientos.
-
-### Contacto
-Enlaces directos a tus redes sociales y formas de contacto.
-
-## 🛠️ Tecnologías Utilizadas
-
-- **HTML5:** Estructura semántica y accesible
-- **CSS3:** Diseño moderno con variables CSS y Grid/Flexbox
-- **JavaScript (Vanilla):** Interactividad sin dependencias
-- **Google Fonts:** Tipografía Inter
-- **GitHub Pages:** Hosting gratuito
-
-## 📱 Responsividad
-
-El sitio está optimizado para:
-- 📱 Móviles (< 480px)
-- 📱 Tablets (480px - 768px)
-- 💻 Laptop (768px - 1200px)
-- 🖥️ Desktop (> 1200px)
-
-## ♿ Accesibilidad
-
-- Navegación por teclado
-- Etiquetas ARIA apropiadas
-- Contraste de colores AA/AAA
-- Texto alternativo en imágenes
-- HTML semántico
-
-## 🔧 Mantenimiento
-
-### Actualizar Contenido
-- Edita directamente los archivos HTML
-- Los cambios se reflejan inmediatamente en GitHub Pages (puede tardar unos minutos)
-
-### Agregar Nuevas Secciones
-- Crea una nueva sección en `index.html`
-- Agrega estilos correspondientes en `css/style.css`
-- Agrega un enlace en la navegación
-
-## 📄 Licencia
-
-Este proyecto está disponible para uso personal y comercial.
-
-## 🤝 Contribuciones
-
-Si encuentras algún error o tienes sugerencias de mejora, no dudes en abrir un issue o pull request.
-
-## 📧 Contacto
-
-- Twitter/X: [@tu_usuario](https://twitter.com/tu_usuario)
-- LinkedIn: [tu_usuario](https://linkedin.com/in/tu_usuario)
-- GitHub: [tu_usuario](https://github.com/tu_usuario)
-- Email: tu_email@example.com
+A case study focused on identifying behavior patterns in non-Bellabeat smart device users and translating those findings into practical marketing recommendations for Bellabeat.
 
 ---
 
-**Construido con ❤️ y mucho café**
+## Executive Summary
+
+Bellabeat wants to understand how people use smart devices in their daily lives so the company can refine product positioning, engagement tactics, and lifecycle marketing.  
+Using public Fitbit-style activity data, this analysis explores weekly and monthly usage patterns, time-of-day behavior, and user engagement segments.
+
+The analysis shows that:
+
+- **Engagement peaks midweek and on weekends**, especially on Wednesdays, Mondays, Saturdays, and Fridays.
+- **Activity increases from March to April**, suggesting a strong seasonal opportunity for spring campaigns or movement challenges.
+- **Afternoons and nights drive the highest activity**, making those periods strong candidates for notification timing and in-app nudges.
+- **User behavior splits into active and inactive cohorts**, which supports segmented retention and re-engagement strategies.
+
+Based on these findings, Bellabeat could prioritize personalized messaging, seasonal challenges, and segment-based campaigns to improve adoption and long-term engagement.
+
+---
+
+## Business Task
+
+Analyze smart device usage data to answer the following questions:
+
+1. What trends appear in smart device usage?
+2. How could those trends apply to Bellabeat customers?
+3. How could those trends influence Bellabeat’s marketing strategy?
+4. Which Bellabeat product could benefit most from these insights?
+
+---
+
+## Dataset
+
+This project uses public smart device usage data commonly associated with the Bellabeat case study.  
+The analysis focuses on non-Bellabeat user behavior as a proxy for broader wearable usage patterns.
+
+---
+
+## Tools Used
+
+- **SQL** for data cleaning, transformation, and exploratory analysis
+- **Stored Procedures** for repeatable logic and summary generation
+- **Power BI** for dashboarding and visual exploration
+- **Markdown** for project documentation
+
+---
+
+## Workflow
+
+### 1. Data Preparation
+The dataset was reviewed and cleaned to improve consistency and analytical reliability.
+
+Main preparation steps included:
+- reviewing available tables and fields
+- validating usage-related variables
+- standardizing formats where necessary
+- preparing summary outputs for downstream analysis
+
+### 2. Exploratory Analysis
+The analysis focused on four practical angles:
+
+- **Seasonality by day and month**
+- **User activity distribution**
+- **Activity by time of day**
+- **User segmentation**
+
+### 3. Visualization
+Power BI was used to create visuals that support the business narrative and make the results easier to interpret for non-technical stakeholders.
+
+---
+
+## Key Insights
+
+### 1. Weekly Seasonality
+Device usage is not evenly distributed across the week.
+
+- Highest engagement appears on **Wednesdays**
+- Strong activity also appears on **Mondays, Fridays, and Saturdays**
+- Lower engagement appears on **Tuesdays and Sundays**
+
+**Business implication:**  
+Campaigns, reminders, and feature prompts should be tested during high-engagement windows to maximize visibility and interaction.
+
+---
+
+### 2. Monthly Trend
+Usage metrics increase noticeably from **March to April**.
+
+- average distance increases
+- daily steps increase
+- overall activity becomes more consistent
+
+**Business implication:**  
+Bellabeat can align campaigns with seasonal momentum, especially in spring or around habit-reset moments.
+
+---
+
+### 3. Time-of-Day Behavior
+The most intense user activity happens during the **afternoon and night**.
+
+- afternoons show the highest step totals
+- nights remain highly active and show strong calorie activity
+- mornings are meaningful but clearly lower
+
+**Business implication:**  
+Notification timing and engagement nudges should prioritize afternoon and evening windows instead of generic morning delivery.
+
+---
+
+### 4. User Segmentation
+The data reveals two broad user groups:
+
+- **Active users** with consistently strong usage patterns
+- **Inactive users** with lower average activity and potential churn risk
+
+**Business implication:**  
+Bellabeat should avoid one-size-fits-all engagement.  
+Retention campaigns, challenge mechanics, and feature messaging should be segmented by activity profile.
+
+---
+
+## Recommendations
+
+### Recommendation 1 — Launch time-aware engagement
+Send reminders, movement prompts, or content recommendations during **afternoon and evening** usage peaks.
+
+### Recommendation 2 — Use seasonal campaign windows
+Build campaigns around **high-activity months** and moments when users are more likely to restart healthy habits.
+
+### Recommendation 3 — Segment lifecycle marketing
+Design different messaging for:
+- highly engaged users
+- at-risk inactive users
+- users showing declining activity
+
+### Recommendation 4 — Apply insights to Bellabeat Leaf
+These insights could be especially useful for **Bellabeat Leaf**, since it blends wellness tracking with lifestyle positioning and could benefit from personalized behavior-based engagement.
+
+---
+
+## Visual Highlights
+
+### Weekly Seasonality
+![Device Usage by Day of Week](img/weekday_seasonality.PNG)
+
+### Monthly Usage Trend
+![Device Usage by Month](img/seasonality_monthly.jpg)
+
+### User Activity Distribution
+![User Activity Histogram](img/usage_histogram.png.jpg)
+
+### Activity by Time of Day
+![Time of Day Activity](img/steps_calories_by_time_of_day.png)
+
+### Activity Heatmap
+![Activity Heatmap by Day and Time](img/activity_heatmap_day_time.png)
+
+---
+
+## Repository Structure
+
+```text
+bellabeat-device-usage-analysis/
+├── img/
+├── README.md
+├── analysis_summary.md
+├── data_cleaning.md
+├── data_sources.md
+└── visualizations.md
+```
+
+---
+
+## Related Documents
+
+- `analysis_summary.md` — high-level findings and interpretation
+- `data_cleaning.md` — preparation notes
+- `data_sources.md` — source references
+- `visualizations.md` — description of dashboard visuals
+
+---
+
+## Portfolio Framing
+
+This project is best presented as a **data case study**, not as a software app.  
+The strongest portfolio version of this project includes:
+
+- a concise business problem
+- tools and workflow
+- 3–4 executive insights
+- screenshots of the dashboard
+- business recommendations
+- a clean README that tells the full story
+
+---
+
+## Author
+
+**Antonio Gutierrez**  
+Data Analyst | SQL | Power BI | Data Storytelling
