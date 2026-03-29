@@ -5,18 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Caso de estudio de analítica sobre uso de dispositivos inteligentes para Bellabeat.">
   <title>Bellabeat Smart Device Usage Analysis | Portfolio</title>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-  <main class="project-detail">
+<body class="project-detail-page">
+  <main class="project-detail-shell">
     <div class="container">
-      <a class="back-link" href="../index.html#projects">← Volver a proyectos</a>
+      <div class="project-detail-topbar">
+        <a class="back-link" id="backLink" href="../index.html#projects">← Volver a proyectos</a>
 
-      <span class="section-badge">Case Study</span>
-      <h1>Bellabeat Smart Device Usage Analysis</h1>
-      <p class="section-subtitle">
-        Caso de analítica enfocado en patrones de uso, segmentación de usuarios y oportunidades de marketing basadas en datos de dispositivos inteligentes.
-      </p>
+        <div class="project-detail-actions">
+          <button id="projectLangToggle" class="btn btn-ghost" aria-label="Cambiar idioma">ES</button>
+          <button id="projectThemeToggle" class="btn btn-ghost" aria-label="Cambiar tema">🌙</button>
+        </div>
+      </div>
+
+      <div class="project-detail-hero">
+        <span class="section-badge" id="projectBadge">Caso de estudio</span>
+        <h1 class="project-detail-title" id="projectTitle">Bellabeat Smart Device Usage Analysis</h1>
+        <p class="section-subtitle project-detail-subtitle" id="projectSubtitle">
+          Caso de analítica enfocado en patrones de uso, segmentación de usuarios y oportunidades de marketing basadas en datos de dispositivos inteligentes.
+        </p>
+      </div>
 
       <div class="project-hero-media">
         <img
@@ -28,71 +47,220 @@
 
       <div class="project-meta-grid">
         <div class="project-meta-card">
-          <strong>Rol</strong>
-          <p>Data Analyst</p>
+          <strong id="metaRoleLabel">Rol</strong>
+          <p id="metaRoleValue">Data Analyst</p>
         </div>
         <div class="project-meta-card">
-          <strong>Herramientas</strong>
-          <p>SQL, Power BI, Data Cleaning, Markdown</p>
+          <strong id="metaToolsLabel">Herramientas</strong>
+          <p id="metaToolsValue">SQL, Power BI, Data Cleaning, Markdown</p>
         </div>
         <div class="project-meta-card">
-          <strong>Tipo</strong>
-          <p>Case Study de analítica</p>
+          <strong id="metaTypeLabel">Tipo</strong>
+          <p id="metaTypeValue">Caso de estudio de analítica</p>
         </div>
         <div class="project-meta-card">
-          <strong>Repositorio</strong>
-          <p><a href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer">Ver en GitHub</a></p>
+          <strong id="metaRepoLabel">Repositorio</strong>
+          <p><a id="metaRepoLink" href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer">Ver en GitHub</a></p>
         </div>
       </div>
 
-      <section class="project-section">
-        <h2>Problema de negocio</h2>
-        <p>
-          Bellabeat necesitaba entender cómo usan sus dispositivos los consumidores para traducir esos patrones en decisiones de marketing, engagement y posicionamiento de producto.
-          El objetivo fue analizar datos de uso de dispositivos inteligentes no Bellabeat para detectar tendencias aplicables a su estrategia.
-        </p>
-      </section>
+      <div class="project-content-grid">
+        <section class="project-section">
+          <h2 id="problemTitle">Problema de negocio</h2>
+          <p id="problemText">
+            Bellabeat necesitaba entender cómo usan sus dispositivos los consumidores para traducir esos patrones en decisiones de marketing, engagement y posicionamiento de producto. El objetivo fue analizar datos de uso de dispositivos inteligentes no Bellabeat para detectar tendencias aplicables a su estrategia.
+          </p>
+        </section>
 
-      <section class="project-section">
-        <h2>Proceso</h2>
-        <ul class="project-list">
-          <li>Revisión del dataset y validación de tablas relevantes.</li>
-          <li>Limpieza y preparación de datos para análisis comparables.</li>
-          <li>Exploración de patrones semanales, mensuales y por franja horaria.</li>
-          <li>Segmentación de usuarios por nivel de actividad.</li>
-          <li>Construcción de visualizaciones en Power BI para comunicar hallazgos.</li>
-        </ul>
-      </section>
+        <section class="project-section">
+          <h2 id="processTitle">Proceso</h2>
+          <ul class="project-list" id="processList">
+            <li>Revisión del dataset y validación de tablas relevantes.</li>
+            <li>Limpieza y preparación de datos para análisis comparables.</li>
+            <li>Exploración de patrones semanales, mensuales y por franja horaria.</li>
+            <li>Segmentación de usuarios por nivel de actividad.</li>
+            <li>Construcción de visualizaciones en Power BI para comunicar hallazgos.</li>
+          </ul>
+        </section>
 
-      <section class="project-section">
-        <h2>Hallazgos clave</h2>
-        <ul class="project-list">
-          <li><strong>El engagement sube a mitad de semana y fines de semana</strong>, con especial fuerza en miércoles, lunes, viernes y sábados.</li>
-          <li><strong>La actividad aumenta de marzo a abril</strong>, lo que abre una oportunidad para campañas estacionales.</li>
-          <li><strong>La tarde y la noche concentran la mayor actividad</strong>, lo que ayuda a definir mejores ventanas para notificaciones y mensajes.</li>
-          <li><strong>Existen cohortes activas e inactivas</strong>, útiles para campañas de retención y reactivación más personalizadas.</li>
-        </ul>
-      </section>
+        <section class="project-section">
+          <h2 id="findingsTitle">Hallazgos clave</h2>
+          <ul class="project-list" id="findingsList">
+            <li><strong>El engagement sube a mitad de semana y fines de semana</strong>, con especial fuerza en miércoles, lunes, viernes y sábados.</li>
+            <li><strong>La actividad aumenta de marzo a abril</strong>, lo que abre una oportunidad para campañas estacionales.</li>
+            <li><strong>La tarde y la noche concentran la mayor actividad</strong>, lo que ayuda a definir mejores ventanas para notificaciones y mensajes.</li>
+            <li><strong>Existen cohortes activas e inactivas</strong>, útiles para campañas de retención y reactivación más personalizadas.</li>
+          </ul>
+        </section>
 
-      <section class="project-section">
-        <h2>Recomendaciones</h2>
-        <ul class="project-list">
-          <li>Lanzar campañas y recordatorios en ventanas de alta actividad.</li>
-          <li>Diseñar activaciones estacionales alrededor de momentos de mayor movimiento.</li>
-          <li>Separar estrategias para usuarios activos y usuarios con riesgo de abandono.</li>
-          <li>Aplicar estos insights a productos wellness como Bellabeat Leaf.</li>
-        </ul>
-      </section>
+        <section class="project-section">
+          <h2 id="recommendationsTitle">Recomendaciones</h2>
+          <ul class="project-list" id="recommendationsList">
+            <li>Lanzar campañas y recordatorios en ventanas de alta actividad.</li>
+            <li>Diseñar activaciones estacionales alrededor de momentos de mayor movimiento.</li>
+            <li>Separar estrategias para usuarios activos y usuarios con riesgo de abandono.</li>
+            <li>Aplicar estos insights a productos wellness como Bellabeat Leaf.</li>
+          </ul>
+        </section>
 
-      <section class="project-section">
-        <h2>Evidencia visual</h2>
-        <div class="project-gallery">
-          <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/weekday_seasonality.PNG" alt="Weekly seasonality">
-          <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/steps_calories_by_time_of_day.png" alt="Activity by time of day">
-          <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/activity_heatmap_day_time.png" alt="Activity heatmap">
-        </div>
-      </section>
+        <section class="project-section">
+          <h2 id="evidenceTitle">Evidencia visual</h2>
+          <div class="project-gallery">
+            <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/weekday_seasonality.PNG" alt="Weekly seasonality">
+            <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/steps_calories_by_time_of_day.png" alt="Activity by time of day">
+            <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/activity_heatmap_day_time.png" alt="Activity heatmap">
+          </div>
+        </section>
+      </div>
+
+      <div class="project-footer-actions">
+        <a class="btn btn-primary" id="repoButton" href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer">Ver repositorio</a>
+        <a class="btn btn-secondary" id="backButton" href="../index.html#projects">Volver al portafolio</a>
+      </div>
     </div>
   </main>
+
+  <script>
+    const projectThemeToggle = document.getElementById('projectThemeToggle');
+    const projectLangToggle = document.getElementById('projectLangToggle');
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        projectThemeToggle.textContent = '☀️';
+      } else {
+        document.documentElement.classList.remove('dark');
+        projectThemeToggle.textContent = '🌙';
+      }
+      try { localStorage.setItem('theme', theme); } catch (e) {}
+    }
+
+    const copy = {
+      es: {
+        backLink: '← Volver a proyectos',
+        projectBadge: 'Caso de estudio',
+        projectTitle: 'Bellabeat Smart Device Usage Analysis',
+        projectSubtitle: 'Caso de analítica enfocado en patrones de uso, segmentación de usuarios y oportunidades de marketing basadas en datos de dispositivos inteligentes.',
+        metaRoleLabel: 'Rol',
+        metaRoleValue: 'Data Analyst',
+        metaToolsLabel: 'Herramientas',
+        metaToolsValue: 'SQL, Power BI, Data Cleaning, Markdown',
+        metaTypeLabel: 'Tipo',
+        metaTypeValue: 'Caso de estudio de analítica',
+        metaRepoLabel: 'Repositorio',
+        metaRepoLink: 'Ver en GitHub',
+        problemTitle: 'Problema de negocio',
+        problemText: 'Bellabeat necesitaba entender cómo usan sus dispositivos los consumidores para traducir esos patrones en decisiones de marketing, engagement y posicionamiento de producto. El objetivo fue analizar datos de uso de dispositivos inteligentes no Bellabeat para detectar tendencias aplicables a su estrategia.',
+        processTitle: 'Proceso',
+        findingsTitle: 'Hallazgos clave',
+        recommendationsTitle: 'Recomendaciones',
+        evidenceTitle: 'Evidencia visual',
+        repoButton: 'Ver repositorio',
+        backButton: 'Volver al portafolio',
+        processList: [
+          'Revisión del dataset y validación de tablas relevantes.',
+          'Limpieza y preparación de datos para análisis comparables.',
+          'Exploración de patrones semanales, mensuales y por franja horaria.',
+          'Segmentación de usuarios por nivel de actividad.',
+          'Construcción de visualizaciones en Power BI para comunicar hallazgos.'
+        ],
+        findingsList: [
+          '<strong>El engagement sube a mitad de semana y fines de semana</strong>, con especial fuerza en miércoles, lunes, viernes y sábados.',
+          '<strong>La actividad aumenta de marzo a abril</strong>, lo que abre una oportunidad para campañas estacionales.',
+          '<strong>La tarde y la noche concentran la mayor actividad</strong>, lo que ayuda a definir mejores ventanas para notificaciones y mensajes.',
+          '<strong>Existen cohortes activas e inactivas</strong>, útiles para campañas de retención y reactivación más personalizadas.'
+        ],
+        recommendationsList: [
+          'Lanzar campañas y recordatorios en ventanas de alta actividad.',
+          'Diseñar activaciones estacionales alrededor de momentos de mayor movimiento.',
+          'Separar estrategias para usuarios activos y usuarios con riesgo de abandono.',
+          'Aplicar estos insights a productos wellness como Bellabeat Leaf.'
+        ]
+      },
+      en: {
+        backLink: '← Back to projects',
+        projectBadge: 'Case Study',
+        projectTitle: 'Bellabeat Smart Device Usage Analysis',
+        projectSubtitle: 'Analytics case study focused on usage patterns, user segmentation, and data-driven marketing opportunities for smart-device behavior.',
+        metaRoleLabel: 'Role',
+        metaRoleValue: 'Data Analyst',
+        metaToolsLabel: 'Tools',
+        metaToolsValue: 'SQL, Power BI, Data Cleaning, Markdown',
+        metaTypeLabel: 'Type',
+        metaTypeValue: 'Analytics case study',
+        metaRepoLabel: 'Repository',
+        metaRepoLink: 'View on GitHub',
+        problemTitle: 'Business problem',
+        problemText: 'Bellabeat needed to understand how consumers use smart devices in order to translate those patterns into marketing, engagement, and product-positioning decisions. The goal was to analyze non-Bellabeat smart-device usage data to identify trends applicable to its strategy.',
+        processTitle: 'Process',
+        findingsTitle: 'Key findings',
+        recommendationsTitle: 'Recommendations',
+        evidenceTitle: 'Visual evidence',
+        repoButton: 'View repository',
+        backButton: 'Back to portfolio',
+        processList: [
+          'Reviewed the dataset and validated the relevant tables.',
+          'Cleaned and prepared the data for comparable analysis.',
+          'Explored weekly, monthly, and time-of-day behavior patterns.',
+          'Segmented users by activity level.',
+          'Built Power BI visuals to communicate findings.'
+        ],
+        findingsList: [
+          '<strong>Engagement increases midweek and on weekends</strong>, especially on Wednesdays, Mondays, Fridays, and Saturdays.',
+          '<strong>Activity rises from March to April</strong>, opening a seasonal campaign opportunity.',
+          '<strong>Afternoon and evening concentrate the highest activity</strong>, which helps define better windows for notifications and messaging.',
+          '<strong>There are active and inactive user cohorts</strong>, useful for more personalized retention and reactivation campaigns.'
+        ],
+        recommendationsList: [
+          'Launch campaigns and reminders during high-activity windows.',
+          'Design seasonal activations around periods of increased movement.',
+          'Separate strategies for active users and users at risk of churn.',
+          'Apply these insights to wellness products such as Bellabeat Leaf.'
+        ]
+      }
+    };
+
+    function renderList(elementId, items) {
+      const target = document.getElementById(elementId);
+      if (!target) return;
+      target.innerHTML = items.map(item => '<li>' + item + '</li>').join('');
+    }
+
+    function setLanguage(lang) {
+      const t = copy[lang];
+      Object.keys(t).forEach(key => {
+        if (Array.isArray(t[key])) return;
+        const el = document.getElementById(key);
+        if (el) el.innerHTML = t[key];
+      });
+
+      renderList('processList', t.processList);
+      renderList('findingsList', t.findingsList);
+      renderList('recommendationsList', t.recommendationsList);
+
+      document.documentElement.lang = lang;
+      projectLangToggle.textContent = lang.toUpperCase();
+
+      try { localStorage.setItem('language', lang); } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const savedLang = localStorage.getItem('language') || 'es';
+
+      applyTheme(savedTheme);
+      setLanguage(savedLang);
+
+      projectThemeToggle.addEventListener('click', function () {
+        const isDark = document.documentElement.classList.contains('dark');
+        applyTheme(isDark ? 'light' : 'dark');
+      });
+
+      projectLangToggle.addEventListener('click', function () {
+        const nextLang = document.documentElement.lang === 'en' ? 'es' : 'en';
+        setLanguage(nextLang);
+      });
+    });
+  </script>
 </body>
 </html>
