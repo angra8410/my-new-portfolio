@@ -1,266 +1,1133 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Caso de estudio de analítica sobre uso de dispositivos inteligentes para Bellabeat.">
-  <title>Bellabeat Smart Device Usage Analysis | Portfolio</title>
-  <script>
-    (function () {
-      try {
-        var theme = localStorage.getItem('theme');
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
-  <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bellabeat Smart Device Usage Analysis case study" />
+  <title>Bellabeat Smart Device Usage Analysis</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --case-bg: var(--bg-primary, #f8fafc);
+      --case-surface: var(--bg-secondary, #ffffff);
+      --case-surface-alt: var(--bg-tertiary, #f1f5f9);
+      --case-text: var(--text-primary, #0f172a);
+      --case-text-soft: var(--text-secondary, #475569);
+      --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
+      --case-accent: var(--accent-color, #22d3ee);
+      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --case-radius: 24px;
+      --case-max: 1180px;
+    }
+
+    html.dark {
+      --case-bg: #0b1220;
+      --case-surface: #111a2b;
+      --case-surface-alt: #162135;
+      --case-text: #e5eef8;
+      --case-text-soft: #a8b7cc;
+      --case-border: rgba(148, 163, 184, 0.18);
+      --case-accent: #67e8f9;
+      --case-accent-strong: #22d3ee;
+      --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%),
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%),
+        var(--case-bg);
+      color: var(--case-text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .case-page {
+      min-height: 100vh;
+    }
+
+    .case-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--case-bg) 86%, transparent);
+      border-bottom: 1px solid var(--case-border);
+    }
+
+    .case-topbar-inner {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .case-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--case-text);
+      opacity: 0.94;
+    }
+
+    .case-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .case-theme-pill,
+    .case-lang-pill {
+      border: 1px solid var(--case-border);
+      background: var(--case-surface);
+      color: var(--case-text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: var(--case-shadow);
+    }
+
+    .case-hero {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 56px 20px 28px;
+    }
+
+    .case-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: color-mix(in srgb, var(--case-accent) 18%, transparent);
+      color: var(--case-accent-strong);
+      border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .case-hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .case-hero-main,
+    .case-hero-side {
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+    }
+
+    .case-hero-main {
+      padding: 34px;
+    }
+
+    .case-title {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+    }
+
+    .case-summary {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--case-text-soft);
+      max-width: 62ch;
+    }
+
+    .case-key-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .case-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      color: var(--case-text);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .case-hero-side {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .meta-card {
+      border: 1px solid var(--case-border);
+      background: var(--case-surface-alt);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--case-text-soft);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--case-text);
+      font-weight: 600;
+    }
+
+    .case-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .case-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+    }
+
+    .case-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .case-btn-primary {
+      background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent));
+      color: #06202b;
+    }
+
+    .case-btn-secondary {
+      background: transparent;
+      border-color: var(--case-border);
+      color: var(--case-text);
+    }
+
+    .case-content {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 10px 20px 72px;
+    }
+
+    .content-section {
+      margin-top: 26px;
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+      padding: 30px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--case-accent-strong);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .overview-card {
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .overview-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .overview-card p,
+    .overview-card li {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .overview-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .chart-group {
+      margin-top: 30px;
+    }
+
+    .chart-group-title {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .chart-group-copy {
+      margin: 0 0 18px;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .chart-card {
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--case-border);
+      background: var(--case-surface-alt);
+    }
+
+    .chart-image-wrap {
+      padding: 18px;
+      border-bottom: 1px solid var(--case-border);
+      background: color-mix(in srgb, var(--case-surface) 88%, transparent);
+    }
+
+    .chart-image {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      border: 1px solid var(--case-border);
+      background: #ffffff;
+    }
+
+    .chart-body {
+      padding: 22px;
+    }
+
+    .chart-index {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--case-accent-strong);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .chart-title {
+      margin: 0 0 12px;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+    }
+
+    .chart-copy {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.8;
+    }
+
+    .chart-copy + .chart-copy {
+      margin-top: 10px;
+    }
+
+    .recommendations-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .recommendation-card {
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .recommendation-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .recommendation-card p {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .case-footer {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 0 20px 72px;
+    }
+
+    .case-footer-box {
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+      padding: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .case-footer-copy {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+      max-width: 58ch;
+    }
+
+    @media (max-width: 960px) {
+      .case-hero-grid,
+      .overview-grid,
+      .recommendations-list {
+        grid-template-columns: 1fr;
+      }
+
+      .case-hero-main,
+      .case-hero-side,
+      .content-section,
+      .case-footer-box {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .case-topbar-inner,
+      .case-hero,
+      .case-content,
+      .case-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .case-title {
+        font-size: 2rem;
+      }
+
+      .case-summary {
+        font-size: 1rem;
+      }
+
+      .case-actions,
+      .case-top-actions {
+        width: 100%;
+      }
+
+      .case-btn,
+      .case-theme-pill,
+      .case-lang-pill {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-<body class="project-detail-page">
-  <main class="project-detail-shell">
-    <div class="container">
-      <div class="project-detail-topbar">
-        <a class="back-link" id="backLink" href="../index.html#projects">← Volver a proyectos</a>
+<body>
+  <div class="case-page">
+    <header class="case-topbar">
+      <div class="case-topbar-inner">
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
 
-        <div class="project-detail-actions">
-          <button id="projectLangToggle" class="btn btn-ghost" aria-label="Cambiar idioma">ES</button>
-          <button id="projectThemeToggle" class="btn btn-ghost" aria-label="Cambiar tema">🌙</button>
+        <div class="case-top-actions">
+          <div class="case-lang-pill" id="langIndicator">ES</div>
+          <div class="case-theme-pill" id="themeIndicator">🌙 Dark</div>
         </div>
       </div>
+    </header>
 
-      <div class="project-detail-hero">
-        <span class="section-badge" id="projectBadge">Caso de estudio</span>
-        <h1 class="project-detail-title" id="projectTitle">Bellabeat Smart Device Usage Analysis</h1>
-        <p class="section-subtitle project-detail-subtitle" id="projectSubtitle">
-          Caso de analítica enfocado en patrones de uso, segmentación de usuarios y oportunidades de marketing basadas en datos de dispositivos inteligentes.
-        </p>
-      </div>
+    <main>
+      <section class="case-hero">
+        <div class="case-badge" id="heroBadge">Caso de estudio analítico</div>
 
-      <div class="project-hero-media">
-        <img
-          src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/seasonality_monthly.jpg"
-          alt="Bellabeat dashboard preview"
-          loading="lazy"
-        >
-      </div>
+        <div class="case-hero-grid">
+          <div class="case-hero-main">
+            <h1 class="case-title" id="heroTitle">Bellabeat Smart Device Usage Analysis</h1>
+            <p class="case-summary" id="heroSummary">
+              Análisis de comportamiento de uso de dispositivos inteligentes para identificar patrones temporales, segmentación de usuarios y oportunidades de marketing basadas en datos.
+            </p>
 
-      <div class="project-meta-grid">
-        <div class="project-meta-card">
-          <strong id="metaRoleLabel">Rol</strong>
-          <p id="metaRoleValue">Data Analyst</p>
-        </div>
-        <div class="project-meta-card">
-          <strong id="metaToolsLabel">Herramientas</strong>
-          <p id="metaToolsValue">SQL, Power BI, Data Cleaning, Markdown</p>
-        </div>
-        <div class="project-meta-card">
-          <strong id="metaTypeLabel">Tipo</strong>
-          <p id="metaTypeValue">Caso de estudio de analítica</p>
-        </div>
-        <div class="project-meta-card">
-          <strong id="metaRepoLabel">Repositorio</strong>
-          <p><a id="metaRepoLink" href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer">Ver en GitHub</a></p>
-        </div>
-      </div>
+            <div class="case-key-metrics">
+              <span class="case-chip" id="chip1">SQL</span>
+              <span class="case-chip" id="chip2">Power BI</span>
+              <span class="case-chip" id="chip3">Data Cleaning</span>
+              <span class="case-chip" id="chip4">EDA</span>
+              <span class="case-chip" id="chip5">Segmentation</span>
+            </div>
+          </div>
 
-      <div class="project-content-grid">
-        <section class="project-section">
-          <h2 id="problemTitle">Problema de negocio</h2>
-          <p id="problemText">
-            Bellabeat necesitaba entender cómo usan sus dispositivos los consumidores para traducir esos patrones en decisiones de marketing, engagement y posicionamiento de producto. El objetivo fue analizar datos de uso de dispositivos inteligentes no Bellabeat para detectar tendencias aplicables a su estrategia.
+          <aside class="case-hero-side">
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelRole">Focus</span>
+                <p class="meta-value" id="metaValueRole">Data analytics case study</p>
+              </div>
+
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Business question</span>
+                <p class="meta-value" id="metaValueQuestion">How can Bellabeat use device usage behavior to improve engagement and marketing strategy?</p>
+              </div>
+
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelOutput">Output</span>
+                <p class="meta-value" id="metaValueOutput">Executive dashboard, behavior patterns, segmentation insights, and recommendations</p>
+              </div>
+            </div>
+
+            <div class="case-actions">
+              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer" id="repoButton">Ver repositorio</a>
+              <a class="case-btn case-btn-secondary" href="../index.html#contact" id="contactButton">Contactar</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="case-content">
+        <section class="content-section">
+          <span class="section-kicker" id="overviewKicker">Overview</span>
+          <h2 class="section-title" id="overviewTitle">Project framing</h2>
+          <p class="section-intro" id="overviewIntro">
+            Este proyecto se enfoca en transformar datos de actividad en señales de negocio accionables: cuándo se activan más los usuarios, cómo cambia su comportamiento con el tiempo y qué segmentos requieren estrategias diferenciadas.
           </p>
+
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="overviewCard1Title">Objective</h3>
+              <p id="overviewCard1Body">
+                Detectar patrones de uso relevantes para orientar campañas, mensajería y experiencias de engagement.
+              </p>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="overviewCard2Title">Workflow</h3>
+              <ul id="overviewCard2Body">
+                <li>Data cleaning and preparation</li>
+                <li>Exploratory analysis</li>
+                <li>Behavioral visualization in Power BI</li>
+                <li>Business recommendation synthesis</li>
+              </ul>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="overviewCard3Title">What this page shows</h3>
+              <p id="overviewCard3Body">
+                Los siete gráficos principales del proyecto, organizados en una narrativa más limpia para portafolio.
+              </p>
+            </article>
+          </div>
         </section>
 
-        <section class="project-section">
-          <h2 id="processTitle">Proceso</h2>
-          <ul class="project-list" id="processList">
-            <li>Revisión del dataset y validación de tablas relevantes.</li>
-            <li>Limpieza y preparación de datos para análisis comparables.</li>
-            <li>Exploración de patrones semanales, mensuales y por franja horaria.</li>
-            <li>Segmentación de usuarios por nivel de actividad.</li>
-            <li>Construcción de visualizaciones en Power BI para comunicar hallazgos.</li>
-          </ul>
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Visual analysis</span>
+          <h2 class="section-title" id="visualsTitle">Visualizations & key findings</h2>
+          <p class="section-intro" id="visualsIntro">
+            La historia analítica se organiza en cuatro capas: tendencias temporales, patrones de comportamiento, perfilado de usuarios y relación entre actividad y descanso.
+          </p>
+
+          <div class="chart-group">
+            <h3 class="chart-group-title" id="group1Title">1. Trend & seasonality</h3>
+            <p class="chart-group-copy" id="group1Copy">
+              These charts establish the macro-level behavior: when usage rises across the week and how activity shifts from one month to another.
+            </p>
+
+            <div class="chart-grid">
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/weekday_seasonality.PNG"
+                    alt="Weekly seasonality in device usage"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart1Index">Chart 01</span>
+                  <h3 class="chart-title" id="chart1Title">Weekly seasonality in device usage</h3>
+                  <p class="chart-copy" id="chart1Text1">
+                    El uso del dispositivo alcanza su punto más alto los miércoles, con niveles también fuertes en lunes, jueves, viernes y sábado. El martes aparece como el día de menor actividad relativa.
+                  </p>
+                  <p class="chart-copy" id="chart1Text2">
+                    Esto sugiere que Bellabeat podría sincronizar campañas, recordatorios o retos de actividad alrededor de la mitad de semana y del tramo final de la semana, donde la propensión al uso ya es mayor.
+                  </p>
+                </div>
+              </article>
+
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/seasonality_monthly.jpg"
+                    alt="Monthly usage trends"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart2Index">Chart 02</span>
+                  <h3 class="chart-title" id="chart2Title">Monthly usage trends</h3>
+                  <p class="chart-copy" id="chart2Text1">
+                    Entre marzo y abril se observa una caída ligera en calorías promedio, pero un crecimiento claro en distancia recorrida y pasos diarios. El patrón apunta a actividades más frecuentes o de mayor duración, aunque posiblemente de menor intensidad.
+                  </p>
+                  <p class="chart-copy" id="chart2Text2">
+                    Desde negocio, esto abre una oportunidad para campañas estacionales: por ejemplo, activar desafíos o mensajes en primavera, cuando los usuarios parecen mostrar más disposición al movimiento.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="chart-group">
+            <h3 class="chart-group-title" id="group2Title">2. Behavioral patterns</h3>
+            <p class="chart-group-copy" id="group2Copy">
+              These views move from macro seasonality into daily behavior: what times of day are strongest and how activity concentrates across hour and weekday combinations.
+            </p>
+
+            <div class="chart-grid">
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/steps_calories_by_time_of_day.png"
+                    alt="Activity by time of day"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart3Index">Chart 03</span>
+                  <h3 class="chart-title" id="chart3Title">Activity by time of day</h3>
+                  <p class="chart-copy" id="chart3Text1">
+                    Las horas de la tarde y la noche concentran la mayor actividad en pasos y calorías, mientras que las mañanas muestran niveles más bajos.
+                  </p>
+                  <p class="chart-copy" id="chart3Text2">
+                    Este hallazgo ayuda a decidir cuándo enviar notificaciones, activar nudges o presentar funciones relacionadas con bienestar. En lugar de empujar mensajes al azar, Bellabeat puede alinearlos con los momentos de mayor receptividad.
+                  </p>
+                </div>
+              </article>
+
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/activity_heatmap_day_time.png"
+                    alt="Activity heatmap by day and time"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart4Index">Chart 04</span>
+                  <h3 class="chart-title" id="chart4Title">Activity heatmap by day and time</h3>
+                  <p class="chart-copy" id="chart4Text1">
+                    El heatmap profundiza el comportamiento temporal al cruzar día y hora. Permite distinguir con más precisión qué combinaciones concentran los picos y cuáles representan ventanas de baja actividad.
+                  </p>
+                  <p class="chart-copy" id="chart4Text2">
+                    A nivel estratégico, esto mejora la planificación de intervenciones: se pueden diseñar acciones distintas para horas pico, horas valle y días con menor engagement.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="chart-group">
+            <h3 class="chart-group-title" id="group3Title">3. User profiling</h3>
+            <p class="chart-group-copy" id="group3Copy">
+              These charts help move from aggregate behavior to user-level strategy by showing both distribution shape and segment structure.
+            </p>
+
+            <div class="chart-grid">
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/usage_histogram.png.jpg"
+                    alt="User activity distribution histogram"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart5Index">Chart 05</span>
+                  <h3 class="chart-title" id="chart5Title">User activity distribution</h3>
+                  <p class="chart-copy" id="chart5Text1">
+                    La distribución de actividad muestra que la mayoría de usuarios se concentra en una zona media, mientras un grupo menor presenta niveles de actividad mucho más altos.
+                  </p>
+                  <p class="chart-copy" id="chart5Text2">
+                    Esto es importante porque revela heterogeneidad real en la base de usuarios. No conviene tratar a toda la audiencia igual: hay perfiles que necesitan activación y otros que responden mejor a reconocimiento o retos avanzados.
+                  </p>
+                </div>
+              </article>
+
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/user_segmentation.png"
+                    alt="User segmentation bar chart"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart6Index">Chart 06</span>
+                  <h3 class="chart-title" id="chart6Title">User segmentation</h3>
+                  <p class="chart-copy" id="chart6Text1">
+                    La visualización de segmentos resume la base en dos grupos principales: usuarios activos e inactivos. Es una lectura sencilla, pero muy útil para decisiones de marketing y retención.
+                  </p>
+                  <p class="chart-copy" id="chart6Text2">
+                    Con esta segmentación, Bellabeat puede plantear journeys diferentes: reactivación e incentivos para usuarios de baja actividad, y programas más retadores o de fidelización para quienes ya muestran alto compromiso.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="chart-group">
+            <h3 class="chart-group-title" id="group4Title">4. Activity & wellness relationship</h3>
+            <p class="chart-group-copy" id="group4Copy">
+              This final chart expands the case beyond activity volume and explores how movement and sleep fluctuate over time.
+            </p>
+
+            <div class="chart-grid">
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/steps_sleep_over_time.png"
+                    alt="Steps and sleep over time"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart7Index">Chart 07</span>
+                  <h3 class="chart-title" id="chart7Title">Steps and sleep over time</h3>
+                  <p class="chart-copy" id="chart7Text1">
+                    Las variaciones diarias de pasos y sueño permiten explorar posibles relaciones entre actividad física y descanso. No necesariamente prueban causalidad, pero sí ayudan a identificar patrones que merecen seguimiento.
+                  </p>
+                  <p class="chart-copy" id="chart7Text2">
+                    Para producto y engagement, este tipo de lectura puede apoyar mensajes de hábitos saludables, recomendaciones personalizadas y experiencias más centradas en bienestar integral, no solo en conteo de pasos.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
         </section>
 
-        <section class="project-section">
-          <h2 id="findingsTitle">Hallazgos clave</h2>
-          <ul class="project-list" id="findingsList">
-            <li><strong>El engagement sube a mitad de semana y fines de semana</strong>, con especial fuerza en miércoles, lunes, viernes y sábados.</li>
-            <li><strong>La actividad aumenta de marzo a abril</strong>, lo que abre una oportunidad para campañas estacionales.</li>
-            <li><strong>La tarde y la noche concentran la mayor actividad</strong>, lo que ayuda a definir mejores ventanas para notificaciones y mensajes.</li>
-            <li><strong>Existen cohortes activas e inactivas</strong>, útiles para campañas de retención y reactivación más personalizadas.</li>
-          </ul>
-        </section>
+        <section class="content-section">
+          <span class="section-kicker" id="recKicker">Recommendations</span>
+          <h2 class="section-title" id="recTitle">Business recommendations</h2>
+          <p class="section-intro" id="recIntro">
+            A partir de los patrones observados, estas son las acciones de mayor impacto que emergen del caso.
+          </p>
 
-        <section class="project-section">
-          <h2 id="recommendationsTitle">Recomendaciones</h2>
-          <ul class="project-list" id="recommendationsList">
-            <li>Lanzar campañas y recordatorios en ventanas de alta actividad.</li>
-            <li>Diseñar activaciones estacionales alrededor de momentos de mayor movimiento.</li>
-            <li>Separar estrategias para usuarios activos y usuarios con riesgo de abandono.</li>
-            <li>Aplicar estos insights a productos wellness como Bellabeat Leaf.</li>
-          </ul>
-        </section>
+          <div class="recommendations-list">
+            <article class="recommendation-card">
+              <h3 id="rec1Title">Time campaigns to real behavior</h3>
+              <p id="rec1Text">
+                Priorizar campañas y notificaciones en momentos donde la actividad ya es alta —especialmente mitad de semana, tardes y noches— para maximizar atención y respuesta.
+              </p>
+            </article>
 
-        <section class="project-section">
-          <h2 id="evidenceTitle">Evidencia visual</h2>
-          <div class="project-gallery">
-            <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/weekday_seasonality.PNG" alt="Weekly seasonality">
-            <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/steps_calories_by_time_of_day.png" alt="Activity by time of day">
-            <img src="https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/img/activity_heatmap_day_time.png" alt="Activity heatmap">
+            <article class="recommendation-card">
+              <h3 id="rec2Title">Segment by engagement level</h3>
+              <p id="rec2Text">
+                Diseñar journeys diferenciados para usuarios activos e inactivos, con objetivos distintos de retención, reactivación y upsell de engagement.
+              </p>
+            </article>
+
+            <article class="recommendation-card">
+              <h3 id="rec3Title">Use seasonal momentum</h3>
+              <p id="rec3Text">
+                Aprovechar el aumento observado en pasos y distancia para lanzar retos o contenidos en periodos donde el usuario ya muestra una inclinación natural a moverse más.
+              </p>
+            </article>
+
+            <article class="recommendation-card">
+              <h3 id="rec4Title">Expand wellness messaging</h3>
+              <p id="rec4Text">
+                Complementar la narrativa de actividad con insights relacionados con descanso y hábitos, para presentar una propuesta más completa de salud y bienestar.
+              </p>
+            </article>
           </div>
         </section>
       </div>
+    </main>
 
-      <div class="project-footer-actions">
-        <a class="btn btn-primary" id="repoButton" href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer">Ver repositorio</a>
-        <a class="btn btn-secondary" id="backButton" href="../index.html#projects">Volver al portafolio</a>
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">
+          Esta página resume el caso como pieza de portafolio. El repositorio contiene documentación complementaria sobre fuentes, limpieza de datos, visualizaciones y hallazgos.
+        </p>
+
+        <div class="case-actions">
+          <a class="case-btn case-btn-primary" href="https://github.com/angra8410/bellabeat-device-usage-analysis" target="_blank" rel="noopener noreferrer" id="footerRepoButton">Abrir repositorio</a>
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
       </div>
-    </div>
-  </main>
+    </footer>
+  </div>
 
   <script>
-    const projectThemeToggle = document.getElementById('projectThemeToggle');
-    const projectLangToggle = document.getElementById('projectLangToggle');
+    (function () {
+      const translations = {
+        es: {
+          backToPortfolio: "← Volver al portafolio",
+          heroBadge: "Caso de estudio analítico",
+          heroTitle: "Bellabeat Smart Device Usage Analysis",
+          heroSummary:
+            "Análisis de comportamiento de uso de dispositivos inteligentes para identificar patrones temporales, segmentación de usuarios y oportunidades de marketing basadas en datos.",
+          metaLabelRole: "Enfoque",
+          metaValueRole: "Caso de estudio de analítica de datos",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion:
+            "¿Cómo puede Bellabeat usar el comportamiento de uso del dispositivo para mejorar engagement y estrategia de marketing?",
+          metaLabelOutput: "Entregable",
+          metaValueOutput:
+            "Dashboard ejecutivo, patrones de comportamiento, insights de segmentación y recomendaciones",
+          repoButton: "Ver repositorio",
+          contactButton: "Contactar",
 
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-        projectThemeToggle.textContent = '☀️';
-      } else {
-        document.documentElement.classList.remove('dark');
-        projectThemeToggle.textContent = '🌙';
+          overviewKicker: "Overview",
+          overviewTitle: "Marco del proyecto",
+          overviewIntro:
+            "Este proyecto se enfoca en transformar datos de actividad en señales de negocio accionables: cuándo se activan más los usuarios, cómo cambia su comportamiento con el tiempo y qué segmentos requieren estrategias diferenciadas.",
+          overviewCard1Title: "Objetivo",
+          overviewCard1Body:
+            "Detectar patrones de uso relevantes para orientar campañas, mensajería y experiencias de engagement.",
+          overviewCard2Title: "Flujo de trabajo",
+          overviewCard2Body: [
+            "Limpieza y preparación de datos",
+            "Análisis exploratorio",
+            "Visualización de comportamiento en Power BI",
+            "Síntesis de recomendaciones de negocio"
+          ],
+          overviewCard3Title: "Qué muestra esta página",
+          overviewCard3Body:
+            "Los siete gráficos principales del proyecto, organizados en una narrativa más limpia para portafolio.",
+
+          visualsKicker: "Visual analysis",
+          visualsTitle: "Visualizaciones y hallazgos clave",
+          visualsIntro:
+            "La historia analítica se organiza en cuatro capas: tendencias temporales, patrones de comportamiento, perfilado de usuarios y relación entre actividad y descanso.",
+
+          group1Title: "1. Tendencia y estacionalidad",
+          group1Copy:
+            "Estos gráficos establecen el comportamiento macro: cuándo sube el uso a lo largo de la semana y cómo cambia la actividad de un mes a otro.",
+          chart1Index: "Gráfico 01",
+          chart1Title: "Estacionalidad semanal del uso",
+          chart1Text1:
+            "El uso del dispositivo alcanza su punto más alto los miércoles, con niveles también fuertes en lunes, jueves, viernes y sábado. El martes aparece como el día de menor actividad relativa.",
+          chart1Text2:
+            "Esto sugiere que Bellabeat podría sincronizar campañas, recordatorios o retos de actividad alrededor de la mitad de semana y del tramo final de la semana, donde la propensión al uso ya es mayor.",
+          chart2Index: "Gráfico 02",
+          chart2Title: "Tendencias mensuales de uso",
+          chart2Text1:
+            "Entre marzo y abril se observa una caída ligera en calorías promedio, pero un crecimiento claro en distancia recorrida y pasos diarios. El patrón apunta a actividades más frecuentes o de mayor duración, aunque posiblemente de menor intensidad.",
+          chart2Text2:
+            "Desde negocio, esto abre una oportunidad para campañas estacionales: por ejemplo, activar desafíos o mensajes en primavera, cuando los usuarios parecen mostrar más disposición al movimiento.",
+
+          group2Title: "2. Patrones de comportamiento",
+          group2Copy:
+            "Estas vistas bajan desde la estacionalidad macro al comportamiento diario: qué momentos del día son más fuertes y cómo se concentra la actividad al cruzar hora y día.",
+          chart3Index: "Gráfico 03",
+          chart3Title: "Actividad por momento del día",
+          chart3Text1:
+            "Las horas de la tarde y la noche concentran la mayor actividad en pasos y calorías, mientras que las mañanas muestran niveles más bajos.",
+          chart3Text2:
+            "Este hallazgo ayuda a decidir cuándo enviar notificaciones, activar nudges o presentar funciones relacionadas con bienestar. En lugar de empujar mensajes al azar, Bellabeat puede alinearlos con los momentos de mayor receptividad.",
+          chart4Index: "Gráfico 04",
+          chart4Title: "Heatmap de actividad por día y hora",
+          chart4Text1:
+            "El heatmap profundiza el comportamiento temporal al cruzar día y hora. Permite distinguir con más precisión qué combinaciones concentran los picos y cuáles representan ventanas de baja actividad.",
+          chart4Text2:
+            "A nivel estratégico, esto mejora la planificación de intervenciones: se pueden diseñar acciones distintas para horas pico, horas valle y días con menor engagement.",
+
+          group3Title: "3. Perfilado de usuarios",
+          group3Copy:
+            "Estos gráficos ayudan a pasar del comportamiento agregado a la estrategia por usuario, mostrando tanto la forma de la distribución como la estructura de segmentos.",
+          chart5Index: "Gráfico 05",
+          chart5Title: "Distribución de actividad de usuarios",
+          chart5Text1:
+            "La distribución de actividad muestra que la mayoría de usuarios se concentra en una zona media, mientras un grupo menor presenta niveles de actividad mucho más altos.",
+          chart5Text2:
+            "Esto es importante porque revela heterogeneidad real en la base de usuarios. No conviene tratar a toda la audiencia igual: hay perfiles que necesitan activación y otros que responden mejor a reconocimiento o retos avanzados.",
+          chart6Index: "Gráfico 06",
+          chart6Title: "Segmentación de usuarios",
+          chart6Text1:
+            "La visualización de segmentos resume la base en dos grupos principales: usuarios activos e inactivos. Es una lectura sencilla, pero muy útil para decisiones de marketing y retención.",
+          chart6Text2:
+            "Con esta segmentación, Bellabeat puede plantear journeys diferentes: reactivación e incentivos para usuarios de baja actividad, y programas más retadores o de fidelización para quienes ya muestran alto compromiso.",
+
+          group4Title: "4. Relación entre actividad y bienestar",
+          group4Copy:
+            "Este último gráfico amplía el caso más allá del volumen de actividad y explora cómo fluctúan el movimiento y el sueño a lo largo del tiempo.",
+          chart7Index: "Gráfico 07",
+          chart7Title: "Pasos y sueño a lo largo del tiempo",
+          chart7Text1:
+            "Las variaciones diarias de pasos y sueño permiten explorar posibles relaciones entre actividad física y descanso. No necesariamente prueban causalidad, pero sí ayudan a identificar patrones que merecen seguimiento.",
+          chart7Text2:
+            "Para producto y engagement, este tipo de lectura puede apoyar mensajes de hábitos saludables, recomendaciones personalizadas y experiencias más centradas en bienestar integral, no solo en conteo de pasos.",
+
+          recKicker: "Recommendations",
+          recTitle: "Recomendaciones de negocio",
+          recIntro:
+            "A partir de los patrones observados, estas son las acciones de mayor impacto que emergen del caso.",
+          rec1Title: "Sincronizar campañas con el comportamiento real",
+          rec1Text:
+            "Priorizar campañas y notificaciones en momentos donde la actividad ya es alta —especialmente mitad de semana, tardes y noches— para maximizar atención y respuesta.",
+          rec2Title: "Segmentar por nivel de engagement",
+          rec2Text:
+            "Diseñar journeys diferenciados para usuarios activos e inactivos, con objetivos distintos de retención, reactivación y upsell de engagement.",
+          rec3Title: "Aprovechar el impulso estacional",
+          rec3Text:
+            "Aprovechar el aumento observado en pasos y distancia para lanzar retos o contenidos en periodos donde el usuario ya muestra una inclinación natural a moverse más.",
+          rec4Title: "Expandir la narrativa de bienestar",
+          rec4Text:
+            "Complementar la narrativa de actividad con insights relacionados con descanso y hábitos, para presentar una propuesta más completa de salud y bienestar.",
+
+          footerCopy:
+            "Esta página resume el caso como pieza de portafolio. El repositorio contiene documentación complementaria sobre fuentes, limpieza de datos, visualizaciones y hallazgos.",
+          footerRepoButton: "Abrir repositorio",
+          footerBackButton: "Volver a proyectos",
+          themeDark: "🌙 Dark",
+          themeLight: "☀️ Light"
+        },
+
+        en: {
+          backToPortfolio: "← Back to portfolio",
+          heroBadge: "Analytics case study",
+          heroTitle: "Bellabeat Smart Device Usage Analysis",
+          heroSummary:
+            "Smart device usage behavior analysis to identify temporal patterns, user segmentation, and data-driven marketing opportunities.",
+          metaLabelRole: "Focus",
+          metaValueRole: "Data analytics case study",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion:
+            "How can Bellabeat use device usage behavior to improve engagement and marketing strategy?",
+          metaLabelOutput: "Output",
+          metaValueOutput:
+            "Executive dashboard, behavior patterns, segmentation insights, and recommendations",
+          repoButton: "View repository",
+          contactButton: "Contact",
+
+          overviewKicker: "Overview",
+          overviewTitle: "Project framing",
+          overviewIntro:
+            "This project focuses on turning activity data into actionable business signals: when users are most engaged, how behavior changes over time, and which segments require differentiated strategies.",
+          overviewCard1Title: "Objective",
+          overviewCard1Body:
+            "Detect meaningful usage patterns to guide campaigns, messaging, and engagement experiences.",
+          overviewCard2Title: "Workflow",
+          overviewCard2Body: [
+            "Data cleaning and preparation",
+            "Exploratory analysis",
+            "Behavioral visualization in Power BI",
+            "Business recommendation synthesis"
+          ],
+          overviewCard3Title: "What this page shows",
+          overviewCard3Body:
+            "The seven main charts from the project, reorganized into a cleaner portfolio narrative.",
+
+          visualsKicker: "Visual analysis",
+          visualsTitle: "Visualizations & key findings",
+          visualsIntro:
+            "The analytical story is organized into four layers: temporal trends, behavioral patterns, user profiling, and the relationship between activity and rest.",
+
+          group1Title: "1. Trend & seasonality",
+          group1Copy:
+            "These charts establish the macro-level behavior: when usage rises across the week and how activity shifts from one month to another.",
+          chart1Index: "Chart 01",
+          chart1Title: "Weekly seasonality in device usage",
+          chart1Text1:
+            "Device usage peaks on Wednesdays, with strong activity also across Monday, Thursday, Friday, and Saturday. Tuesday stands out as the weakest day in relative usage.",
+          chart1Text2:
+            "This suggests Bellabeat could time campaigns, reminders, or activity challenges around mid-week and late-week windows, where user propensity is already stronger.",
+          chart2Index: "Chart 02",
+          chart2Title: "Monthly usage trends",
+          chart2Text1:
+            "From March to April, average calories show a slight decline, while distance covered and daily steps rise clearly. The pattern points to more frequent or longer activity, possibly at lower intensity.",
+          chart2Text2:
+            "From a business perspective, this creates room for seasonal campaigns, such as spring challenges or messaging aligned with naturally higher movement levels.",
+
+          group2Title: "2. Behavioral patterns",
+          group2Copy:
+            "These views move from macro seasonality into daily behavior: what times of day are strongest and how activity concentrates across hour and weekday combinations.",
+          chart3Index: "Chart 03",
+          chart3Title: "Activity by time of day",
+          chart3Text1:
+            "Afternoon and night hours account for the strongest activity in both steps and calories, while mornings appear less active.",
+          chart3Text2:
+            "This insight helps determine when to send notifications, trigger nudges, or surface wellness features. Instead of pushing messages randomly, Bellabeat can align them with moments of higher receptivity.",
+          chart4Index: "Chart 04",
+          chart4Title: "Activity heatmap by day and time",
+          chart4Text1:
+            "The heatmap deepens the time-based analysis by crossing day of week with hour of day. It makes it easier to identify specific peaks and lower-engagement windows.",
+          chart4Text2:
+            "Strategically, this supports more precise intervention planning, with different actions for peak hours, quiet hours, and lower-engagement days.",
+
+          group3Title: "3. User profiling",
+          group3Copy:
+            "These charts help move from aggregate behavior to user-level strategy by showing both distribution shape and segment structure.",
+          chart5Index: "Chart 05",
+          chart5Title: "User activity distribution",
+          chart5Text1:
+            "The activity distribution shows that most users cluster in a moderate range, while a smaller subset reaches much higher activity levels.",
+          chart5Text2:
+            "This matters because it reveals real heterogeneity in the user base. Bellabeat should not treat the full audience the same way: some users need activation, while others respond better to recognition or advanced challenges.",
+          chart6Index: "Chart 06",
+          chart6Title: "User segmentation",
+          chart6Text1:
+            "The segment view summarizes the user base into two main groups: active and inactive users. It is a simple chart, but highly useful for retention and marketing decisions.",
+          chart6Text2:
+            "With this segmentation, Bellabeat can design different journeys: reactivation and incentives for lower-activity users, and stronger loyalty or challenge-based experiences for highly engaged users.",
+
+          group4Title: "4. Activity & wellness relationship",
+          group4Copy:
+            "This final chart expands the case beyond pure activity volume and explores how movement and sleep fluctuate over time.",
+          chart7Index: "Chart 07",
+          chart7Title: "Steps and sleep over time",
+          chart7Text1:
+            "Daily variation in steps and sleep makes it possible to explore potential relationships between physical activity and rest. It does not necessarily prove causality, but it does surface patterns worth monitoring.",
+          chart7Text2:
+            "For product and engagement strategy, this type of view can support healthier-habit messaging, personalized recommendations, and a broader wellness value proposition beyond step counting alone.",
+
+          recKicker: "Recommendations",
+          recTitle: "Business recommendations",
+          recIntro:
+            "Based on the observed patterns, these are the highest-impact actions that emerge from the case.",
+          rec1Title: "Time campaigns to real behavior",
+          rec1Text:
+            "Prioritize campaigns and notifications during already-strong activity windows — especially mid-week, afternoons, and evenings — to maximize attention and response.",
+          rec2Title: "Segment by engagement level",
+          rec2Text:
+            "Design differentiated journeys for active and inactive users, with distinct goals for retention, reactivation, and engagement growth.",
+          rec3Title: "Use seasonal momentum",
+          rec3Text:
+            "Leverage the observed increase in steps and distance to launch challenges or content during periods when users already show a natural tendency to move more.",
+          rec4Title: "Expand wellness messaging",
+          rec4Text:
+            "Complement the activity narrative with rest- and habit-related insights to support a broader, more holistic wellness positioning.",
+
+          footerCopy:
+            "This page summarizes the case as a portfolio asset. The repository contains additional documentation on sources, data cleaning, visualizations, and findings.",
+          footerRepoButton: "Open repository",
+          footerBackButton: "Back to projects",
+          themeDark: "🌙 Dark",
+          themeLight: "☀️ Light"
+        }
+      };
+
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (themeIndicator) {
+          const activeLang = localStorage.getItem("language") || "es";
+          themeIndicator.textContent =
+            savedTheme === "dark"
+              ? translations[activeLang].themeDark
+              : translations[activeLang].themeLight;
+        }
       }
-      try { localStorage.setItem('theme', theme); } catch (e) {}
-    }
 
-    const copy = {
-      es: {
-        backLink: '← Volver a proyectos',
-        projectBadge: 'Caso de estudio',
-        projectTitle: 'Bellabeat Smart Device Usage Analysis',
-        projectSubtitle: 'Caso de analítica enfocado en patrones de uso, segmentación de usuarios y oportunidades de marketing basadas en datos de dispositivos inteligentes.',
-        metaRoleLabel: 'Rol',
-        metaRoleValue: 'Data Analyst',
-        metaToolsLabel: 'Herramientas',
-        metaToolsValue: 'SQL, Power BI, Data Cleaning, Markdown',
-        metaTypeLabel: 'Tipo',
-        metaTypeValue: 'Caso de estudio de analítica',
-        metaRepoLabel: 'Repositorio',
-        metaRepoLink: 'Ver en GitHub',
-        problemTitle: 'Problema de negocio',
-        problemText: 'Bellabeat necesitaba entender cómo usan sus dispositivos los consumidores para traducir esos patrones en decisiones de marketing, engagement y posicionamiento de producto. El objetivo fue analizar datos de uso de dispositivos inteligentes no Bellabeat para detectar tendencias aplicables a su estrategia.',
-        processTitle: 'Proceso',
-        findingsTitle: 'Hallazgos clave',
-        recommendationsTitle: 'Recomendaciones',
-        evidenceTitle: 'Evidencia visual',
-        repoButton: 'Ver repositorio',
-        backButton: 'Volver al portafolio',
-        processList: [
-          'Revisión del dataset y validación de tablas relevantes.',
-          'Limpieza y preparación de datos para análisis comparables.',
-          'Exploración de patrones semanales, mensuales y por franja horaria.',
-          'Segmentación de usuarios por nivel de actividad.',
-          'Construcción de visualizaciones en Power BI para comunicar hallazgos.'
-        ],
-        findingsList: [
-          '<strong>El engagement sube a mitad de semana y fines de semana</strong>, con especial fuerza en miércoles, lunes, viernes y sábados.',
-          '<strong>La actividad aumenta de marzo a abril</strong>, lo que abre una oportunidad para campañas estacionales.',
-          '<strong>La tarde y la noche concentran la mayor actividad</strong>, lo que ayuda a definir mejores ventanas para notificaciones y mensajes.',
-          '<strong>Existen cohortes activas e inactivas</strong>, útiles para campañas de retención y reactivación más personalizadas.'
-        ],
-        recommendationsList: [
-          'Lanzar campañas y recordatorios en ventanas de alta actividad.',
-          'Diseñar activaciones estacionales alrededor de momentos de mayor movimiento.',
-          'Separar estrategias para usuarios activos y usuarios con riesgo de abandono.',
-          'Aplicar estos insights a productos wellness como Bellabeat Leaf.'
-        ]
-      },
-      en: {
-        backLink: '← Back to projects',
-        projectBadge: 'Case Study',
-        projectTitle: 'Bellabeat Smart Device Usage Analysis',
-        projectSubtitle: 'Analytics case study focused on usage patterns, user segmentation, and data-driven marketing opportunities for smart-device behavior.',
-        metaRoleLabel: 'Role',
-        metaRoleValue: 'Data Analyst',
-        metaToolsLabel: 'Tools',
-        metaToolsValue: 'SQL, Power BI, Data Cleaning, Markdown',
-        metaTypeLabel: 'Type',
-        metaTypeValue: 'Analytics case study',
-        metaRepoLabel: 'Repository',
-        metaRepoLink: 'View on GitHub',
-        problemTitle: 'Business problem',
-        problemText: 'Bellabeat needed to understand how consumers use smart devices in order to translate those patterns into marketing, engagement, and product-positioning decisions. The goal was to analyze non-Bellabeat smart-device usage data to identify trends applicable to its strategy.',
-        processTitle: 'Process',
-        findingsTitle: 'Key findings',
-        recommendationsTitle: 'Recommendations',
-        evidenceTitle: 'Visual evidence',
-        repoButton: 'View repository',
-        backButton: 'Back to portfolio',
-        processList: [
-          'Reviewed the dataset and validated the relevant tables.',
-          'Cleaned and prepared the data for comparable analysis.',
-          'Explored weekly, monthly, and time-of-day behavior patterns.',
-          'Segmented users by activity level.',
-          'Built Power BI visuals to communicate findings.'
-        ],
-        findingsList: [
-          '<strong>Engagement increases midweek and on weekends</strong>, especially on Wednesdays, Mondays, Fridays, and Saturdays.',
-          '<strong>Activity rises from March to April</strong>, opening a seasonal campaign opportunity.',
-          '<strong>Afternoon and evening concentrate the highest activity</strong>, which helps define better windows for notifications and messaging.',
-          '<strong>There are active and inactive user cohorts</strong>, useful for more personalized retention and reactivation campaigns.'
-        ],
-        recommendationsList: [
-          'Launch campaigns and reminders during high-activity windows.',
-          'Design seasonal activations around periods of increased movement.',
-          'Separate strategies for active users and users at risk of churn.',
-          'Apply these insights to wellness products such as Bellabeat Leaf.'
-        ]
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
       }
-    };
 
-    function renderList(elementId, items) {
-      const target = document.getElementById(elementId);
-      if (!target) return;
-      target.innerHTML = items.map(item => '<li>' + item + '</li>').join('');
-    }
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(item => `<li>${item}</li>`).join("");
+      }
 
-    function setLanguage(lang) {
-      const t = copy[lang];
-      Object.keys(t).forEach(key => {
-        if (Array.isArray(t[key])) return;
-        const el = document.getElementById(key);
-        if (el) el.innerHTML = t[key];
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations.es;
+        document.documentElement.lang = lang;
+        setText("langIndicator", lang.toUpperCase());
+
+        Object.keys(t).forEach((key) => {
+          if (Array.isArray(t[key])) return;
+          setText(key, t[key]);
+        });
+
+        setList("overviewCard2Body", t.overviewCard2Body);
+
+        const theme = localStorage.getItem("theme") || "light";
+        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const lang = localStorage.getItem("language") || "es";
+        applySavedTheme();
+        applyLanguage(lang);
       });
-
-      renderList('processList', t.processList);
-      renderList('findingsList', t.findingsList);
-      renderList('recommendationsList', t.recommendationsList);
-
-      document.documentElement.lang = lang;
-      projectLangToggle.textContent = lang.toUpperCase();
-
-      try { localStorage.setItem('language', lang); } catch (e) {}
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      const savedLang = localStorage.getItem('language') || 'es';
-
-      applyTheme(savedTheme);
-      setLanguage(savedLang);
-
-      projectThemeToggle.addEventListener('click', function () {
-        const isDark = document.documentElement.classList.contains('dark');
-        applyTheme(isDark ? 'light' : 'dark');
-      });
-
-      projectLangToggle.addEventListener('click', function () {
-        const nextLang = document.documentElement.lang === 'en' ? 'es' : 'en';
-        setLanguage(nextLang);
-      });
-    });
+    })();
   </script>
 </body>
 </html>
