@@ -91,6 +91,19 @@ const projects = [
     metrics_en: ['User segmentation', 'Usage trends', 'Business insights'],
     detailUrl: 'projects/bellabeat-smart-device-usage-analysis.html',
     repoUrl: 'https://github.com/angra8410/bellabeat-device-usage-analysis'
+  },
+  {
+    title: 'VitaPlus Colombia - Plataforma de datos sinteticos de salud en Microsoft Fabric',
+    title_en: 'VitaPlus Colombia - Synthetic Healthcare Data Platform in Microsoft Fabric',
+    category: 'Ingenieria de datos',
+    category_en: 'Data Engineering',
+    excerpt: 'Proyecto de practica en Microsoft Fabric con datos sinteticos de salud para modelado SQL, Lakehouse, Warehouse, modelo semantico y reporte Power BI.',
+    excerpt_en: 'Microsoft Fabric practice project with synthetic healthcare data for SQL modeling, Lakehouse, Warehouse, semantic model, and Power BI reporting.',
+    tech: ['Microsoft Fabric', 'SQL', 'Lakehouse', 'Warehouse', 'Power BI', 'Star Schema'],
+    metrics: ['70,000 clientes ficticios', '100,000 ventas sinteticas', '6 anos de historial'],
+    metrics_en: ['70,000 fictitious customers', '100,000 synthetic sales', '6 years of history'],
+    detailUrl: 'projects/vitaplus_colombia.html',
+    repoUrl: '#'
   }
 ];
 

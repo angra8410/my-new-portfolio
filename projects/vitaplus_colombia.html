@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VitaPlus Colombia Microsoft Fabric synthetic healthcare data platform case study" />
+  <title>VitaPlus Colombia - Microsoft Fabric Data Platform</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --case-bg: var(--bg-primary, #f8fafc);
+      --case-surface: var(--bg-secondary, #ffffff);
+      --case-surface-alt: var(--bg-tertiary, #f1f5f9);
+      --case-text: var(--text-primary, #0f172a);
+      --case-text-soft: var(--text-secondary, #475569);
+      --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
+      --case-accent: var(--accent-color, #22d3ee);
+      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --case-radius: 24px;
+      --case-max: 1180px;
+    }
+
+    html.dark {
+      --case-bg: #0b1220;
+      --case-surface: #111a2b;
+      --case-surface-alt: #162135;
+      --case-text: #e5eef8;
+      --case-text-soft: #a8b7cc;
+      --case-border: rgba(148, 163, 184, 0.18);
+      --case-accent: #67e8f9;
+      --case-accent-strong: #22d3ee;
+      --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%),
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%),
+        var(--case-bg);
+      color: var(--case-text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .case-page {
+      min-height: 100vh;
+    }
+
+    .case-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--case-bg) 86%, transparent);
+      border-bottom: 1px solid var(--case-border);
+    }
+
+    .case-topbar-inner {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .case-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--case-text);
+      opacity: 0.94;
+    }
+
+    .case-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .case-theme-pill,
+    .case-lang-pill {
+      border: 1px solid var(--case-border);
+      background: var(--case-surface);
+      color: var(--case-text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: var(--case-shadow);
+    }
+
+    .case-hero {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 56px 20px 28px;
+    }
+
+    .case-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: color-mix(in srgb, var(--case-accent) 18%, transparent);
+      color: var(--case-accent-strong);
+      border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .case-hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .case-hero-main,
+    .case-hero-side {
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+    }
+
+    .case-hero-main {
+      padding: 34px;
+    }
+
+    .case-title {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+    }
+
+    .case-summary {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--case-text-soft);
+      max-width: 62ch;
+    }
+
+    .case-key-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .case-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      color: var(--case-text);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .case-hero-side {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .meta-card,
+    .overview-card,
+    .artifact-card,
+    .stat-card,
+    .recommendation-card,
+    .insight-card,
+    .flow-step {
+      border: 1px solid var(--case-border);
+      background: var(--case-surface-alt);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--case-text-soft);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--case-text);
+      font-weight: 600;
+    }
+
+    .case-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .case-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+    }
+
+    .case-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .case-btn-primary {
+      background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent));
+      color: #06202b;
+    }
+
+    .case-btn-secondary {
+      background: transparent;
+      border-color: var(--case-border);
+      color: var(--case-text);
+    }
+
+    .case-content {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 10px 20px 72px;
+    }
+
+    .content-section {
+      margin-top: 26px;
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+      padding: 30px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--case-accent-strong);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-intro,
+    .overview-card p,
+    .overview-card li,
+    .artifact-card p,
+    .stat-card p,
+    .recommendation-card p,
+    .insight-card p,
+    .flow-step p,
+    .case-footer-copy {
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .section-intro {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .overview-grid,
+    .artifact-grid,
+    .stat-grid,
+    .recommendations-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .artifact-grid,
+    .stat-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .flow-chain {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .overview-card h3,
+    .artifact-card h3,
+    .stat-card h3,
+    .recommendation-card h3,
+    .insight-card h3,
+    .flow-step h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .overview-card p,
+    .artifact-card p,
+    .stat-card p,
+    .recommendation-card p,
+    .insight-card p,
+    .flow-step p {
+      margin: 0;
+    }
+
+    .overview-card ul,
+    .recommendation-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .artifact-card code,
+    .flow-step code {
+      color: var(--case-text);
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    .stat-value {
+      margin: 0 0 4px;
+      color: var(--case-text);
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .workflow-list {
+      margin: 22px 0 0;
+      padding-left: 20px;
+      color: var(--case-text-soft);
+      line-height: 1.85;
+    }
+
+    .code-block {
+      margin: 18px 0 0;
+      padding: 18px;
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid var(--case-border);
+      background: #07111f;
+      color: #d8f3ff;
+      font: 0.92rem/1.7 Consolas, "Courier New", monospace;
+    }
+
+    .insight-card {
+      margin-top: 22px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--case-accent) 20%, transparent), transparent),
+        var(--case-surface-alt);
+    }
+
+    .insight-metric {
+      margin: 10px 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      color: var(--case-text);
+      font-weight: 800;
+    }
+
+    .case-footer {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 0 20px 72px;
+    }
+
+    .case-footer-box {
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+      padding: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .case-footer-copy {
+      margin: 0;
+      max-width: 58ch;
+    }
+
+    @media (max-width: 960px) {
+      .case-hero-grid,
+      .overview-grid,
+      .artifact-grid,
+      .stat-grid,
+      .recommendations-list,
+      .flow-chain {
+        grid-template-columns: 1fr;
+      }
+
+      .case-hero-main,
+      .case-hero-side,
+      .content-section,
+      .case-footer-box {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .case-topbar-inner,
+      .case-hero,
+      .case-content,
+      .case-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .case-title {
+        font-size: 2rem;
+      }
+
+      .case-summary {
+        font-size: 1rem;
+      }
+
+      .case-actions,
+      .case-top-actions {
+        width: 100%;
+      }
+
+      .case-btn,
+      .case-theme-pill,
+      .case-lang-pill {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="case-page">
+    <header class="case-topbar">
+      <div class="case-topbar-inner">
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">Volver al portafolio</a>
+
+        <div class="case-top-actions">
+          <div class="case-lang-pill" id="langIndicator">ES</div>
+          <div class="case-theme-pill" id="themeIndicator">Dark</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-hero">
+        <div class="case-badge" id="heroBadge">Proyecto de ingeniería de datos</div>
+
+        <div class="case-hero-grid">
+          <div class="case-hero-main">
+            <h1 class="case-title" id="heroTitle">VitaPlus Colombia - Plataforma de datos sintéticos de salud en Microsoft Fabric</h1>
+            <p class="case-summary" id="heroSummary">
+              Caso de portafolio para una empresa ficticia de salud, construido con datos sintéticos para practicar SQL, modelado dimensional, Lakehouse, Warehouse, Semantic Model y reportes en Power BI dentro de Microsoft Fabric.
+            </p>
+
+            <div class="case-key-metrics">
+              <span class="case-chip" id="chip1">Microsoft Fabric</span>
+              <span class="case-chip" id="chip2">SQL</span>
+              <span class="case-chip" id="chip3">Lakehouse</span>
+              <span class="case-chip" id="chip4">Warehouse</span>
+              <span class="case-chip" id="chip5">Power BI</span>
+              <span class="case-chip" id="chip6">Synthetic Data</span>
+              <span class="case-chip" id="chip7">Star Schema</span>
+            </div>
+          </div>
+
+          <aside class="case-hero-side">
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelRole">Enfoque</span>
+                <p class="meta-value" id="metaValueRole">Proyecto de práctica de ingeniería de datos y analítica</p>
+              </div>
+
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
+                <p class="meta-value" id="metaValueQuestion">¿Cómo puede una empresa sintética de salud usar datos de ventas, clientes y productos para practicar modelado analítico en Fabric?</p>
+              </div>
+
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelOutput">Entregable</span>
+                <p class="meta-value" id="metaValueOutput">Workspace de Fabric, Lakehouse, Warehouse, SQL endpoint, modelo semántico, reporte Power BI y dataset de práctica SQL</p>
+              </div>
+            </div>
+
+            <div class="case-actions">
+              <!-- TODO: Replace # with the VitaPlus Colombia repository URL -->
+              <a class="case-btn case-btn-primary" href="#" id="repoButton">Ver repositorio</a>
+              <a class="case-btn case-btn-secondary" href="../index.html#contact" id="contactButton">Contactar</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="case-content">
+        <section class="content-section">
+          <span class="section-kicker" id="overviewKicker">Overview</span>
+          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
+          <p class="section-intro" id="overviewIntro">
+            VitaPlus Colombia simula un negocio retail de salud en Colombia con clientes, productos, ventas y calendario. El objetivo fue practicar el flujo completo desde archivos CSV/TXT hasta análisis en Fabric y Power BI.
+          </p>
+
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="overviewCard1Title">Contexto</h3>
+              <p id="overviewCard1Body">El proyecto usa una empresa ficticia y datos completamente sintéticos para evitar información personal, pacientes reales o reclamaciones médicas reales.</p>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="overviewCard2Title">Objetivos técnicos</h3>
+              <ul id="overviewCard2Body">
+                <li>Creación de tablas SQL</li>
+                <li>Carga de archivos CSV/TXT</li>
+                <li>Ingesta en Lakehouse y Warehouse</li>
+                <li>Modelado de hechos y dimensiones</li>
+              </ul>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="overviewCard3Title">Flujo analítico</h3>
+              <p id="overviewCard3Body">El caso conecta datos sintéticos con Delta tables, SQL Analytics Endpoint, Semantic Model y un reporte Power BI usando una lógica estilo DirectLake cuando es posible.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="architectureKicker">Arquitectura</span>
+          <h2 class="section-title" id="architectureTitle">Pipeline de datos en Microsoft Fabric</h2>
+          <p class="section-intro" id="architectureIntro">
+            La arquitectura del proyecto organiza archivos sintéticos en una ruta de ingesta y análisis: archivos de origen, Lakehouse, Delta tables, SQL Analytics Endpoint, Warehouse, modelo semántico y reporte Power BI.
+          </p>
+
+          <div class="flow-chain">
+            <article class="flow-step"><h3 id="flowStep1Title">1. Archivos</h3><p id="flowStep1Text">CSV/TXT sintéticos generados para práctica.</p></article>
+            <article class="flow-step"><h3 id="flowStep2Title">2. Lakehouse</h3><p><code>lh_vitaplus_colombia</code></p></article>
+            <article class="flow-step"><h3 id="flowStep3Title">3. Delta</h3><p id="flowStep3Text">Tablas creadas automáticamente con Load to Tables.</p></article>
+            <article class="flow-step"><h3 id="flowStep4Title">4. SQL Endpoint</h3><p><code>lh_vitaplus_colombia</code></p></article>
+            <article class="flow-step"><h3 id="flowStep5Title">5. Warehouse</h3><p><code>wh_vitaplus_colombia</code></p></article>
+            <article class="flow-step"><h3 id="flowStep6Title">6. Power BI</h3><p><code>vitaplus_colombia</code></p></article>
+          </div>
+
+          <div class="artifact-grid">
+            <article class="artifact-card"><h3 id="artifactWorkspaceLabel">Workspace</h3><p><code>ws_vitaplus_colombia</code></p></article>
+            <article class="artifact-card"><h3 id="artifactPurposeLabel">Propósito</h3><p id="artifactPurposeValue">This workspace is to practice everything in Fabric.</p></article>
+            <article class="artifact-card"><h3 id="artifactLakehouseLabel">Lakehouse</h3><p><code>lh_vitaplus_colombia</code></p></article>
+            <article class="artifact-card"><h3 id="artifactEndpointLabel">SQL Analytics Endpoint</h3><p><code>lh_vitaplus_colombia</code></p></article>
+            <article class="artifact-card"><h3 id="artifactSemanticLabel">Semantic Model</h3><p><code>sm_vitaplus_colombia</code></p></article>
+            <article class="artifact-card"><h3 id="artifactReportLabel">Report</h3><p><code>vitaplus_colombia</code></p></article>
+            <article class="artifact-card"><h3 id="artifactModelLabel">Modelo semántico Power BI</h3><p><code>vitaplus_colombia</code></p></article>
+            <article class="artifact-card"><h3 id="artifactCopyJobLabel">Copy job</h3><p><code>CopyJob_1</code></p></article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="datasetKicker">Dataset</span>
+          <h2 class="section-title" id="datasetTitle">Datos sintéticos para práctica analítica</h2>
+          <p class="section-intro" id="datasetIntro">
+            El dataset fue diseñado para simular operaciones comerciales de una empresa de salud sin usar datos reales de personas, pacientes o transacciones clínicas.
+          </p>
+
+          <div class="stat-grid">
+            <article class="stat-card"><div class="stat-value">70,000</div><p id="statCustomers">Clientes ficticios</p></article>
+            <article class="stat-card"><div class="stat-value">600</div><p id="statProducts">Productos ficticios</p></article>
+            <article class="stat-card"><div class="stat-value">100,000</div><p id="statSales">Transacciones de venta</p></article>
+            <article class="stat-card"><div class="stat-value">6</div><p id="statYears">Años de historial</p></article>
+          </div>
+
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="datasetFilesTitle">Formato</h3>
+              <p id="datasetFilesBody">Archivos CSV/TXT creados para cargar datos en SQL y Microsoft Fabric.</p>
+            </article>
+            <article class="overview-card">
+              <h3 id="datasetTablesTitle">Tablas sugeridas</h3>
+              <ul id="datasetTablesBody">
+                <li>clientes</li>
+                <li>productos</li>
+                <li>ventas</li>
+                <li>detalle_ventas</li>
+                <li>sedes</li>
+                <li>calendario</li>
+              </ul>
+            </article>
+            <article class="overview-card">
+              <h3 id="datasetPrivacyTitle">Privacidad</h3>
+              <p id="datasetPrivacyBody">Todos los registros son sintéticos y se usan solo para aprendizaje, pruebas y demostración de portafolio.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="workflowKicker">Workflow</span>
+          <h2 class="section-title" id="workflowTitle">Proceso de construcción</h2>
+          <p class="section-intro" id="workflowIntro">
+            El flujo combina diseño del dataset, generación de archivos, carga en Fabric, modelado semántico y exploración visual en Power BI.
+          </p>
+
+          <ol class="workflow-list" id="workflowList">
+            <li>Diseño prompt-driven del dataset sintético.</li>
+            <li>Generación de archivos CSV/TXT.</li>
+            <li>Upload al Fabric Lakehouse.</li>
+            <li>Load to Tables para crear Delta tables.</li>
+            <li>Consulta mediante SQL Analytics Endpoint.</li>
+            <li>Ingesta opcional al Warehouse.</li>
+            <li>Creación del modelo semántico.</li>
+            <li>Construcción del reporte Power BI.</li>
+            <li>Exploración de insights de negocio.</li>
+          </ol>
+
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="lakehouseTitle">Carga en Lakehouse</h3>
+              <ul id="lakehouseSteps">
+                <li>Abrir el panel del Lakehouse.</li>
+                <li>Subir CSVs en Files/vitaplus/.</li>
+                <li>Seleccionar cada archivo.</li>
+                <li>Usar Load to Tables.</li>
+                <li>Fabric crea tablas Delta automáticamente.</li>
+                <li>Acceder por SQL Analytics Endpoint o notebooks PySpark.</li>
+              </ul>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="warehouseTitle">Carga en Warehouse</h3>
+              <p id="warehouseIntro">El Warehouse puede alimentarse con COPY INTO o con el wizard de ingesta de Fabric.</p>
+              <pre class="code-block"><code>COPY INTO dbo.clientes
+FROM 'https://tu_storage.dfs.core.windows.net/vitaplus/clientes.csv'
+WITH (FILE_TYPE='CSV', FIRSTROW=2);</code></pre>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="starTitle">Modelo estrella en Power BI</h3>
+              <ul id="starSteps">
+                <li>Conectar al SQL Endpoint.</li>
+                <li>Marcar ventas como tabla de hechos.</li>
+                <li>Usar clientes, productos, calendario y sedes como dimensiones.</li>
+                <li>Configurar relaciones.</li>
+                <li>Usar modo DirectLake cuando sea posible.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="insightKicker">Key insight</span>
+          <h2 class="section-title" id="insightTitle">Análisis por ciudad</h2>
+          <p class="section-intro" id="insightBody">
+            El reporte permite practicar análisis comercial por ubicación, agregando ventas por ciudad y comparando desempeño territorial.
+          </p>
+          <article class="insight-card">
+            <h3 id="insightCardTitle">Insight de ejemplo</h3>
+            <div class="insight-metric" id="insightMetric">Pereira: $12,942,969,876.88</div>
+            <p id="insightNote">Pereira alcanzó ventas totales de $12,942,969,876.88. Este tipo de lectura ayuda a practicar reporting ejecutivo, análisis city-level y validación de métricas agregadas.</p>
+          </article>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="skillsKicker">Skills</span>
+          <h2 class="section-title" id="skillsTitle">Habilidades demostradas</h2>
+          <p class="section-intro" id="skillsIntro">
+            El caso cubre competencias de ingeniería de datos, modelado, analítica y storytelling para un flujo moderno en Microsoft Fabric.
+          </p>
+
+          <div class="recommendations-list">
+            <article class="recommendation-card"><h3>Data engineering</h3><p id="skill1">Diseño de carga desde archivos hacia Lakehouse y Warehouse.</p></article>
+            <article class="recommendation-card"><h3>Synthetic data generation</h3><p id="skill2">Creación de datos ficticios seguros para práctica y demostración.</p></article>
+            <article class="recommendation-card"><h3>SQL modeling</h3><p id="skill3">Estructura de tablas, consultas y preparación para análisis.</p></article>
+            <article class="recommendation-card"><h3>Star schema thinking</h3><p id="skill4">Separación entre hechos, dimensiones, calendario y ubicaciones.</p></article>
+            <article class="recommendation-card"><h3>Fabric Lakehouse</h3><p id="skill5">Uso de archivos, Delta tables y SQL Analytics Endpoint.</p></article>
+            <article class="recommendation-card"><h3>Fabric Warehouse</h3><p id="skill6">Práctica con COPY INTO e ingesta estructurada.</p></article>
+            <article class="recommendation-card"><h3>Semantic modeling</h3><p id="skill7">Preparación del modelo para reporting y métricas reutilizables.</p></article>
+            <article class="recommendation-card"><h3>Power BI reporting</h3><p id="skill8">Exploración de insights y narrativa visual de negocio.</p></article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="recKicker">Recommendations</span>
+          <h2 class="section-title" id="recTitle">Siguientes pasos</h2>
+          <p class="section-intro" id="recIntro">
+            Estas mejoras convertirían el ejercicio en una solución de práctica más robusta y mejor documentada.
+          </p>
+
+          <div class="recommendations-list">
+            <article class="recommendation-card"><h3 id="rec1Title">Validación</h3><p id="rec1Text">Agregar consultas de validación para totales, duplicados y llaves foráneas.</p></article>
+            <article class="recommendation-card"><h3 id="rec2Title">Modelo estrella formal</h3><p id="rec2Text">Documentar claramente tabla de hechos, dimensiones, cardinalidades y granularidad.</p></article>
+            <article class="recommendation-card"><h3 id="rec3Title">Medidas DAX</h3><p id="rec3Text">Crear medidas para revenue, margen, transacciones y segmentación de clientes.</p></article>
+            <article class="recommendation-card"><h3 id="rec4Title">Comparación de patrones</h3><p id="rec4Text">Comparar consultas en Lakehouse vs Warehouse y medir diferencias de uso.</p></article>
+            <article class="recommendation-card"><h3 id="rec5Title">Automatización</h3><p id="rec5Text">Agregar refresh incremental o automatización con pipelines.</p></article>
+            <article class="recommendation-card"><h3 id="rec6Title">Documentación</h3><p id="rec6Text">Documentar el proceso de ingesta completo dentro del repositorio.</p></article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">
+          Esta página resume el caso VitaPlus Colombia como pieza de portafolio. El proyecto usa solamente datos sintéticos y está orientado a aprendizaje, pruebas y demostración técnica.
+        </p>
+
+        <div class="case-actions">
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const translations = {
+        es: {
+          backToPortfolio: "Volver al portafolio",
+          heroBadge: "Proyecto de ingeniería de datos",
+          heroTitle: "VitaPlus Colombia - Plataforma de datos sintéticos de salud en Microsoft Fabric",
+          heroSummary:
+            "Caso de portafolio para una empresa ficticia de salud, construido con datos sintéticos para practicar SQL, modelado dimensional, Lakehouse, Warehouse, Semantic Model y reportes en Power BI dentro de Microsoft Fabric.",
+          metaLabelRole: "Enfoque",
+          metaValueRole: "Proyecto de práctica de ingeniería de datos y analítica",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion:
+            "¿Cómo puede una empresa sintética de salud usar datos de ventas, clientes y productos para practicar modelado analítico en Fabric?",
+          metaLabelOutput: "Entregable",
+          metaValueOutput:
+            "Workspace de Fabric, Lakehouse, Warehouse, SQL endpoint, modelo semántico, reporte Power BI y dataset de práctica SQL",
+          repoButton: "Ver repositorio",
+          contactButton: "Contactar",
+          overviewKicker: "Overview",
+          overviewTitle: "Marco del proyecto",
+          overviewIntro:
+            "VitaPlus Colombia simula un negocio retail de salud en Colombia con clientes, productos, ventas y calendario. El objetivo fue practicar el flujo completo desde archivos CSV/TXT hasta análisis en Fabric y Power BI.",
+          overviewCard1Title: "Contexto",
+          overviewCard1Body:
+            "El proyecto usa una empresa ficticia y datos completamente sintéticos para evitar información personal, pacientes reales o reclamaciones médicas reales.",
+          overviewCard2Title: "Objetivos técnicos",
+          overviewCard2Body: [
+            "Creación de tablas SQL",
+            "Carga de archivos CSV/TXT",
+            "Ingesta en Lakehouse y Warehouse",
+            "Modelado de hechos y dimensiones",
+            "Modelado semántico para Power BI",
+            "Flujo analítico estilo DirectLake"
+          ],
+          overviewCard3Title: "Flujo analítico",
+          overviewCard3Body:
+            "El caso conecta datos sintéticos con Delta tables, SQL Analytics Endpoint, Semantic Model y un reporte Power BI usando una lógica estilo DirectLake cuando es posible.",
+          architectureKicker: "Arquitectura",
+          architectureTitle: "Pipeline de datos en Microsoft Fabric",
+          architectureIntro:
+            "La arquitectura del proyecto organiza archivos sintéticos en una ruta de ingesta y análisis: archivos de origen, Lakehouse, Delta tables, SQL Analytics Endpoint, Warehouse, modelo semántico y reporte Power BI.",
+          flowStep1Title: "1. Archivos",
+          flowStep1Text: "CSV/TXT sintéticos generados para práctica.",
+          flowStep3Title: "3. Delta",
+          flowStep3Text: "Tablas creadas automáticamente con Load to Tables.",
+          artifactWorkspaceLabel: "Workspace",
+          artifactPurposeLabel: "Propósito",
+          artifactPurposeValue: "This workspace is to practice everything in Fabric.",
+          artifactLakehouseLabel: "Lakehouse",
+          artifactEndpointLabel: "SQL Analytics Endpoint",
+          artifactSemanticLabel: "Semantic Model",
+          artifactReportLabel: "Report",
+          artifactModelLabel: "Modelo semántico Power BI",
+          artifactCopyJobLabel: "Copy job",
+          datasetKicker: "Dataset",
+          datasetTitle: "Datos sintéticos para práctica analítica",
+          datasetIntro:
+            "El dataset fue diseñado para simular operaciones comerciales de una empresa de salud sin usar datos reales de personas, pacientes o transacciones clínicas.",
+          statCustomers: "Clientes ficticios",
+          statProducts: "Productos ficticios",
+          statSales: "Transacciones de venta",
+          statYears: "Años de historial",
+          datasetFilesTitle: "Formato",
+          datasetFilesBody: "Archivos CSV/TXT creados para cargar datos en SQL y Microsoft Fabric.",
+          datasetTablesTitle: "Tablas sugeridas",
+          datasetTablesBody: ["clientes", "productos", "ventas", "detalle_ventas", "sedes", "calendario"],
+          datasetPrivacyTitle: "Privacidad",
+          datasetPrivacyBody:
+            "Todos los registros son sintéticos y se usan solo para aprendizaje, pruebas y demostración de portafolio.",
+          workflowKicker: "Workflow",
+          workflowTitle: "Proceso de construcción",
+          workflowIntro:
+            "El flujo combina diseño del dataset, generación de archivos, carga en Fabric, modelado semántico y exploración visual en Power BI.",
+          workflowList: [
+            "Diseño prompt-driven del dataset sintético.",
+            "Generación de archivos CSV/TXT.",
+            "Upload al Fabric Lakehouse.",
+            "Load to Tables para crear Delta tables.",
+            "Consulta mediante SQL Analytics Endpoint.",
+            "Ingesta opcional al Warehouse.",
+            "Creación del modelo semántico.",
+            "Construcción del reporte Power BI.",
+            "Exploración de insights de negocio."
+          ],
+          lakehouseTitle: "Carga en Lakehouse",
+          lakehouseSteps: [
+            "Abrir el panel del Lakehouse.",
+            "Subir CSVs en Files/vitaplus/.",
+            "Seleccionar cada archivo.",
+            "Usar Load to Tables.",
+            "Fabric crea tablas Delta automáticamente.",
+            "Acceder por SQL Analytics Endpoint o notebooks PySpark."
+          ],
+          warehouseTitle: "Carga en Warehouse",
+          warehouseIntro: "El Warehouse puede alimentarse con COPY INTO o con el wizard de ingesta de Fabric.",
+          starTitle: "Modelo estrella en Power BI",
+          starSteps: [
+            "Conectar al SQL Endpoint.",
+            "Marcar ventas como tabla de hechos.",
+            "Usar clientes, productos, calendario y sedes como dimensiones.",
+            "Configurar relaciones.",
+            "Usar modo DirectLake cuando sea posible."
+          ],
+          insightKicker: "Key insight",
+          insightTitle: "Análisis por ciudad",
+          insightBody:
+            "El reporte permite practicar análisis comercial por ubicación, agregando ventas por ciudad y comparando desempeño territorial.",
+          insightCardTitle: "Insight de ejemplo",
+          insightMetric: "Pereira: $12,942,969,876.88",
+          insightNote:
+            "Pereira alcanzó ventas totales de $12,942,969,876.88. Este tipo de lectura ayuda a practicar reporting ejecutivo, análisis city-level y validación de métricas agregadas.",
+          skillsKicker: "Skills",
+          skillsTitle: "Habilidades demostradas",
+          skillsIntro:
+            "El caso cubre competencias de ingeniería de datos, modelado, analítica y storytelling para un flujo moderno en Microsoft Fabric.",
+          skill1: "Diseño de carga desde archivos hacia Lakehouse y Warehouse.",
+          skill2: "Creación de datos ficticios seguros para práctica y demostración.",
+          skill3: "Estructura de tablas, consultas y preparación para análisis.",
+          skill4: "Separación entre hechos, dimensiones, calendario y ubicaciones.",
+          skill5: "Uso de archivos, Delta tables y SQL Analytics Endpoint.",
+          skill6: "Práctica con COPY INTO e ingesta estructurada.",
+          skill7: "Preparación del modelo para reporting y métricas reutilizables.",
+          skill8: "Exploración de insights y narrativa visual de negocio.",
+          recKicker: "Recommendations",
+          recTitle: "Siguientes pasos",
+          recIntro: "Estas mejoras convertirían el ejercicio en una solución de práctica más robusta y mejor documentada.",
+          rec1Title: "Validación",
+          rec1Text: "Agregar consultas de validación para totales, duplicados y llaves foráneas.",
+          rec2Title: "Modelo estrella formal",
+          rec2Text: "Documentar claramente tabla de hechos, dimensiones, cardinalidades y granularidad.",
+          rec3Title: "Medidas DAX",
+          rec3Text: "Crear medidas para revenue, margen, transacciones y segmentación de clientes.",
+          rec4Title: "Comparación de patrones",
+          rec4Text: "Comparar consultas en Lakehouse vs Warehouse y medir diferencias de uso.",
+          rec5Title: "Automatización",
+          rec5Text: "Agregar refresh incremental o automatización con pipelines.",
+          rec6Title: "Documentación",
+          rec6Text: "Documentar el proceso de ingesta completo dentro del repositorio.",
+          footerCopy:
+            "Esta página resume el caso VitaPlus Colombia como pieza de portafolio. El proyecto usa solamente datos sintéticos y está orientado a aprendizaje, pruebas y demostración técnica.",
+          footerBackButton: "Volver a proyectos",
+          themeDark: "Dark",
+          themeLight: "Light"
+        },
+
+        en: {
+          backToPortfolio: "Back to portfolio",
+          heroBadge: "Data engineering project",
+          heroTitle: "VitaPlus Colombia - Synthetic Healthcare Data Platform in Microsoft Fabric",
+          heroSummary:
+            "Portfolio case study for a fictional healthcare company, built with synthetic data to practice SQL, dimensional modeling, Lakehouse, Warehouse, Semantic Model, and Power BI reporting in Microsoft Fabric.",
+          metaLabelRole: "Focus",
+          metaValueRole: "Data engineering and analytics practice project",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion:
+            "How can a synthetic healthcare company use sales, customer, and product data to practice analytical modeling in Fabric?",
+          metaLabelOutput: "Output",
+          metaValueOutput:
+            "Fabric workspace, Lakehouse, Warehouse, SQL endpoint, semantic model, Power BI report, and SQL practice dataset",
+          repoButton: "View repository",
+          contactButton: "Contact",
+          overviewKicker: "Overview",
+          overviewTitle: "Project framing",
+          overviewIntro:
+            "VitaPlus Colombia simulates a healthcare retail business in Colombia with customers, products, sales, and calendar data. The goal was to practice the full workflow from CSV/TXT files to analysis in Fabric and Power BI.",
+          overviewCard1Title: "Context",
+          overviewCard1Body:
+            "The project uses a fictional company and fully synthetic data to avoid personal information, real patients, or real healthcare claims.",
+          overviewCard2Title: "Technical goals",
+          overviewCard2Body: [
+            "SQL table creation",
+            "CSV/TXT loading",
+            "Lakehouse and Warehouse ingestion",
+            "Fact and dimension modeling",
+            "Power BI semantic modeling",
+            "DirectLake-style analytical workflow"
+          ],
+          overviewCard3Title: "Analytical workflow",
+          overviewCard3Body:
+            "The case connects synthetic data with Delta tables, SQL Analytics Endpoint, Semantic Model, and a Power BI report using a DirectLake-style flow when possible.",
+          architectureKicker: "Architecture",
+          architectureTitle: "Microsoft Fabric data pipeline",
+          architectureIntro:
+            "The project architecture organizes synthetic files into an ingestion and analytics path: source files, Lakehouse, Delta tables, SQL Analytics Endpoint, Warehouse, semantic model, and Power BI report.",
+          flowStep1Title: "1. Files",
+          flowStep1Text: "Synthetic CSV/TXT files generated for practice.",
+          flowStep3Title: "3. Delta",
+          flowStep3Text: "Tables created automatically with Load to Tables.",
+          artifactWorkspaceLabel: "Workspace",
+          artifactPurposeLabel: "Purpose",
+          artifactPurposeValue: "This workspace is to practice everything in Fabric.",
+          artifactLakehouseLabel: "Lakehouse",
+          artifactEndpointLabel: "SQL Analytics Endpoint",
+          artifactSemanticLabel: "Semantic Model",
+          artifactReportLabel: "Report",
+          artifactModelLabel: "Power BI semantic model",
+          artifactCopyJobLabel: "Copy job",
+          datasetKicker: "Dataset",
+          datasetTitle: "Synthetic data for analytics practice",
+          datasetIntro:
+            "The dataset was designed to simulate commercial operations for a healthcare company without using real people, patients, or clinical transaction data.",
+          statCustomers: "Fictitious customers",
+          statProducts: "Fictitious products",
+          statSales: "Sales transactions",
+          statYears: "Years of history",
+          datasetFilesTitle: "Format",
+          datasetFilesBody: "CSV/TXT files created for loading data into SQL and Microsoft Fabric.",
+          datasetTablesTitle: "Suggested tables",
+          datasetTablesBody: ["clientes", "productos", "ventas", "detalle_ventas", "sedes", "calendario"],
+          datasetPrivacyTitle: "Privacy",
+          datasetPrivacyBody:
+            "All records are synthetic and used only for learning, testing, and portfolio demonstration.",
+          workflowKicker: "Workflow",
+          workflowTitle: "Build process",
+          workflowIntro:
+            "The workflow combines dataset design, file generation, Fabric loading, semantic modeling, and visual exploration in Power BI.",
+          workflowList: [
+            "Prompt-driven synthetic dataset design.",
+            "CSV/TXT file generation.",
+            "Upload into Fabric Lakehouse.",
+            "Load to Tables to create Delta tables.",
+            "Query through SQL Analytics Endpoint.",
+            "Optional Warehouse ingestion.",
+            "Semantic model creation.",
+            "Power BI report creation.",
+            "Business insight exploration."
+          ],
+          lakehouseTitle: "Lakehouse loading flow",
+          lakehouseSteps: [
+            "Open the Lakehouse panel.",
+            "Upload CSV files into Files/vitaplus/.",
+            "Select each file.",
+            "Use Load to Tables.",
+            "Fabric creates Delta tables automatically.",
+            "Access the tables through SQL Analytics Endpoint or PySpark notebooks."
+          ],
+          warehouseTitle: "Warehouse loading",
+          warehouseIntro: "The Warehouse can be loaded with COPY INTO or the Fabric ingestion wizard.",
+          starTitle: "Star schema modeling in Power BI",
+          starSteps: [
+            "Connect to the SQL Endpoint.",
+            "Mark sales as the fact table.",
+            "Use customers, products, calendar, and locations as dimensions.",
+            "Configure relationships.",
+            "Use DirectLake mode when possible."
+          ],
+          insightKicker: "Key insight",
+          insightTitle: "City-level analysis",
+          insightBody:
+            "The report supports commercial analysis by location, aggregating sales by city and comparing regional performance.",
+          insightCardTitle: "Example insight",
+          insightMetric: "Pereira: $12,942,969,876.88",
+          insightNote:
+            "Pereira reached total sales of $12,942,969,876.88. This type of insight helps practice executive reporting, city-level sales analysis, and aggregate metric validation.",
+          skillsKicker: "Skills",
+          skillsTitle: "Skills demonstrated",
+          skillsIntro:
+            "The case covers data engineering, modeling, analytics, and storytelling skills for a modern Microsoft Fabric workflow.",
+          skill1: "Loading design from files into Lakehouse and Warehouse.",
+          skill2: "Safe fictitious data creation for practice and demonstration.",
+          skill3: "Table structure, queries, and preparation for analysis.",
+          skill4: "Separation between facts, dimensions, calendar, and locations.",
+          skill5: "Files, Delta tables, and SQL Analytics Endpoint usage.",
+          skill6: "COPY INTO and structured ingestion practice.",
+          skill7: "Model preparation for reporting and reusable metrics.",
+          skill8: "Insight exploration and visual business storytelling.",
+          recKicker: "Recommendations",
+          recTitle: "Next steps",
+          recIntro: "These improvements would make the practice solution more robust and better documented.",
+          rec1Title: "Validation",
+          rec1Text: "Add validation queries for totals, duplicates, and foreign keys.",
+          rec2Title: "Formal star schema",
+          rec2Text: "Clearly document the fact table, dimensions, cardinalities, and grain.",
+          rec3Title: "DAX measures",
+          rec3Text: "Create measures for revenue, margin, transactions, and customer segmentation.",
+          rec4Title: "Pattern comparison",
+          rec4Text: "Compare Lakehouse vs Warehouse query patterns and document usage differences.",
+          rec5Title: "Automation",
+          rec5Text: "Add incremental refresh or pipeline automation.",
+          rec6Title: "Documentation",
+          rec6Text: "Document the complete ingestion process inside the repository.",
+          footerCopy:
+            "This page summarizes the VitaPlus Colombia case as a portfolio asset. The project uses only synthetic data and is intended for learning, testing, and technical demonstration.",
+          footerBackButton: "Back to projects",
+          themeDark: "Dark",
+          themeLight: "Light"
+        }
+      };
+
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (themeIndicator) {
+          const activeLang = localStorage.getItem("language") || "es";
+          themeIndicator.textContent =
+            savedTheme === "dark"
+              ? translations[activeLang].themeDark
+              : translations[activeLang].themeLight;
+        }
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(item => `<li>${item}</li>`).join("");
+      }
+
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations.es;
+        document.documentElement.lang = lang;
+        setText("langIndicator", lang.toUpperCase());
+
+        Object.keys(t).forEach((key) => {
+          if (Array.isArray(t[key])) return;
+          setText(key, t[key]);
+        });
+
+        [
+          "overviewCard2Body",
+          "datasetTablesBody",
+          "workflowList",
+          "lakehouseSteps",
+          "starSteps"
+        ].forEach((id) => setList(id, t[id]));
+
+        const theme = localStorage.getItem("theme") || "light";
+        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const lang = localStorage.getItem("language") || "es";
+        applySavedTheme();
+        applyLanguage(lang);
+      });
+    })();
+  </script>
+</body>
+</html>
