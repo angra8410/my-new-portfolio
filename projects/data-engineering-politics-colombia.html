@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Data Engineering Politics Colombia case study" />
+  <title>Data Engineering Politics Colombia</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --case-bg: var(--bg-primary, #f8fafc);
+      --case-surface: var(--bg-secondary, #ffffff);
+      --case-surface-alt: var(--bg-tertiary, #f1f5f9);
+      --case-text: var(--text-primary, #0f172a);
+      --case-text-soft: var(--text-secondary, #475569);
+      --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
+      --case-accent: var(--accent-color, #22d3ee);
+      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --case-radius: 24px;
+      --case-max: 1180px;
+    }
+
+    html.dark {
+      --case-bg: #0b1220;
+      --case-surface: #111a2b;
+      --case-surface-alt: #162135;
+      --case-text: #e5eef8;
+      --case-text-soft: #a8b7cc;
+      --case-border: rgba(148, 163, 184, 0.18);
+      --case-accent: #67e8f9;
+      --case-accent-strong: #22d3ee;
+      --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%),
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%),
+        var(--case-bg);
+      color: var(--case-text);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .case-page {
+      min-height: 100vh;
+    }
+
+    .case-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--case-bg) 86%, transparent);
+      border-bottom: 1px solid var(--case-border);
+    }
+
+    .case-topbar-inner {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .case-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--case-text);
+      opacity: 0.94;
+    }
+
+    .case-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .case-theme-pill,
+    .case-lang-pill {
+      border: 1px solid var(--case-border);
+      background: var(--case-surface);
+      color: var(--case-text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: var(--case-shadow);
+    }
+
+    .case-hero {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 56px 20px 28px;
+    }
+
+    .case-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: color-mix(in srgb, var(--case-accent) 18%, transparent);
+      color: var(--case-accent-strong);
+      border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .case-hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .case-hero-main,
+    .case-hero-side {
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+    }
+
+    .case-hero-main {
+      padding: 34px;
+    }
+
+    .case-title {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+    }
+
+    .case-summary {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--case-text-soft);
+      max-width: 62ch;
+    }
+
+    .case-key-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .case-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      color: var(--case-text);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .case-hero-side {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .meta-card {
+      border: 1px solid var(--case-border);
+      background: var(--case-surface-alt);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--case-text-soft);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--case-text);
+      font-weight: 600;
+    }
+
+    .case-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .case-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+    }
+
+    .case-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .case-btn-primary {
+      background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent));
+      color: #06202b;
+    }
+
+    .case-btn-secondary {
+      background: transparent;
+      border-color: var(--case-border);
+      color: var(--case-text);
+    }
+
+    .case-content {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 10px 20px 72px;
+    }
+
+    .content-section {
+      margin-top: 26px;
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+      padding: 30px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--case-accent-strong);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .overview-card {
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .overview-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .overview-card p,
+    .overview-card li {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .overview-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .chart-group {
+      margin-top: 30px;
+    }
+
+    .chart-group-title {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .chart-group-copy {
+      margin: 0 0 18px;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .chart-card {
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--case-border);
+      background: var(--case-surface-alt);
+    }
+
+    .chart-image-wrap {
+      padding: 18px;
+      border-bottom: 1px solid var(--case-border);
+      background: color-mix(in srgb, var(--case-surface) 88%, transparent);
+    }
+
+    .chart-image {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      border: 1px solid var(--case-border);
+      background: #ffffff;
+    }
+
+    .chart-body {
+      padding: 22px;
+    }
+
+    .chart-index {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--case-accent-strong);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .chart-title {
+      margin: 0 0 12px;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+    }
+
+    .chart-copy {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.8;
+    }
+
+    .chart-copy + .chart-copy {
+      margin-top: 10px;
+    }
+
+    .recommendations-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .recommendation-card {
+      background: var(--case-surface-alt);
+      border: 1px solid var(--case-border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .recommendation-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .recommendation-card p {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+    }
+
+    .case-footer {
+      max-width: var(--case-max);
+      margin: 0 auto;
+      padding: 0 20px 72px;
+    }
+
+    .case-footer-box {
+      background: var(--case-surface);
+      border: 1px solid var(--case-border);
+      border-radius: var(--case-radius);
+      box-shadow: var(--case-shadow);
+      padding: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .case-footer-copy {
+      margin: 0;
+      color: var(--case-text-soft);
+      line-height: 1.75;
+      max-width: 58ch;
+    }
+
+    @media (max-width: 960px) {
+      .case-hero-grid,
+      .overview-grid,
+      .recommendations-list {
+        grid-template-columns: 1fr;
+      }
+
+      .case-hero-main,
+      .case-hero-side,
+      .content-section,
+      .case-footer-box {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .case-topbar-inner,
+      .case-hero,
+      .case-content,
+      .case-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .case-title {
+        font-size: 2rem;
+      }
+
+      .case-summary {
+        font-size: 1rem;
+      }
+
+      .case-actions,
+      .case-top-actions {
+        width: 100%;
+      }
+
+      .case-btn,
+      .case-theme-pill,
+      .case-lang-pill {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="case-page">
+    <header class="case-topbar">
+      <div class="case-topbar-inner">
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
+
+        <div class="case-top-actions">
+          <div class="case-lang-pill" id="langIndicator">ES</div>
+          <div class="case-theme-pill" id="themeIndicator">🌙 Dark</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-hero">
+        <div class="case-badge" id="heroBadge">Caso de estudio de Ingeniería de Datos</div>
+
+        <div class="case-hero-grid">
+          <div class="case-hero-main">
+            <h1 class="case-title" id="heroTitle">Data Engineering Politics Colombia</h1>
+            <p class="case-summary" id="heroSummary">
+              Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar datos políticos de Colombia utilizando Microsoft Fabric y Power BI.
+            </p>
+
+            <div class="case-key-metrics">
+              <span class="case-chip" id="chip1">Microsoft Fabric</span>
+              <span class="case-chip" id="chip2">PySpark</span>
+              <span class="case-chip" id="chip3">T-SQL</span>
+              <span class="case-chip" id="chip4">Power BI</span>
+              <span class="case-chip" id="chip5">Medallion Architecture</span>
+            </div>
+          </div>
+
+          <aside class="case-hero-side">
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelRole">Enfoque</span>
+                <p class="meta-value" id="metaValueRole">Ingeniería y Analítica de Datos</p>
+              </div>
+
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
+                <p class="meta-value" id="metaValueQuestion">¿Cómo centralizar y procesar datos políticos para identificar tendencias y desempeño electoral mediante una arquitectura nube?</p>
+              </div>
+
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelOutput">Entregable</span>
+                <p class="meta-value" id="metaValueOutput">Pipeline automatizado, Tablas Delta y Dashboard en Power BI</p>
+              </div>
+            </div>
+
+            <div class="case-actions">
+              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/data-engineering-politics-colombia" target="_blank" rel="noopener noreferrer" id="repoButton">Ver repositorio</a>
+              <a class="case-btn case-btn-secondary" href="../index.html#contact" id="contactButton">Contactar</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="case-content">
+        <section class="content-section">
+          <span class="section-kicker" id="overviewKicker">Overview</span>
+          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
+          <p class="section-intro" id="overviewIntro">
+            Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros políticos crudos en insights accionables, permitiendo el análisis de resultados electorales y comportamiento legislativo.
+          </p>
+
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="overviewCard1Title">Objetivo</h3>
+              <p id="overviewCard1Body">
+                Crear una plataforma de datos escalable que centralice la información política dispersa y automatice su procesamiento.
+              </p>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="overviewCard2Title">Flujo de trabajo</h3>
+              <ul id="overviewCard2Body">
+                <li>Ingestión de datos a Fabric Lakehouse</li>
+                <li>Limpieza y transformación con PySpark</li>
+                <li>Modelado dimensional (Estrella) en SQL</li>
+                <li>Visualización analítica en Power BI</li>
+              </ul>
+            </article>
+
+            <article class="overview-card">
+              <h3 id="overviewCard3Title">Qué muestra esta página</h3>
+              <p id="overviewCard3Body">
+                La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis político.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Análisis Visual</span>
+          <h2 class="section-title" id="visualsTitle">Arquitectura y Visualizaciones</h2>
+          <p class="section-intro" id="visualsIntro">
+            El proyecto se estructura en tres capas principales: infraestructura, flujo de procesamiento y entrega de valor visual.
+          </p>
+
+          <div class="chart-group">
+            <h3 class="chart-group-title" id="group1Title">1. Infraestructura y Diseño</h3>
+            <p class="chart-group-copy" id="group1Copy">
+              Diseño de la arquitectura del sistema y el modelo de datos para garantizar escalabilidad y rendimiento.
+            </p>
+
+            <div class="chart-grid">
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/architecture.png"
+                    alt="System Architecture"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart1Index">Gráfico 01</span>
+                  <h3 class="chart-title" id="chart1Title">Arquitectura del Sistema</h3>
+                  <p class="chart-copy" id="chart1Text1">
+                    Implementación en Microsoft Fabric utilizando Lakehouse para almacenamiento y notebooks de PySpark para la orquestación del procesamiento Medallion.
+                  </p>
+                  <p class="chart-copy" id="chart1Text2">
+                    Esta arquitectura permite separar el cómputo del almacenamiento, facilitando el escalado independiente y el uso de múltiples lenguajes (Python, SQL) sobre los mismos datos.
+                  </p>
+                </div>
+              </article>
+
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/entity_relationship.png"
+                    alt="Data Model"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart2Index">Gráfico 02</span>
+                  <h3 class="chart-title" id="chart2Title">Modelo de Datos (DER)</h3>
+                  <p class="chart-copy" id="chart2Text1">
+                    Modelo relacional diseñado para optimizar las consultas analíticas, estructurando la información de candidatos, partidos, elecciones y resultados geográficos.
+                  </p>
+                  <p class="chart-copy" id="chart2Text2">
+                    El diseño asegura la integridad referencial y facilita la creación de medidas complejas en Power BI para análisis comparativos inter-anuales.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="chart-group">
+            <h3 class="chart-group-title" id="group2Title">2. Pipeline y Resultados</h3>
+            <p class="chart-group-copy" id="group2Copy">
+              Flujo de datos desde el origen hasta el dashboard final de Power BI.
+            </p>
+
+            <div class="chart-grid">
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/data_flow.png"
+                    alt="Data Flow"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart3Index">Gráfico 03</span>
+                  <h3 class="chart-title" id="chart3Title">Flujo de Procesamiento</h3>
+                  <p class="chart-copy" id="chart3Text1">
+                    El pipeline automatiza la limpieza de nombres, estandarización de departamentos y consolidación de votos por mesa y municipio.
+                  </p>
+                  <p class="chart-copy" id="chart3Text2">
+                    Se utilizan técnicas de validación de datos en cada etapa para asegurar que la información en la capa 'Gold' sea confiable para el reporte final.
+                  </p>
+                </div>
+              </article>
+
+              <article class="chart-card">
+                <div class="chart-image-wrap">
+                  <img
+                    class="chart-image"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/docs/images/screenshot_dashboard.png"
+                    alt="Power BI Dashboard"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="chart-body">
+                  <span class="chart-index" id="chart4Index">Gráfico 04</span>
+                  <h3 class="chart-title" id="chart4Title">Dashboard de Análisis Político</h3>
+                  <p class="chart-copy" id="chart4Text1">
+                    Visualización interactiva que permite filtrar resultados por partido, región y periodo electoral, identificando picos de votación y distribución geográfica.
+                  </p>
+                  <p class="chart-copy" id="chart4Text2">
+                    El dashboard integra mapas de calor y gráficos de tendencia para ofrecer una visión clara del panorama político colombiano.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="recKicker">Recomendaciones</span>
+          <h2 class="section-title" id="recTitle">Recomendaciones Técnicas</h2>
+          <p class="section-intro" id="recIntro">
+            A partir de la implementación de este pipeline, se sugieren las siguientes mejoras para la escalabilidad.
+          </p>
+
+          <div class="recommendations-list">
+            <article class="recommendation-card">
+              <h3 id="rec1Title">Implementar CI/CD</h3>
+              <p id="rec1Text">
+                Integrar el despliegue de notebooks y esquemas SQL mediante Azure DevOps o GitHub Actions para automatizar las actualizaciones del pipeline.
+              </p>
+            </article>
+
+            <article class="recommendation-card">
+              <h3 id="rec2Title">Optimización de Delta Tables</h3>
+              <p id="rec2Text">
+                Utilizar Z-Ordering en las columnas de ubicación y fecha para acelerar las consultas geoespaciales y temporales en grandes volúmenes de datos.
+              </p>
+            </article>
+
+            <article class="recommendation-card">
+              <h3 id="rec3Title">Monitoreo Proactivo</h3>
+              <p id="rec3Text">
+                Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información política.
+              </p>
+            </article>
+
+            <article class="recommendation-card">
+              <h3 id="rec4Title">Enriquecimiento de Datos</h3>
+              <p id="rec4Text">
+                Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados electorales con indicadores de desarrollo.
+              </p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">
+          Esta página resume el proyecto de ingeniería de datos como pieza de portafolio. El repositorio contiene el código completo de los notebooks, scripts SQL y archivos de configuración.
+        </p>
+
+        <div class="case-actions">
+          <a class="case-btn case-btn-primary" href="https://github.com/angra8410/data-engineering-politics-colombia" target="_blank" rel="noopener noreferrer" id="footerRepoButton">Abrir repositorio</a>
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const translations = {
+        es: {
+          backToPortfolio: "← Volver al portafolio",
+          heroBadge: "Caso de estudio de Ingeniería de Datos",
+          heroTitle: "Data Engineering Politics Colombia",
+          heroSummary:
+            "Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar datos políticos de Colombia utilizando Microsoft Fabric y Power BI.",
+          metaLabelRole: "Enfoque",
+          metaValueRole: "Ingeniería y Analítica de Datos",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion:
+            "¿Cómo centralizar y procesar datos políticos para identificar tendencias y desempeño electoral mediante una arquitectura nube?",
+          metaLabelOutput: "Entregable",
+          metaValueOutput:
+            "Pipeline automatizado, Tablas Delta y Dashboard en Power BI",
+          repoButton: "Ver repositorio",
+          contactButton: "Contactar",
+
+          overviewKicker: "Overview",
+          overviewTitle: "Marco del proyecto",
+          overviewIntro:
+            "Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros políticos crudos en insights accionables, permitiendo el análisis de resultados electorales y comportamiento legislativo.",
+          overviewCard1Title: "Objetivo",
+          overviewCard1Body:
+            "Crear una plataforma de datos escalable que centralice la información política dispersa y automatice su procesamiento.",
+          overviewCard2Title: "Flujo de trabajo",
+          overviewCard2Body: [
+            "Ingestión de datos a Fabric Lakehouse",
+            "Limpieza y transformación con PySpark",
+            "Modelado dimensional (Estrella) en SQL",
+            "Visualización analítica en Power BI"
+          ],
+          overviewCard3Title: "Qué muestra esta página",
+          overviewCard3Body:
+            "La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis político.",
+
+          visualsKicker: "Análisis Visual",
+          visualsTitle: "Arquitectura y Visualizaciones",
+          visualsIntro:
+            "El proyecto se estructura en tres capas principales: infraestructura, flujo de procesamiento y entrega de valor visual.",
+
+          group1Title: "1. Infraestructura y Diseño",
+          group1Copy:
+            "Diseño de la arquitectura del sistema y el modelo de datos para garantizar escalabilidad y rendimiento.",
+          chart1Index: "Gráfico 01",
+          chart1Title: "Arquitectura del Sistema",
+          chart1Text1:
+            "Implementación en Microsoft Fabric utilizando Lakehouse para almacenamiento y notebooks de PySpark para la orquestación del procesamiento Medallion.",
+          chart1Text2:
+            "Esta arquitectura permite separar el cómputo del almacenamiento, facilitando el escalado independiente y el uso de múltiples lenguajes (Python, SQL) sobre los mismos datos.",
+          chart2Index: "Gráfico 02",
+          chart2Title: "Modelo de Datos (DER)",
+          chart2Text1:
+            "Modelo relacional diseñado para optimizar las consultas analíticas, estructurando la información de candidatos, partidos, elecciones y resultados geográficos.",
+          chart2Text2:
+            "El diseño asegura la integridad referencial y facilita la creación de medidas complejas en Power BI para análisis comparativos inter-anuales.",
+
+          group2Title: "2. Pipeline y Resultados",
+          group2Copy:
+            "Flujo de datos desde el origen hasta el dashboard final de Power BI.",
+          chart3Index: "Gráfico 03",
+          chart3Title: "Flujo de Procesamiento",
+          chart3Text1:
+            "El pipeline automatiza la limpieza de nombres, estandarización de departamentos y consolidación de votos por mesa y municipio.",
+          chart3Text2:
+            "Se utilizan técnicas de validación de datos en cada etapa para asegurar que la información en la capa 'Gold' sea confiable para el reporte final.",
+          chart4Index: "Gráfico 04",
+          chart4Title: "Dashboard de Análisis Político",
+          chart4Text1:
+            "Visualización interactiva que permite filtrar resultados por partido, región y periodo electoral, identificando picos de votación y distribución geográfica.",
+          chart4Text2:
+            "El dashboard integra mapas de calor y gráficos de tendencia para ofrecer una visión clara del panorama político colombiano.",
+
+          recKicker: "Recomendaciones",
+          recTitle: "Recomendaciones Técnicas",
+          recIntro:
+            "A partir de la implementación de este pipeline, se sugieren las siguientes mejoras para la escalabilidad.",
+          rec1Title: "Implementar CI/CD",
+          rec1Text:
+            "Integrar el despliegue de notebooks y esquemas SQL mediante Azure DevOps o GitHub Actions para automatizar las actualizaciones del pipeline.",
+          rec2Title: "Optimización de Delta Tables",
+          rec2Text:
+            "Utilizar Z-Ordering en las columnas de ubicación y fecha para acelerar las consultas geoespaciales y temporales en grandes volúmenes de datos.",
+          rec3Title: "Monitoreo Proactivo",
+          rec3Text:
+            "Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información política.",
+          rec4Title: "Enriquecimiento de Datos",
+          rec4Text:
+            "Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados electorales con indicadores de desarrollo.",
+
+          footerCopy:
+            "Esta página resume el proyecto de ingeniería de datos como pieza de portafolio. El repositorio contiene el código completo de los notebooks, scripts SQL y archivos de configuración.",
+          footerRepoButton: "Abrir repositorio",
+          footerBackButton: "Volver a proyectos",
+          themeDark: "🌙 Dark",
+          themeLight: "☀️ Light"
+        },
+
+        en: {
+          backToPortfolio: "← Back to portfolio",
+          heroBadge: "Data Engineering Case Study",
+          heroTitle: "Data Engineering Politics Colombia",
+          heroSummary:
+            "End-to-end data pipeline construction to ingest, transform, and analyze political data from Colombia using Microsoft Fabric and Power BI.",
+          metaLabelRole: "Focus",
+          metaValueRole: "Data Engineering & Analytics",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion:
+            "How to centralize and process political data to identify trends and electoral performance using a cloud architecture?",
+          metaLabelOutput: "Output",
+          metaValueOutput:
+            "Automated pipeline, Delta Tables, and Power BI Dashboard",
+          repoButton: "View repository",
+          contactButton: "Contact",
+
+          overviewKicker: "Overview",
+          overviewTitle: "Project framing",
+          overviewIntro:
+            "This project implements a modern data architecture (Medallion) to transform raw political records into actionable insights, enabling the analysis of electoral results and legislative behavior.",
+          overviewCard1Title: "Objective",
+          overviewCard1Body:
+            "Create a scalable data platform that centralizes dispersed political information and automates its processing.",
+          overviewCard2Title: "Workflow",
+          overviewCard2Body: [
+            "Data ingestion to Fabric Lakehouse",
+            "Cleaning and transformation with PySpark",
+            "Dimensional modeling (Star Schema) in SQL",
+            "Analytical visualization in Power BI"
+          ],
+          overviewCard3Title: "What this page shows",
+          overviewCard3Body:
+            "The system architecture, data flow, and visual results of the political analysis dashboard.",
+
+          visualsKicker: "Visual Analysis",
+          visualsTitle: "Architecture & Visualizations",
+          visualsIntro:
+            "The project is structured into three main layers: infrastructure, processing flow, and visual value delivery.",
+
+          group1Title: "1. Infrastructure & Design",
+          group1Copy:
+            "Design of the system architecture and data model to ensure scalability and performance.",
+          chart1Index: "Chart 01",
+          chart1Title: "System Architecture",
+          chart1Text1:
+            "Implementation in Microsoft Fabric using Lakehouse for storage and PySpark notebooks for Medallion processing orchestration.",
+          chart1Text2:
+            "This architecture allows for computing and storage separation, facilitating independent scaling and the use of multiple languages (Python, SQL) over the same data.",
+          chart2Index: "Chart 02",
+          chart2Title: "Data Model (ERD)",
+          chart2Text1:
+            "Relational model designed to optimize analytical queries, structuring information for candidates, parties, elections, and geographic results.",
+          chart2Text2:
+            "The design ensures referential integrity and facilitates the creation of complex measures in Power BI for year-over-year comparative analysis.",
+
+          group2Title: "2. Pipeline & Results",
+          group2Copy:
+            "Data flow from source to the final Power BI dashboard.",
+          chart3Index: "Chart 03",
+          chart3Title: "Processing Flow",
+          chart3Text1:
+            "The pipeline automates name cleaning, department standardization, and consolidation of votes by polling station and municipality.",
+          chart3Text2:
+            "Data validation techniques are used at each stage to ensure that information in the 'Gold' layer is reliable for final reporting.",
+          chart4Index: "Chart 04",
+          chart4Title: "Political Analysis Dashboard",
+          chart4Text1:
+            "Interactive visualization that allows filtering results by party, region, and electoral period, identifying voting peaks and geographic distribution.",
+          chart4Text2:
+            "The dashboard integrates heatmaps and trend charts to offer a clear view of the Colombian political landscape.",
+
+          recKicker: "Recommendations",
+          recTitle: "Technical Recommendations",
+          recIntro:
+            "Based on the implementation of this pipeline, the following improvements are suggested for scalability.",
+          rec1Title: "Implement CI/CD",
+          rec1Text:
+            "Integrate the deployment of notebooks and SQL schemas using Azure DevOps or GitHub Actions to automate pipeline updates.",
+          rec2Title: "Delta Tables Optimization",
+          rec2Text:
+            "Use Z-Ordering on location and date columns to speed up geospatial and temporal queries on large data volumes.",
+          rec3Title: "Proactive Monitoring",
+          rec3Text:
+            "Set up data quality alerts and pipeline failure notifications to ensure the freshness and veracity of political information.",
+          rec4Title: "Data Enrichment",
+          rec4Text:
+            "Integrate external sources such as population censuses or socioeconomic data to cross-reference electoral results with development indicators.",
+
+          footerCopy:
+            "This page summarizes the data engineering project as a portfolio piece. The repository contains the full code of the notebooks, SQL scripts, and configuration files.",
+          footerRepoButton: "Open repository",
+          footerBackButton: "Back to projects",
+          themeDark: "🌙 Dark",
+          themeLight: "☀️ Light"
+        }
+      };
+
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (themeIndicator) {
+          const activeLang = localStorage.getItem("language") || "es";
+          themeIndicator.textContent =
+            savedTheme === "dark"
+              ? translations[activeLang].themeDark
+              : translations[activeLang].themeLight;
+        }
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(item => `<li>${item}</li>`).join("");
+      }
+
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations.es;
+        document.documentElement.lang = lang;
+        setText("langIndicator", lang.toUpperCase());
+
+        Object.keys(t).forEach((key) => {
+          if (Array.isArray(t[key])) return;
+          setText(key, t[key]);
+        });
+
+        setList("overviewCard2Body", t.overviewCard2Body);
+
+        const theme = localStorage.getItem("theme") || "light";
+        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const lang = localStorage.getItem("language") || "es";
+        applySavedTheme();
+        applyLanguage(lang);
+      });
+    })();
+  </script>
+</body>
+</html>

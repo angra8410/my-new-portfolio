@@ -93,6 +93,19 @@ const projects = [
     repoUrl: 'https://github.com/angra8410/bellabeat-device-usage-analysis'
   },
   {
+    title: 'Data Engineering Politics Colombia',
+    title_en: 'Data Engineering Politics Colombia',
+    category: 'Ingenieria de datos',
+    category_en: 'Data Engineering',
+    excerpt: 'Pipeline de datos end-to-end para el procesamiento de resultados electorales en Colombia utilizando Microsoft Fabric.',
+    excerpt_en: 'End-to-end data pipeline for processing Colombian electoral results using Microsoft Fabric.',
+    tech: ['Microsoft Fabric', 'PySpark', 'SQL', 'Delta Lake', 'Power BI'],
+    metrics: ['Arquitectura Medallion', 'Automatización de pipelines', 'Dashboard interactivo'],
+    metrics_en: ['Medallion Architecture', 'Pipeline automation', 'Interactive dashboard'],
+    detailUrl: 'projects/data-engineering-politics-colombia.html',
+    repoUrl: 'https://github.com/angra8410/data-engineering-politics-colombia'
+  },
+  {
     title: 'VitaPlus Colombia - Plataforma de datos sinteticos de salud en Microsoft Fabric',
     title_en: 'VitaPlus Colombia - Synthetic Healthcare Data Platform in Microsoft Fabric',
     category: 'Ingenieria de datos',
