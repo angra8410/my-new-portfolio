@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Data Engineering Politics Colombia case study" />
-  <title>Data Engineering Politics Colombia</title>
+  <meta name="description" content="Data Engineering Labor Market Colombia case study" />
+  <title>Data Engineering - Colombian Labor Market</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -512,9 +512,9 @@
 
         <div class="case-hero-grid">
           <div class="case-hero-main">
-            <h1 class="case-title" id="heroTitle">Data Engineering Politics Colombia</h1>
+            <h1 class="case-title" id="heroTitle">Data Engineering - Colombian Labor Market</h1>
             <p class="case-summary" id="heroSummary">
-              Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar datos políticos de Colombia utilizando Microsoft Fabric y Power BI.
+              Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar indicadores del mercado laboral en Colombia utilizando Microsoft Fabric y Power BI.
             </p>
 
             <div class="case-key-metrics">
@@ -535,7 +535,7 @@
 
               <div class="meta-card">
                 <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
-                <p class="meta-value" id="metaValueQuestion">¿Cómo centralizar y procesar datos políticos para identificar tendencias y desempeño electoral mediante una arquitectura nube?</p>
+                <p class="meta-value" id="metaValueQuestion">¿Cómo centralizar y procesar indicadores laborales para identificar tendencias y el impacto de políticas económicas mediante una arquitectura nube?</p>
               </div>
 
               <div class="meta-card">
@@ -557,14 +557,14 @@
           <span class="section-kicker" id="overviewKicker">Overview</span>
           <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
           <p class="section-intro" id="overviewIntro">
-            Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros políticos crudos en insights accionables, permitiendo el análisis de resultados electorales y comportamiento legislativo.
+            Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros crudos del mercado laboral en insights accionables, permitiendo el análisis de desempleo y participación laboral.
           </p>
 
           <div class="overview-grid">
             <article class="overview-card">
               <h3 id="overviewCard1Title">Objetivo</h3>
               <p id="overviewCard1Body">
-                Crear una plataforma de datos escalable que centralice la información política dispersa y automatice su procesamiento.
+                Crear una plataforma de datos escalable que centralice la información laboral dispersa y automatice su procesamiento.
               </p>
             </article>
 
@@ -581,7 +581,7 @@
             <article class="overview-card">
               <h3 id="overviewCard3Title">Qué muestra esta página</h3>
               <p id="overviewCard3Body">
-                La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis político.
+                La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis laboral.
               </p>
             </article>
           </div>
@@ -605,19 +605,19 @@
                 <div class="chart-image-wrap">
                   <img
                     class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/architecture.png"
-                    alt="System Architecture"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/kpi.png"
+                    alt="Dashboard KPIs - Labor Market"
                     loading="lazy"
                   />
                 </div>
                 <div class="chart-body">
                   <span class="chart-index" id="chart1Index">Gráfico 01</span>
-                  <h3 class="chart-title" id="chart1Title">Arquitectura del Sistema</h3>
+                  <h3 class="chart-title" id="chart1Title">Vista General del Dashboard</h3>
                   <p class="chart-copy" id="chart1Text1">
-                    Implementación en Microsoft Fabric utilizando Lakehouse para almacenamiento y notebooks de PySpark para la orquestación del procesamiento Medallion.
+                    Visualización de los KPIs principales del mercado laboral colombiano, incluyendo tasas de desempleo y participación global.
                   </p>
                   <p class="chart-copy" id="chart1Text2">
-                    Esta arquitectura permite separar el cómputo del almacenamiento, facilitando el escalado independiente y el uso de múltiples lenguajes (Python, SQL) sobre los mismos datos.
+                    Esta vista permite a los tomadores de decisiones identificar rápidamente el estado actual de la fuerza laboral y las métricas clave de desempeño.
                   </p>
                 </div>
               </article>
@@ -626,19 +626,19 @@
                 <div class="chart-image-wrap">
                   <img
                     class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/entity_relationship.png"
-                    alt="Data Model"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/annualaverage.png"
+                    alt="Annual Average Unemployment Rate"
                     loading="lazy"
                   />
                 </div>
                 <div class="chart-body">
                   <span class="chart-index" id="chart2Index">Gráfico 02</span>
-                  <h3 class="chart-title" id="chart2Title">Modelo de Datos (DER)</h3>
+                  <h3 class="chart-title" id="chart2Title">Tasa de Desempleo Anual</h3>
                   <p class="chart-copy" id="chart2Text1">
-                    Modelo relacional diseñado para optimizar las consultas analíticas, estructurando la información de candidatos, partidos, elecciones y resultados geográficos.
+                    Análisis histórico de la tasa de desempleo desde 2019 hasta 2026, destacando los picos causados por factores económicos y globales.
                   </p>
                   <p class="chart-copy" id="chart2Text2">
-                    El diseño asegura la integridad referencial y facilita la creación de medidas complejas en Power BI para análisis comparativos inter-anuales.
+                    El gráfico permite comparar el desempeño inter-anual y validar las tendencias de recuperación del mercado laboral.
                   </p>
                 </div>
               </article>
@@ -656,19 +656,19 @@
                 <div class="chart-image-wrap">
                   <img
                     class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/data_flow.png"
-                    alt="Data Flow"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/heatmapandwaterfall.png"
+                    alt="Employment Heatmap and Waterfall Analysis"
                     loading="lazy"
                   />
                 </div>
                 <div class="chart-body">
                   <span class="chart-index" id="chart3Index">Gráfico 03</span>
-                  <h3 class="chart-title" id="chart3Title">Flujo de Procesamiento</h3>
+                  <h3 class="chart-title" id="chart3Title">Análisis de Heatmap y Waterfall</h3>
                   <p class="chart-copy" id="chart3Text1">
-                    El pipeline automatiza la limpieza de nombres, estandarización de departamentos y consolidación de votos por mesa y municipio.
+                    Visualización de la distribución regional y los cambios incrementales en la fuerza laboral mediante gráficos de calor y cascada.
                   </p>
                   <p class="chart-copy" id="chart3Text2">
-                    Se utilizan técnicas de validación de datos en cada etapa para asegurar que la información en la capa 'Gold' sea confiable para el reporte final.
+                    Se utilizan técnicas de validación de datos para asegurar que la información geográfica sea precisa para el análisis territorial.
                   </p>
                 </div>
               </article>
@@ -677,19 +677,19 @@
                 <div class="chart-image-wrap">
                   <img
                     class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/docs/images/screenshot_dashboard.png"
-                    alt="Power BI Dashboard"
+                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/linechart.png"
+                    alt="Unemployment Rate Trends"
                     loading="lazy"
                   />
                 </div>
                 <div class="chart-body">
                   <span class="chart-index" id="chart4Index">Gráfico 04</span>
-                  <h3 class="chart-title" id="chart4Title">Dashboard de Análisis Político</h3>
+                  <h3 class="chart-title" id="chart4Title">Tendencias de Desempleo</h3>
                   <p class="chart-copy" id="chart4Text1">
-                    Visualización interactiva que permite filtrar resultados por partido, región y periodo electoral, identificando picos de votación y distribución geográfica.
+                    Gráfico de líneas detallado que muestra la evolución temporal del desempleo y la relación entre empleados y desocupados.
                   </p>
                   <p class="chart-copy" id="chart4Text2">
-                    El dashboard integra mapas de calor y gráficos de tendencia para ofrecer una visión clara del panorama político colombiano.
+                    El dashboard integra filtros interactivos para ofrecer una visión clara de las tendencias a largo plazo en el panorama laboral colombiano.
                   </p>
                 </div>
               </article>
@@ -722,14 +722,14 @@
             <article class="recommendation-card">
               <h3 id="rec3Title">Monitoreo Proactivo</h3>
               <p id="rec3Text">
-                Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información política.
+                Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información.
               </p>
             </article>
 
             <article class="recommendation-card">
               <h3 id="rec4Title">Enriquecimiento de Datos</h3>
               <p id="rec4Text">
-                Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados electorales con indicadores de desarrollo.
+                Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados laborales con indicadores de desarrollo.
               </p>
             </article>
           </div>
@@ -757,14 +757,14 @@
         es: {
           backToPortfolio: "← Volver al portafolio",
           heroBadge: "Caso de estudio de Ingeniería de Datos",
-          heroTitle: "Data Engineering Politics Colombia",
+          heroTitle: "Data Engineering - Colombian Labor Market",
           heroSummary:
-            "Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar datos políticos de Colombia utilizando Microsoft Fabric y Power BI.",
+            "Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar indicadores del mercado laboral en Colombia utilizando Microsoft Fabric y Power BI.",
           metaLabelRole: "Enfoque",
           metaValueRole: "Ingeniería y Analítica de Datos",
           metaLabelQuestion: "Pregunta de negocio",
           metaValueQuestion:
-            "¿Cómo centralizar y procesar datos políticos para identificar tendencias y desempeño electoral mediante una arquitectura nube?",
+            "¿Cómo centralizar y procesar indicadores laborales para identificar tendencias y el impacto de políticas económicas mediante una arquitectura nube?",
           metaLabelOutput: "Entregable",
           metaValueOutput:
             "Pipeline automatizado, Tablas Delta y Dashboard en Power BI",
@@ -774,10 +774,10 @@
           overviewKicker: "Overview",
           overviewTitle: "Marco del proyecto",
           overviewIntro:
-            "Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros políticos crudos en insights accionables, permitiendo el análisis de resultados electorales y comportamiento legislativo.",
+            "Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros crudos del mercado laboral en insights accionables, permitiendo el análisis de desempleo y participación laboral.",
           overviewCard1Title: "Objetivo",
           overviewCard1Body:
-            "Crear una plataforma de datos escalable que centralice la información política dispersa y automatice su procesamiento.",
+            "Crear una plataforma de datos escalable que centralice la información laboral dispersa y automatice su procesamiento.",
           overviewCard2Title: "Flujo de trabajo",
           overviewCard2Body: [
             "Ingestión de datos a Fabric Lakehouse",
@@ -787,7 +787,7 @@
           ],
           overviewCard3Title: "Qué muestra esta página",
           overviewCard3Body:
-            "La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis político.",
+            "La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis laboral.",
 
           visualsKicker: "Análisis Visual",
           visualsTitle: "Arquitectura y Visualizaciones",
@@ -798,33 +798,33 @@
           group1Copy:
             "Diseño de la arquitectura del sistema y el modelo de datos para garantizar escalabilidad y rendimiento.",
           chart1Index: "Gráfico 01",
-          chart1Title: "Arquitectura del Sistema",
+          chart1Title: "Vista General del Dashboard",
           chart1Text1:
-            "Implementación en Microsoft Fabric utilizando Lakehouse para almacenamiento y notebooks de PySpark para la orquestación del procesamiento Medallion.",
+            "Visualización de los KPIs principales del mercado laboral colombiano, incluyendo tasas de desempleo y participación global.",
           chart1Text2:
-            "Esta arquitectura permite separar el cómputo del almacenamiento, facilitando el escalado independiente y el uso de múltiples lenguajes (Python, SQL) sobre los mismos datos.",
+            "Esta vista permite a los tomadores de decisiones identificar rápidamente el estado actual de la fuerza laboral y las métricas clave de desempeño.",
           chart2Index: "Gráfico 02",
-          chart2Title: "Modelo de Datos (DER)",
+          chart2Title: "Tasa de Desempleo Anual",
           chart2Text1:
-            "Modelo relacional diseñado para optimizar las consultas analíticas, estructurando la información de candidatos, partidos, elecciones y resultados geográficos.",
+            "Análisis histórico de la tasa de desempleo desde 2019 hasta 2026, destacando los picos causados por factores económicos y globales.",
           chart2Text2:
-            "El diseño asegura la integridad referencial y facilita la creación de medidas complejas en Power BI para análisis comparativos inter-anuales.",
+            "El gráfico permite comparar el desempeño inter-anual y validar las tendencias de recuperación del mercado laboral.",
 
           group2Title: "2. Pipeline y Resultados",
           group2Copy:
             "Flujo de datos desde el origen hasta el dashboard final de Power BI.",
           chart3Index: "Gráfico 03",
-          chart3Title: "Flujo de Procesamiento",
+          chart3Title: "Análisis de Heatmap y Waterfall",
           chart3Text1:
-            "El pipeline automatiza la limpieza de nombres, estandarización de departamentos y consolidación de votos por mesa y municipio.",
+            "Visualización de la distribución regional y los cambios incrementales en la fuerza laboral mediante gráficos de calor y cascada.",
           chart3Text2:
-            "Se utilizan técnicas de validación de datos en cada etapa para asegurar que la información en la capa 'Gold' sea confiable para el reporte final.",
+            "Se utilizan técnicas de validación de datos para asegurar que la información geográfica sea precisa para el análisis territorial.",
           chart4Index: "Gráfico 04",
-          chart4Title: "Dashboard de Análisis Político",
+          chart4Title: "Tendencias de Desempleo",
           chart4Text1:
-            "Visualización interactiva que permite filtrar resultados por partido, región y periodo electoral, identificando picos de votación y distribución geográfica.",
+            "Gráfico de líneas detallado que muestra la evolución temporal del desempleo y la relación entre empleados y desocupados.",
           chart4Text2:
-            "El dashboard integra mapas de calor y gráficos de tendencia para ofrecer una visión clara del panorama político colombiano.",
+            "El dashboard integra filtros interactivos para ofrecer una visión clara de las tendencias a largo plazo en el panorama laboral colombiano.",
 
           recKicker: "Recomendaciones",
           recTitle: "Recomendaciones Técnicas",
@@ -838,10 +838,10 @@
             "Utilizar Z-Ordering en las columnas de ubicación y fecha para acelerar las consultas geoespaciales y temporales en grandes volúmenes de datos.",
           rec3Title: "Monitoreo Proactivo",
           rec3Text:
-            "Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información política.",
+            "Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información.",
           rec4Title: "Enriquecimiento de Datos",
           rec4Text:
-            "Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados electorales con indicadores de desarrollo.",
+            "Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados laborales con indicadores de desarrollo.",
 
           footerCopy:
             "Esta página resume el proyecto de ingeniería de datos como pieza de portafolio. El repositorio contiene el código completo de los notebooks, scripts SQL y archivos de configuración.",
@@ -854,14 +854,14 @@
         en: {
           backToPortfolio: "← Back to portfolio",
           heroBadge: "Data Engineering Case Study",
-          heroTitle: "Data Engineering Politics Colombia",
+          heroTitle: "Data Engineering - Colombian Labor Market",
           heroSummary:
-            "End-to-end data pipeline construction to ingest, transform, and analyze political data from Colombia using Microsoft Fabric and Power BI.",
+            "End-to-end data pipeline construction to ingest, transform, and analyze labor market indicators in Colombia using Microsoft Fabric and Power BI.",
           metaLabelRole: "Focus",
           metaValueRole: "Data Engineering & Analytics",
           metaLabelQuestion: "Business question",
           metaValueQuestion:
-            "How to centralize and process political data to identify trends and electoral performance using a cloud architecture?",
+            "How to centralize and process labor indicators to identify trends and the impact of economic policies using a cloud architecture?",
           metaLabelOutput: "Output",
           metaValueOutput:
             "Automated pipeline, Delta Tables, and Power BI Dashboard",
@@ -871,10 +871,10 @@
           overviewKicker: "Overview",
           overviewTitle: "Project framing",
           overviewIntro:
-            "This project implements a modern data architecture (Medallion) to transform raw political records into actionable insights, enabling the analysis of electoral results and legislative behavior.",
+            "This project implements a modern data architecture (Medallion) to transform raw labor market records into actionable insights, enabling the analysis of unemployment and labor participation.",
           overviewCard1Title: "Objective",
           overviewCard1Body:
-            "Create a scalable data platform that centralizes dispersed political information and automates its processing.",
+            "Create a scalable data platform that centralizes dispersed labor information and automatizes its processing.",
           overviewCard2Title: "Workflow",
           overviewCard2Body: [
             "Data ingestion to Fabric Lakehouse",
@@ -884,7 +884,7 @@
           ],
           overviewCard3Title: "What this page shows",
           overviewCard3Body:
-            "The system architecture, data flow, and visual results of the political analysis dashboard.",
+            "The system architecture, data flow, and visual results of the labor analysis dashboard.",
 
           visualsKicker: "Visual Analysis",
           visualsTitle: "Architecture & Visualizations",
@@ -895,33 +895,33 @@
           group1Copy:
             "Design of the system architecture and data model to ensure scalability and performance.",
           chart1Index: "Chart 01",
-          chart1Title: "System Architecture",
+          chart1Title: "Dashboard Overview",
           chart1Text1:
-            "Implementation in Microsoft Fabric using Lakehouse for storage and PySpark notebooks for Medallion processing orchestration.",
+            "Visualization of the main KPIs of the Colombian labor market, including unemployment rates and global participation.",
           chart1Text2:
-            "This architecture allows for computing and storage separation, facilitating independent scaling and the use of multiple languages (Python, SQL) over the same data.",
+            "This view allows decision-makers to quickly identify the current state of the workforce and key performance metrics.",
           chart2Index: "Chart 02",
-          chart2Title: "Data Model (ERD)",
+          chart2Title: "Annual Unemployment Rate",
           chart2Text1:
-            "Relational model designed to optimize analytical queries, structuring information for candidates, parties, elections, and geographic results.",
+            "Historical analysis of the unemployment rate from 2019 to 2026, highlighting peaks caused by economic and global factors.",
           chart2Text2:
-            "The design ensures referential integrity and facilitates the creation of complex measures in Power BI for year-over-year comparative analysis.",
+            "The chart allows for year-over-year performance comparison and validation of labor market recovery trends.",
 
           group2Title: "2. Pipeline & Results",
           group2Copy:
             "Data flow from source to the final Power BI dashboard.",
           chart3Index: "Chart 03",
-          chart3Title: "Processing Flow",
+          chart3Title: "Heatmap and Waterfall Analysis",
           chart3Text1:
-            "The pipeline automates name cleaning, department standardization, and consolidation of votes by polling station and municipality.",
+            "Visualization of regional distribution and incremental changes in the workforce through heatmaps and waterfall charts.",
           chart3Text2:
-            "Data validation techniques are used at each stage to ensure that information in the 'Gold' layer is reliable for final reporting.",
+            "Data validation techniques are used to ensure that geographic information is accurate for territorial analysis.",
           chart4Index: "Chart 04",
-          chart4Title: "Political Analysis Dashboard",
+          chart4Title: "Unemployment Trends",
           chart4Text1:
-            "Interactive visualization that allows filtering results by party, region, and electoral period, identifying voting peaks and geographic distribution.",
+            "Detailed line chart showing the temporal evolution of unemployment and the relationship between employed and unemployed individuals.",
           chart4Text2:
-            "The dashboard integrates heatmaps and trend charts to offer a clear view of the Colombian political landscape.",
+            "The dashboard integrates interactive filters to offer a clear view of long-term trends in the Colombian labor landscape.",
 
           recKicker: "Recommendations",
           recTitle: "Technical Recommendations",
@@ -935,10 +935,10 @@
             "Use Z-Ordering on location and date columns to speed up geospatial and temporal queries on large data volumes.",
           rec3Title: "Proactive Monitoring",
           rec3Text:
-            "Set up data quality alerts and pipeline failure notifications to ensure the freshness and veracity of political information.",
+            "Set up data quality alerts and pipeline failure notifications to ensure the freshness and veracity of information.",
           rec4Title: "Data Enrichment",
           rec4Text:
-            "Integrate external sources such as population censuses or socioeconomic data to cross-reference electoral results with development indicators.",
+            "Integrate external sources such as population censuses or socioeconomic data to cross-reference labor results with development indicators.",
 
           footerCopy:
             "This page summarizes the data engineering project as a portfolio piece. The repository contains the full code of the notebooks, SQL scripts, and configuration files.",
