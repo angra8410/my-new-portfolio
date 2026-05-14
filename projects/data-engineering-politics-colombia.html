@@ -110,6 +110,13 @@
       font-size: 0.92rem;
       font-weight: 600;
       box-shadow: var(--case-shadow);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .case-theme-pill:hover,
+    .case-lang-pill:hover {
+      background: var(--case-surface-alt);
     }
 
     .case-hero {
@@ -500,8 +507,8 @@
         <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
 
         <div class="case-top-actions">
-          <div class="case-lang-pill" id="langIndicator">ES</div>
-          <div class="case-theme-pill" id="themeIndicator">🌙 Dark</div>
+          <button class="case-lang-pill" id="langIndicator" aria-label="Toggle language">ES</button>
+          <button class="case-theme-pill" id="themeIndicator" aria-label="Toggle theme">🌙 Dark</button>
         </div>
       </div>
     </header>
@@ -990,6 +997,27 @@
       }
 
       document.addEventListener("DOMContentLoaded", function () {
+        const langIndicator = document.getElementById("langIndicator");
+        const themeIndicator = document.getElementById("themeIndicator");
+
+        if (langIndicator) {
+          langIndicator.addEventListener("click", function () {
+            const currentLang = localStorage.getItem("language") || "es";
+            const newLang = currentLang === "es" ? "en" : "es";
+            localStorage.setItem("language", newLang);
+            applyLanguage(newLang);
+          });
+        }
+
+        if (themeIndicator) {
+          themeIndicator.addEventListener("click", function () {
+            const currentTheme = localStorage.getItem("theme") || "light";
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            applySavedTheme();
+          });
+        }
+
         const lang = localStorage.getItem("language") || "es";
         applySavedTheme();
         applyLanguage(lang);
