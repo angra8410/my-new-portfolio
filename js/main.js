@@ -84,6 +84,7 @@ const projects = [
     title_en: 'Bellabeat Smart Device Usage Analysis',
     category: 'Caso de estudio',
     category_en: 'Case Study',
+    image: 'https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/assets/images/thumbnail.png', // Placeholder if needed, or null
     excerpt: 'Análisis de uso de dispositivos inteligentes para identificar patrones de comportamiento, segmentación de usuarios y oportunidades de marketing basadas en datos.',
     excerpt_en: 'Smart device usage analysis to identify behavior patterns, user segmentation, and data-driven marketing opportunities.',
     tech: ['SQL', 'Power BI', 'Data Cleaning', 'EDA'],
@@ -97,6 +98,7 @@ const projects = [
     title_en: 'Data Engineering - Colombian Labor Market',
     category: 'Ingeniería de datos',
     category_en: 'Data Engineering',
+    image: 'img/main-photo.png',
     excerpt: 'Pipeline de datos end-to-end para el procesamiento de indicadores laborales en Colombia utilizando Microsoft Fabric.',
     excerpt_en: 'End-to-end data pipeline for processing Colombian labor indicators using Microsoft Fabric.',
     tech: ['Microsoft Fabric', 'PySpark', 'SQL', 'Delta Lake', 'Power BI'],
@@ -110,6 +112,7 @@ const projects = [
     title_en: 'VitaPlus Colombia - Synthetic Healthcare Data Platform in Microsoft Fabric',
     category: 'Ingenieria de datos',
     category_en: 'Data Engineering',
+    image: 'img/vitaplus_colombia_report_main.png',
     excerpt: 'Proyecto de practica en Microsoft Fabric con datos sinteticos de salud para modelado SQL, Lakehouse, Warehouse, modelo semantico y reporte Power BI.',
     excerpt_en: 'Microsoft Fabric practice project with synthetic healthcare data for SQL modeling, Lakehouse, Warehouse, semantic model, and Power BI reporting.',
     tech: ['Microsoft Fabric', 'SQL', 'Lakehouse', 'Warehouse', 'Power BI', 'Star Schema'],
@@ -162,7 +165,18 @@ function loadProjects() {
     const metrics = isEnglish ? (project.metrics_en || project.metrics) : project.metrics;
     const article = document.createElement('article');
     article.className = 'project-card';
+    
+    let imageHtml = '';
+    if (project.image) {
+      imageHtml = `
+        <div class="project-card-image">
+          <img src="${project.image}" alt="${title}" loading="lazy">
+        </div>
+      `;
+    }
+
     article.innerHTML = `
+      ${imageHtml}
       <div class="project-card-content">
         <div class="project-card-header">
           <span class="project-category">${category}</span>
