@@ -80,11 +80,27 @@ const blogPosts = [
 
 const projects = [
   {
+    title: 'covid-metrics-v2',
+    title_en: 'covid-metrics-v2',
+    category: 'Caso de estudio',
+    category_en: 'Case Study',
+    date: '2026-05-28',
+    image: 'img/placeholder.png',
+    excerpt: 'Análisis de datos detallado para covid-metrics-v2.',
+    excerpt_en: 'Detailed data analysis for covid-metrics-v2.',
+    tech: ['Power BI', 'SQL', 'DAX'],
+    metrics: ['Análisis en progreso'],
+    metrics_en: ['Analysis in progress'],
+    detailUrl: 'projects/covid-metrics-v2.html',
+    repoUrl: 'https://github.com/angra8410/my-new-portfolio'
+  },
+  {
     title: 'Bellabeat Smart Device Usage Analysis',
     title_en: 'Bellabeat Smart Device Usage Analysis',
     category: 'Caso de estudio',
     category_en: 'Case Study',
-    image: 'https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/assets/images/thumbnail.png', // Placeholder if needed, or null
+    date: '2024-04-10',
+    image: 'https://raw.githubusercontent.com/angra8410/bellabeat-device-usage-analysis/main/assets/images/thumbnail.png',
     excerpt: 'Análisis de uso de dispositivos inteligentes para identificar patrones de comportamiento, segmentación de usuarios y oportunidades de marketing basadas en datos.',
     excerpt_en: 'Smart device usage analysis to identify behavior patterns, user segmentation, and data-driven marketing opportunities.',
     tech: ['SQL', 'Power BI', 'Data Cleaning', 'EDA'],
@@ -98,6 +114,7 @@ const projects = [
     title_en: 'Data Engineering - Colombian Labor Market',
     category: 'Ingeniería de datos',
     category_en: 'Data Engineering',
+    date: '2024-05-15',
     image: 'img/main-photo.png',
     excerpt: 'Pipeline de datos end-to-end para el procesamiento de indicadores laborales en Colombia utilizando Microsoft Fabric.',
     excerpt_en: 'End-to-end data pipeline for processing Colombian labor indicators using Microsoft Fabric.',
@@ -112,6 +129,7 @@ const projects = [
     title_en: 'VitaPlus Colombia - Synthetic Healthcare Data Platform in Microsoft Fabric',
     category: 'Ingenieria de datos',
     category_en: 'Data Engineering',
+    date: '2024-05-20',
     image: 'img/vitaplus_colombia_report_main.png',
     excerpt: 'Proyecto de practica en Microsoft Fabric con datos sinteticos de salud para modelado SQL, Lakehouse, Warehouse, modelo semantico y reporte Power BI.',
     excerpt_en: 'Microsoft Fabric practice project with synthetic healthcare data for SQL modeling, Lakehouse, Warehouse, semantic model, and Power BI reporting.',
@@ -157,12 +175,26 @@ function loadProjects() {
   const isEnglish = currentLang === 'en';
   const viewCaseText = isEnglish ? 'View case study' : 'Ver caso de estudio';
   const viewRepoText = isEnglish ? 'View repository' : 'Ver repositorio';
+  const newBadgeText = isEnglish ? 'New' : 'Nuevo';
+
   projectsGrid.innerHTML = '';
-  projects.forEach(project => {
+
+  // Sort projects by date descending
+  const sortedProjects = [...projects].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  sortedProjects.forEach(project => {
     const title = isEnglish ? (project.title_en || project.title) : project.title;
     const category = isEnglish ? (project.category_en || project.category) : project.category;
     const excerpt = isEnglish ? (project.excerpt_en || project.excerpt) : project.excerpt;
     const metrics = isEnglish ? (project.metrics_en || project.metrics) : project.metrics;
+    
+    // Check if project is recent (within last 30 days)
+    const projectDate = new Date(project.date);
+    const today = new Date();
+    const diffTime = Math.abs(today - projectDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const isNew = diffDays <= 30;
+
     const article = document.createElement('article');
     article.className = 'project-card';
     
@@ -170,6 +202,7 @@ function loadProjects() {
     if (project.image) {
       imageHtml = `
         <div class="project-card-image">
+          ${isNew ? `<span class="project-badge-new">${newBadgeText}</span>` : ''}
           <img src="${project.image}" alt="${title}" loading="lazy">
         </div>
       `;
@@ -179,7 +212,10 @@ function loadProjects() {
       ${imageHtml}
       <div class="project-card-content">
         <div class="project-card-header">
-          <span class="project-category">${category}</span>
+          <div class="project-meta">
+            <span class="project-category">${category}</span>
+            <span class="project-date">${formatDate(project.date)}</span>
+          </div>
           <h3 class="project-title">${title}</h3>
         </div>
         <p class="project-excerpt">${excerpt}</p>
@@ -321,3 +357,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
