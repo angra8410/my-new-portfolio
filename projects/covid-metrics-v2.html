@@ -1,98 +1,10 @@
-param(
-    [Parameter(Mandatory = $true)]
-    [string]$ProjectName,
-
-    [Parameter(Mandatory = $false)]
-    [string]$GitHubUrl = "https://github.com/angra8410/my-new-portfolio",
-
-    [Parameter(Mandatory = $false)]
-    [switch]$InitGit,
-
-    [Parameter(Mandatory = $false)]
-    [switch]$PushGit = $true
-)
-
-Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
-
-# 1. CONFIGURACIÓN DE RUTAS
-$repoRoot = Get-Location
-$timestamp = Get-Date -Format "yyyy-MM-dd"
-
-# Carpeta donde Power BI guardará los archivos (OneDrive)
-$oneDrivePath = "C:\Users\antoi\OneDrive\MyPortfolio"
-$projectPath = Join-Path $oneDrivePath $ProjectName
-
-# Ruta al archivo JS y carpeta de proyectos HTML
-$jsPath = Join-Path $repoRoot "js/main.js"
-$htmlPath = Join-Path $repoRoot "projects\$ProjectName.html"
-
-Write-Host "🚀 Iniciando creación de proyecto: $ProjectName" -ForegroundColor Cyan
-
-# 2. CREAR ESTRUCTURA EN ONEDRIVE
-if (-not (Test-Path -LiteralPath $oneDrivePath)) {
-    New-Item -ItemType Directory -Path $oneDrivePath -Force | Out-Null
-}
-
-if (Test-Path -LiteralPath $projectPath) {
-    Write-Warning "La carpeta del proyecto ya existe en OneDrive. Saltando creación de carpetas."
-} else {
-    $folders = @(
-        "docs",
-        "powerbi\$ProjectName.Dataset",
-        "powerbi\$ProjectName.Report",
-        "sql",
-        "assets\screenshots",
-        "exports"
-    )
-    foreach ($folder in $folders) {
-        New-Item -ItemType Directory -Path (Join-Path $projectPath $folder) -Force | Out-Null
-    }
-    
-    $pbipContent = @{ version = "1.0"; settings = @{ enableAutoFullRefresh = $true } } | ConvertTo-Json
-    Set-Content -Path (Join-Path $projectPath "powerbi\$ProjectName.pbip") -Value $pbipContent
-    
-    $metadata = @{ projectName = $ProjectName; createdAt = $timestamp; type = "pbip_project" } | ConvertTo-Json
-    Set-Content -Path (Join-Path $projectPath "metadata.json") -Value $metadata
-}
-
-# 3. AUTO-INYECCIÓN EN JS/MAIN.JS
-if (Test-Path $jsPath) {
-    Write-Host "📝 Actualizando js/main.js..." -ForegroundColor Yellow
-    $newProjectJS = @"
-  {
-    title: '$ProjectName',
-    title_en: '$ProjectName',
-    category: 'Caso de estudio',
-    category_en: 'Case Study',
-    date: '$timestamp',
-    image: 'img/$ProjectName.png',
-    excerpt: 'Análisis de datos detallado para $ProjectName.',
-    excerpt_en: 'Detailed data analysis for $ProjectName.',
-    tech: ['Power BI', 'SQL', 'DAX'],
-    metrics: ['Análisis en progreso'],
-    metrics_en: ['Analysis in progress'],
-    detailUrl: 'projects/$ProjectName.html',
-    repoUrl: '$GitHubUrl'
-  },
-"@
-    $jsContent = Get-Content $jsPath -Raw
-    $jsContent = $jsContent -replace 'const projects = \[', "const projects = [`n$newProjectJS"
-    Set-Content $jsPath $jsContent
-} else {
-    Write-Error "No se encontró js/main.js en $jsPath."
-}
-
-# 4. CREAR PLANTILLA HTML AUTOMÁTICA
-Write-Host "📄 Generando plantilla HTML para $ProjectName..." -ForegroundColor Yellow
-$htmlContent = @"
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Análisis de datos para $ProjectName" />
-  <title>$ProjectName - Portfolio</title>
+  <meta name="description" content="Análisis de datos para covid-metrics-v2" />
+  <title>covid-metrics-v2 - Portfolio</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -204,7 +116,7 @@ $htmlContent = @"
 
         <div class="case-hero-grid">
           <div class="case-hero-main">
-            <h1 class="case-title" id="heroTitle">$ProjectName</h1>
+            <h1 class="case-title" id="heroTitle">covid-metrics-v2</h1>
             <p class="case-summary" id="heroSummary">Análisis de datos detallado desarrollado en Power BI para extraer insights accionables.</p>
 
             <div class="case-key-metrics">
@@ -223,7 +135,7 @@ $htmlContent = @"
             </div>
 
             <div class="case-actions">
-              <a class="case-btn case-btn-primary" href="$GitHubUrl" target="_blank" rel="noopener noreferrer" id="repoButton">Ver repositorio</a>
+              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/my-new-portfolio" target="_blank" rel="noopener noreferrer" id="repoButton">Ver repositorio</a>
             </div>
           </aside>
         </div>
@@ -235,10 +147,10 @@ $htmlContent = @"
           <h2 class="section-title" id="overviewGeneralTitle">Dashboard Overview</h2>
           <div class="chart-card">
             <div class="chart-image-wrap">
-              <img class="chart-image" src="../img/$ProjectName.png" alt="General Overview of the BI Dashboard" loading="lazy" />
+              <img class="chart-image" src="../img/covid-metrics-v2.png" alt="General Overview of the BI Dashboard" loading="lazy" />
             </div>
             <div class="chart-body">
-              <p class="chart-copy" id="overviewGeneralText">Vista principal del reporte interactivo creado para el análisis de $ProjectName.</p>
+              <p class="chart-copy" id="overviewGeneralText">Vista principal del reporte interactivo creado para el análisis de covid-metrics-v2.</p>
             </div>
           </div>
         </section>
@@ -252,28 +164,28 @@ $htmlContent = @"
         es: {
           backToPortfolio: "← Volver al portafolio",
           heroBadge: "Caso de estudio",
-          heroTitle: "$ProjectName",
+          heroTitle: "covid-metrics-v2",
           heroSummary: "Análisis de datos detallado desarrollado en Power BI para extraer insights accionables.",
           metaLabelRole: "Enfoque",
           metaValueRole: "Business Intelligence",
           repoButton: "Ver repositorio",
           overviewGeneralKicker: "Vista General",
           overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "Vista principal del reporte interactivo creado para el análisis de $ProjectName.",
+          overviewGeneralText: "Vista principal del reporte interactivo creado para el análisis de covid-metrics-v2.",
           themeDark: "🌙 Dark",
           themeLight: "☀️ Light"
         },
         en: {
           backToPortfolio: "← Back to portfolio",
           heroBadge: "Case Study",
-          heroTitle: "$ProjectName",
+          heroTitle: "covid-metrics-v2",
           heroSummary: "Detailed data analysis developed in Power BI to extract actionable insights.",
           metaLabelRole: "Focus",
           metaValueRole: "Business Intelligence",
           repoButton: "Open repository",
           overviewGeneralKicker: "General Overview",
           overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "Main view of the interactive report created for the analysis of $ProjectName.",
+          overviewGeneralText: "Main view of the interactive report created for the analysis of covid-metrics-v2.",
           themeDark: "🌙 Dark",
           themeLight: "☀️ Light"
         }
@@ -338,19 +250,3 @@ $htmlContent = @"
   </script>
 </body>
 </html>
-"@
-Set-Content -Path $htmlPath -Value $htmlContent -Encoding UTF8
-
-# 5. GIT AUTOMÁTICO PARA ACTUALIZAR EL PORTAFOLIO
-Write-Host "💾 Sincronizando con GitHub..." -ForegroundColor Magenta
-git add .
-git commit -m "feat: add new project $ProjectName ($timestamp)"
-if ($PushGit) {
-    git push origin main
-}
-
-Write-Host "`n✨ ¡LISTO! El proyecto ha sido creado." -ForegroundColor Green
-Write-Host "📍 OneDrive: $projectPath"
-Write-Host "🌐 HTML generado en: $htmlPath"
-Write-Host "📸 IMPORTANTE: Para que la imagen aparezca, guarda tu captura como 'img/$ProjectName.png'." -ForegroundColor Cyan
-
