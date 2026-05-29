@@ -83,8 +83,8 @@ if (Test-Path $jsPath) {
     Write-Error "No se encontró js/main.js en $jsPath."
 }
 
-# 4. CREAR PLANTILLA HTML AUTOMÁTICA
-Write-Host "📄 Generando plantilla HTML para $ProjectName..." -ForegroundColor Yellow
+# 4. CREAR PLANTILLA HTML COMPLETA AUTOMÁTICA
+Write-Host "📄 Generando plantilla HTML completa para $ProjectName..." -ForegroundColor Yellow
 $htmlContent = @"
 <!DOCTYPE html>
 <html lang="es">
@@ -205,12 +205,12 @@ $htmlContent = @"
         <div class="case-hero-grid">
           <div class="case-hero-main">
             <h1 class="case-title" id="heroTitle">$ProjectName</h1>
-            <p class="case-summary" id="heroSummary">Análisis de datos detallado desarrollado en Power BI para extraer insights accionables.</p>
+            <p class="case-summary" id="heroSummary">Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre $ProjectName.</p>
 
             <div class="case-key-metrics">
               <span class="case-chip">Power BI</span>
               <span class="case-chip">DAX</span>
-              <span class="case-chip">SQL</span>
+              <span class="case-chip">Business Intelligence</span>
             </div>
           </div>
 
@@ -218,32 +218,111 @@ $htmlContent = @"
             <div class="meta-grid">
               <div class="meta-card">
                 <span class="meta-label" id="metaLabelRole">Enfoque</span>
-                <p class="meta-value" id="metaValueRole">Business Intelligence</p>
+                <p class="meta-value" id="metaValueRole">Analítica de Datos</p>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
+                <p class="meta-value" id="metaValueQuestion">¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?</p>
               </div>
             </div>
-
             <div class="case-actions">
-              <a class="case-btn case-btn-primary" href="$GitHubUrl" target="_blank" rel="noopener noreferrer" id="repoButton">Ver repositorio</a>
+              <a class="case-btn case-btn-primary" href="$GitHubUrl" target="_blank" id="repoButton">Ver repositorio</a>
             </div>
           </aside>
         </div>
       </section>
 
       <div class="case-content">
+        <!-- Overview Section -->
+        <section class="content-section">
+          <span class="section-kicker" id="overviewKicker">Overview</span>
+          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
+          <p class="section-intro" id="overviewIntro">Introducción detallada sobre el origen de los datos y el propósito del análisis.</p>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="overviewCard1Title">Objetivo</h3>
+              <p id="overviewCard1Body">Definir el objetivo principal alcanzado con este reporte.</p>
+            </article>
+            <article class="overview-card">
+              <h3 id="overviewCard2Title">Metodología</h3>
+              <ul id="overviewCard2Body">
+                <li>Extracción y limpieza</li>
+                <li>Modelado de datos</li>
+                <li>Creación de medidas DAX</li>
+                <li>Diseño de interfaz</li>
+              </ul>
+            </article>
+            <article class="overview-card">
+              <h3 id="overviewCard3Title">Resultados</h3>
+              <p id="overviewCard3Body">Resumen del impacto de los hallazgos encontrados.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Main Dashboard View -->
         <section class="content-section">
           <span class="section-kicker" id="overviewGeneralKicker">Vista General</span>
           <h2 class="section-title" id="overviewGeneralTitle">Dashboard Overview</h2>
           <div class="chart-card">
             <div class="chart-image-wrap">
-              <img class="chart-image" src="../img/$ProjectName.png" alt="General Overview of the BI Dashboard" loading="lazy" />
+              <img class="chart-image" src="../img/$ProjectName.png" alt="Dashboard Overview" loading="lazy" />
             </div>
             <div class="chart-body">
-              <p class="chart-copy" id="overviewGeneralText">Vista principal del reporte interactivo creado para el análisis de $ProjectName.</p>
+              <p class="chart-copy" id="overviewGeneralText">Esta vista consolidada permite entender las métricas de un vistazo.</p>
             </div>
+          </div>
+        </section>
+
+        <!-- Visual Analysis -->
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Análisis Visual</span>
+          <h2 class="section-title" id="visualsTitle">Detalles y Visualizaciones</h2>
+          <div class="chart-grid">
+            <article class="chart-card">
+              <div class="chart-image-wrap"><div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">[Imagen 2]</div></div>
+              <div class="chart-body">
+                <span class="chart-index" id="chart1Index">Gráfico 01</span>
+                <h3 class="chart-title" id="chart1Title">Tendencia Temporal</h3>
+                <p class="chart-copy" id="chart1Text1">Descripción de la primera visualización clave.</p>
+              </div>
+            </article>
+            <article class="chart-card">
+              <div class="chart-image-wrap"><div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">[Imagen 3]</div></div>
+              <div class="chart-body">
+                <span class="chart-index" id="chart2Index">Gráfico 02</span>
+                <h3 class="chart-title" id="chart2Title">Distribución de Categorías</h3>
+                <p class="chart-copy" id="chart2Text1">Descripción de la segunda visualización clave.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="content-section">
+          <span class="section-kicker" id="recKicker">Conclusiones</span>
+          <h2 class="section-title" id="recTitle">Recomendaciones del Analista</h2>
+          <div class="recommendations-list">
+            <article class="recommendation-card">
+              <h3 id="rec1Title">Acción 1</h3>
+              <p id="rec1Text">Recomendación basada en los datos analizados.</p>
+            </article>
+            <article class="recommendation-card">
+              <h3 id="rec2Title">Acción 2</h3>
+              <p id="rec2Text">Segunda recomendación estratégica.</p>
+            </article>
           </div>
         </section>
       </div>
     </main>
+
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">Portafolio de Análisis de Datos profesional.</p>
+        <div class="case-actions">
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
+      </div>
+    </footer>
   </div>
 
   <script>
@@ -251,29 +330,83 @@ $htmlContent = @"
       const translations = {
         es: {
           backToPortfolio: "← Volver al portafolio",
-          heroBadge: "Caso de estudio",
+          heroBadge: "Caso de estudio de Análisis de Datos",
           heroTitle: "$ProjectName",
-          heroSummary: "Análisis de datos detallado desarrollado en Power BI para extraer insights accionables.",
+          heroSummary: "Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre $ProjectName.",
           metaLabelRole: "Enfoque",
-          metaValueRole: "Business Intelligence",
+          metaValueRole: "Analítica de Datos",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion: "¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?",
           repoButton: "Ver repositorio",
+          overviewKicker: "Overview",
+          overviewTitle: "Marco del proyecto",
+          overviewIntro: "Introducción detallada sobre el origen de los datos y el propósito del análisis.",
+          overviewCard1Title: "Objetivo",
+          overviewCard1Body: "Definir el objetivo principal alcanzado con este reporte.",
+          overviewCard2Title: "Metodología",
+          overviewCard2Body: ["Extracción y limpieza", "Modelado de datos", "DAX", "Diseño"],
+          overviewCard3Title: "Resultados",
+          overviewCard3Body: "Resumen del impacto de los hallazgos encontrados.",
           overviewGeneralKicker: "Vista General",
           overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "Vista principal del reporte interactivo creado para el análisis de $ProjectName.",
+          overviewGeneralText: "Esta vista consolidada permite entender las métricas de un vistazo.",
+          visualsKicker: "Análisis Visual",
+          visualsTitle: "Detalles y Visualizaciones",
+          chart1Index: "Gráfico 01",
+          chart1Title: "Tendencia Temporal",
+          chart1Text1: "Descripción de la primera visualización clave.",
+          chart2Index: "Gráfico 02",
+          chart2Title: "Distribución de Categorías",
+          chart2Text1: "Descripción de la segunda visualización clave.",
+          recKicker: "Conclusiones",
+          recTitle: "Recomendaciones",
+          rec1Title: "Acción 1",
+          rec1Text: "Recomendación basada en los datos analizados.",
+          rec2Title: "Acción 2",
+          rec2Text: "Segunda recomendación estratégica.",
+          footerCopy: "Portafolio de Análisis de Datos profesional.",
+          footerBackButton: "Volver a proyectos",
           themeDark: "🌙 Dark",
           themeLight: "☀️ Light"
         },
         en: {
           backToPortfolio: "← Back to portfolio",
-          heroBadge: "Case Study",
+          heroBadge: "Data Analysis Case Study",
           heroTitle: "$ProjectName",
-          heroSummary: "Detailed data analysis developed in Power BI to extract actionable insights.",
+          heroSummary: "Detailed data analysis developed in Power BI to extract actionable insights about $ProjectName.",
           metaLabelRole: "Focus",
-          metaValueRole: "Business Intelligence",
+          metaValueRole: "Data Analytics",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion: "What are the main findings and trends identified in the dataset?",
           repoButton: "Open repository",
+          overviewKicker: "Overview",
+          overviewTitle: "Project Framework",
+          overviewIntro: "Detailed introduction about data origin and analysis purpose.",
+          overviewCard1Title: "Objective",
+          overviewCard1Body: "Define the main goal achieved with this report.",
+          overviewCard2Title: "Methodology",
+          overviewCard2Body: ["Extraction & Cleaning", "Data Modeling", "DAX", "Design"],
+          overviewCard3Title: "Results",
+          overviewCard3Body: "Summary of the impact of the findings.",
           overviewGeneralKicker: "General Overview",
           overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "Main view of the interactive report created for the analysis of $ProjectName.",
+          overviewGeneralText: "This consolidated view allows understanding metrics at a glance.",
+          visualsKicker: "Visual Analysis",
+          visualsTitle: "Details & Visualizations",
+          chart1Index: "Chart 01",
+          chart1Title: "Temporal Trend",
+          chart1Text1: "Description of the first key visualization.",
+          chart2Index: "Chart 02",
+          chart2Title: "Category Distribution",
+          chart2Text1: "Description of the second key visualization.",
+          recKicker: "Conclusions",
+          recTitle: "Recommendations",
+          rec1Title: "Action 1",
+          rec1Text: "Recommendation based on the analyzed data.",
+          rec2Title: "Action 2",
+          rec2Text: "Second strategic recommendation.",
+          footerCopy: "Professional Data Analysis Portfolio.",
+          footerBackButton: "Back to projects",
           themeDark: "🌙 Dark",
           themeLight: "☀️ Light"
         }
@@ -294,6 +427,12 @@ $htmlContent = @"
         if (el) el.textContent = value;
       }
 
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(item => "<li>" + item + "</li>").join("");
+      }
+
       function applyLanguage(lang) {
         const t = translations[lang] || translations.es;
         document.documentElement.lang = lang;
@@ -301,8 +440,11 @@ $htmlContent = @"
         if(langIndicator) langIndicator.textContent = lang.toUpperCase();
 
         Object.keys(t).forEach((key) => {
+          if (Array.isArray(t[key])) return;
           setText(key, t[key]);
         });
+
+        setList("overviewCard2Body", t.overviewCard2Body);
 
         const theme = localStorage.getItem("theme") || "light";
         setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
@@ -353,4 +495,3 @@ Write-Host "`n✨ ¡LISTO! El proyecto ha sido creado." -ForegroundColor Green
 Write-Host "📍 OneDrive: $projectPath"
 Write-Host "🌐 HTML generado en: $htmlPath"
 Write-Host "📸 IMPORTANTE: Para que la imagen aparezca, guarda tu captura como 'img/$ProjectName.png'." -ForegroundColor Cyan
-
