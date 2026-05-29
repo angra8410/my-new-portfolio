@@ -342,7 +342,7 @@
       function setList(id, items) {
         const el = document.getElementById(id);
         if (!el || !Array.isArray(items)) return;
-        el.innerHTML = items.map(item => "<li>" + item + "</li>").join("");
+        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
       }
 
       function applyLanguage(lang) {
@@ -351,9 +351,10 @@
         const langIndicator = document.getElementById("langIndicator");
         if(langIndicator) langIndicator.textContent = lang.toUpperCase();
 
-        Object.keys(t).forEach((key) => {
-          if (Array.isArray(t[key])) return;
-          setText(key, t[key]);
+        Object.keys(t).forEach(function(key) {
+          if (typeof t[key] === 'string') {
+            setText(key, t[key]);
+          }
         });
 
         setList("overviewCard2Body", t.overviewCard2Body);

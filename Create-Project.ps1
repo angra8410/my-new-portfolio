@@ -56,10 +56,14 @@ if (Test-Path -LiteralPath $projectPath) {
     Set-Content -Path (Join-Path $projectPath "metadata.json") -Value $metadata
 }
 
-# 3. AUTO-INYECCIÓN EN JS/MAIN.JS
+# 3. AUTO-INYECCIÓN EN JS/MAIN.JS (CON VERIFICACIÓN DE DUPLICADOS)
 if (Test-Path $jsPath) {
-    Write-Host "📝 Actualizando js/main.js..." -ForegroundColor Yellow
-    $newProjectJS = @"
+    $jsContent = Get-Content $jsPath -Raw
+    if ($jsContent -like "*title: '$ProjectName'*") {
+        Write-Warning "El proyecto '$ProjectName' ya existe en js/main.js. Saltando inyección."
+    } else {
+        Write-Host "📝 Actualizando js/main.js..." -ForegroundColor Yellow
+        $newProjectJS = @"
   {
     title: '$ProjectName',
     title_en: '$ProjectName',
@@ -76,9 +80,9 @@ if (Test-Path $jsPath) {
     repoUrl: '$GitHubUrl'
   },
 "@
-    $jsContent = Get-Content $jsPath -Raw
-    $jsContent = $jsContent -replace 'const projects = \[', "const projects = [`n$newProjectJS"
-    Set-Content $jsPath $jsContent
+        $jsContent = $jsContent -replace 'const projects = \[', "const projects = [`n$newProjectJS"
+        Set-Content $jsPath $jsContent
+    }
 } else {
     Write-Error "No se encontró js/main.js en $jsPath."
 }
@@ -430,7 +434,7 @@ $htmlContent = @"
       function setList(id, items) {
         const el = document.getElementById(id);
         if (!el || !Array.isArray(items)) return;
-        el.innerHTML = items.map(item => "<li>" + item + "</li>").join("");
+        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
       }
 
       function applyLanguage(lang) {
@@ -439,9 +443,10 @@ $htmlContent = @"
         const langIndicator = document.getElementById("langIndicator");
         if(langIndicator) langIndicator.textContent = lang.toUpperCase();
 
-        Object.keys(t).forEach((key) => {
-          if (Array.isArray(t[key])) return;
-          setText(key, t[key]);
+        Object.keys(t).forEach(function(key) {
+          if (typeof t[key] === 'string') {
+            setText(key, t[key]);
+          }
         });
 
         setList("overviewCard2Body", t.overviewCard2Body);
