@@ -59,7 +59,20 @@ Para que el nuevo proyecto aparezca en tu sitio web:
 
 ---
 
-## 5. Mejores Prácticas
+## 5. Capturas de Pantalla Automáticas
+Ya no necesitas recortar manualmente las imágenes de Power BI. Hemos añadido un script que abre tu proyecto, toma la captura y la guarda en el lugar correcto.
+
+1. Termina de diseñar tu reporte en Power BI Desktop y guárdalo.
+2. Cierra Power BI (opcional, el script puede manejarlo).
+3. En PowerShell, ejecuta:
+   ```powershell
+   ./Update-Screenshot.ps1 -ProjectName "nombre-de-tu-proyecto"
+   ```
+4. El script abrirá Power BI, maximizará la ventana, tomará la captura y la guardará como `img/nombre-de-tu-proyecto.png`.
+
+---
+
+## 6. Mejores Prácticas
 - **Commits Claros:** Haz commits cuando termines una medida DAX compleja o un cambio visual importante. Git ahora puede leer esos cambios.
 - **Capturas de Pantalla:** Guarda siempre una captura principal en `assets/screenshots/` para usarla como portada en el sitio web.
 - **Documentación:** El script genera un `README.md` inicial; complétalo con el "Business Case" para impresionar a los reclutadores.

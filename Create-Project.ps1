@@ -499,4 +499,6 @@ if ($PushGit) {
 Write-Host "`n✨ ¡LISTO! El proyecto ha sido creado." -ForegroundColor Green
 Write-Host "📍 OneDrive: $projectPath"
 Write-Host "🌐 HTML generado en: $htmlPath"
-Write-Host "📸 IMPORTANTE: Para que la imagen aparezca, guarda tu captura como 'img/$ProjectName.png'." -ForegroundColor Cyan
+Write-Host "📸 AUTOMATIZACIÓN: Cuando termines tu reporte, puedes generar la captura automáticamente ejecutando:" -ForegroundColor Cyan
+Write-Host "   ./Update-Screenshot.ps1 -ProjectName '$ProjectName'" -ForegroundColor Green
+Write-Host "   (Esto abrirá Power BI, tomará la foto y la guardará en 'img/$ProjectName.png')" -ForegroundColor Gray
