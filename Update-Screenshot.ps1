@@ -15,11 +15,53 @@ $ErrorActionPreference = "Stop"
 # 1. CONFIGURACIÓN DE RUTAS
 $repoRoot = Get-Location
 $oneDrivePath = "C:\Users\antoi\OneDrive\MyPortfolio"
-$projectPath = Join-Path $oneDrivePath $ProjectName
-$pbipPath = Join-Path $projectPath "powerbi\$ProjectName.pbip"
+
+# Intentar encontrar el archivo .pbip real (con datos)
+$possiblePbipPaths = @(
+    (Join-Path $oneDrivePath "$ProjectName\powerbi\$ProjectName.pbip"),
+    (Join-Path $oneDrivePath "$ProjectName.pbip")
+)
+
+$pbipPath = ""
+foreach ($p in $possiblePbipPaths) {
+    if (Test-Path $p) {
+        $parentDir = Split-Path $p -Parent
+        $reportDir = Join-Path $parentDir "$ProjectName.Report"
+        $semanticDir = Join-Path $parentDir "$ProjectName.SemanticModel"
+        $datasetDir = Join-Path $parentDir "$ProjectName.Dataset"
+        
+        $hasData = $false
+        if (Test-Path $reportDir) { $hasData = $true }
+        if (Test-Path $semanticDir) { $hasData = $true }
+        if (Test-Path $datasetDir) { $hasData = $true }
+        
+        if ($hasData) {
+            $pbipPath = $p
+            break
+        }
+    }
+}
+
+if (-not $pbipPath) {
+    foreach ($p in $possiblePbipPaths) {
+        if (Test-Path $p) {
+            $pbipPath = $p
+            break
+        }
+    }
+}
+
 $outputPath = Join-Path $repoRoot "img\$ProjectName.png"
 
+if (-not $pbipPath) {
+    Write-Warning "No se encontró el archivo .pbip para el proyecto '$ProjectName'."
+    Write-Host "Proyectos disponibles en OneDrive:" -ForegroundColor Cyan
+    Get-ChildItem $oneDrivePath -Filter "*.pbip" | Select-Object -ExpandProperty Name | ForEach-Object { Write-Host " - $_" }
+    return
+}
+
 Write-Host "📸 Iniciando captura automática para: $ProjectName" -ForegroundColor Cyan
+Write-Host "📍 Usando archivo: $pbipPath" -ForegroundColor Gray
 
 # 2. LOCALIZAR POWER BI DESKTOP
 $pbiPath = ""
@@ -28,7 +70,6 @@ $possiblePaths = @(
     "${env:ProgramFiles(x86)}\Microsoft Power BI Desktop\bin\PBIDesktop.exe"
 )
 
-# Intentar buscar versión de la Tienda (Microsoft Store)
 $storeApp = Get-AppxPackage -Name *PowerBIDesktop* | Select-Object -ExpandProperty InstallLocation -First 1
 if ($storeApp) {
     $possiblePaths += Join-Path $storeApp "bin\PBIDesktop.exe"
@@ -42,20 +83,7 @@ foreach ($path in $possiblePaths) {
 }
 
 if (-not $pbiPath) {
-    Write-Error "No se pudo encontrar el ejecutable de Power BI Desktop. Por favor, verifica la instalación."
-    return
-}
-
-if (-not (Test-Path $projectPath)) {
-    Write-Warning "No se encontró la carpeta del proyecto en OneDrive: $projectPath"
-    $available = Get-ChildItem $oneDrivePath -Directory | Select-Object -ExpandProperty Name
-    Write-Host "Proyectos disponibles en OneDrive:" -ForegroundColor Cyan
-    $available | ForEach-Object { Write-Host " - $_" }
-    return
-}
-
-if (-not (Test-Path $pbipPath)) {
-    Write-Error "No se encontró el archivo .pbip en: $pbipPath"
+    Write-Error "No se pudo encontrar el ejecutable de Power BI Desktop."
     return
 }
 
@@ -84,17 +112,14 @@ $process = Start-Process $pbiPath -ArgumentList "`"$pbipPath`"" -PassThru
 Write-Host "⏳ Esperando $WaitTime segundos a que cargue el reporte..." -ForegroundColor Gray
 Start-Sleep -Seconds $WaitTime
 
-# 6. CAPTURAR LA CAPTURA
+# 6. CAPTURAR LA VENTANA
 try {
-    # Intentar obtener el handle de la ventana principal
     $handle = $process.MainWindowHandle
     $retryCount = 0
-    while ($handle -eq [IntPtr]::Zero -and $retryCount -lt 10) {
+    while ($handle -eq [IntPtr]::Zero -and $retryCount -lt 15) {
         Start-Sleep -Seconds 2
         $process.Refresh()
         $handle = $process.MainWindowHandle
-        
-        # Fallback: Buscar por nombre de proceso si el handle sigue siendo Zero
         if ($handle -eq [IntPtr]::Zero) {
             $p = Get-Process -Name "PBIDesktop" | Where-Object { $_.MainWindowTitle -like "*$ProjectName*" } | Select-Object -First 1
             if ($p) { $handle = $p.MainWindowHandle }
@@ -104,36 +129,25 @@ try {
 
     if ($handle -ne [IntPtr]::Zero) {
         Write-Host "📷 Capturando ventana..." -ForegroundColor Green
-        
-        # Maximizar y traer al frente
-        [Win32.Win32Window]::ShowWindow($handle, 3) # SW_MAXIMIZE = 3
+        [Win32.Win32Window]::ShowWindow($handle, 3) # Maximizar
         [Win32.Win32Window]::SetForegroundWindow($handle) | Out-Null
-        Start-Sleep -Seconds 3 # Tiempo para que la UI se estabilice tras maximizar
+        Start-Sleep -Seconds 5 # Tiempo para estabilizar el renderizado
 
-        # Obtener dimensiones
         $rect = New-Object Win32.Win32Window+RECT
         [Win32.Win32Window]::GetWindowRect($handle, [ref]$rect) | Out-Null
 
         $width = $rect.Right - $rect.Left
         $height = $rect.Bottom - $rect.Top
 
-        if ($width -le 0 -or $height -le 0) {
-            throw "Dimensiones de ventana inválidas ($width x $height)."
+        if ($width -gt 0 -and $height -gt 0) {
+            $bmp = New-Object System.Drawing.Bitmap($width, $height)
+            $graphics = [System.Drawing.Graphics]::FromImage($bmp)
+            $graphics.CopyFromScreen($rect.Left, $rect.Top, 0, 0, $bmp.Size)
+            $bmp.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
+            Write-Host "✅ Captura guardada con éxito en: $outputPath" -ForegroundColor Green
         }
-
-        # Capturar el área
-        $bmp = New-Object System.Drawing.Bitmap($width, $height)
-        $graphics = [System.Drawing.Graphics]::FromImage($bmp)
-        $graphics.CopyFromScreen($rect.Left, $rect.Top, 0, 0, $bmp.Size)
-
-        # Guardar archivo
-        $bmp.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
-        Write-Host "✅ Captura guardada con éxito en: $outputPath" -ForegroundColor Green
-        
-        # Mostrar en el explorador (opcional)
-        # explorer.exe /select,$outputPath
     } else {
-        Write-Warning "No se pudo detectar la ventana de Power BI a tiempo. Intenta aumentar el tiempo de espera (-WaitTime)."
+        Write-Warning "No se pudo detectar la ventana de Power BI."
     }
 }
 catch {
@@ -143,10 +157,7 @@ finally {
     if (-not $KeepOpen) {
         Write-Host "🛑 Cerrando Power BI Desktop..." -ForegroundColor Yellow
         Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
-    } else {
-        Write-Host "💡 Power BI Desktop se mantiene abierto." -ForegroundColor Gray
     }
-    
     if ($graphics) { $graphics.Dispose() }
     if ($bmp) { $bmp.Dispose() }
 }
