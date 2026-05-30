@@ -40,11 +40,31 @@ if (-not ([System.Management.Automation.PSTypeName]'Win32.DpiUtils').Type) {
 $physicalWidth = [Win32.DpiUtils]::GetSystemMetrics(0)
 $physicalHeight = [Win32.DpiUtils]::GetSystemMetrics(1)
 
-# LOCALIZAR ARCHIVO
+# --- LOCALIZAR ARCHIVO (v5.3 - Más robusto) ---
+$cleanName = $ProjectName -replace "\.pbix$|\.pbip$", ""
 $bestPath = ""
-$p1 = Join-Path $oneDrivePath "$ProjectName.pbix"
-$p2 = Join-Path $oneDrivePath "$ProjectName.pbip"
-if (Test-Path $p1) { $bestPath = $p1 } elseif (Test-Path $p2) { $bestPath = $p2 }
+
+# Intentar varias combinaciones
+$p1 = Join-Path $oneDrivePath "$cleanName.pbix"
+$p2 = Join-Path $oneDrivePath "$cleanName.pbip"
+
+if (Test-Path $p1) { 
+    $bestPath = $p1 
+} elseif (Test-Path $p2) { 
+    $bestPath = $p2 
+} else {
+    # Búsqueda difusa si no es exacto
+    $files = Get-ChildItem $oneDrivePath -Include "*.pbix", "*.pbip" -Recurse -ErrorAction SilentlyContinue
+    $match = $files | Where-Object { $_.Name -like "*$cleanName*" } | Select-Object -First 1
+    if ($match) { $bestPath = $match.FullName }
+}
+
+if (-not $bestPath) {
+    Write-Warning "No se pudo encontrar el archivo para '$ProjectName'."
+    Write-Host "`nArchivos disponibles en OneDrive:" -ForegroundColor Cyan
+    Get-ChildItem $oneDrivePath -Include "*.pbix", "*.pbip" | Select-Object Name | ForEach-Object { Write-Host " - $($_.Name)" }
+    return
+}
 
 # LOCALIZAR PBI
 $pbiPath = "${env:ProgramFiles}\Microsoft Power BI Desktop\bin\PBIDesktop.exe"
@@ -68,7 +88,11 @@ try {
         Write-Host "2. Haz clic dentro del reporte para dar foco." -ForegroundColor Yellow
         for ($c = 5; $c -gt 0; $c--) { Write-Host "Capturando en $c..."; Start-Sleep -Seconds 1 }
 
-        $currentOutput = Join-Path $repoRoot "img\$ProjectName$suffix.png"
+        # Definir nombre de salida basado en el nombre del proyecto dado por el usuario
+        # Esto asegura que si usas -Page 2, se guarde como nombre-2.png
+        $outputBaseName = $ProjectName -replace "\.pbix$|\.pbip$", ""
+        $currentOutput = Join-Path $repoRoot "img\$outputBaseName$suffix.png"
+        
         [Win32.DpiUtils]::SetForegroundWindow($handle) | Out-Null
         Start-Sleep -Seconds 2
 

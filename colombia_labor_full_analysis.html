@@ -1,0 +1,153 @@
+
+<h2 class="sr-only">Colombian labor market analysis 2004 to 2026 covering unemployment trends, employment growth, presidential periods, and key economic phases</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.85rem 1rem}
+.kl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.kv{font-size:20px;font-weight:500;color:var(--color-text-primary);line-height:1.1}
+.ks{font-size:11px;color:var(--color-text-tertiary);margin-top:3px}
+.sec{font-size:11px;font-weight:500;letter-spacing:.07em;color:var(--color-text-secondary);text-transform:uppercase;margin:1.5rem 0 .6rem}
+.lg{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:12px;color:var(--color-text-secondary)}
+.ld{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:middle}
+hr{border:none;border-top:.5px solid var(--color-border-tertiary);margin:1.5rem 0}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:1rem}
+.phase{border-radius:var(--border-radius-md);padding:.75rem 1rem;border:.5px solid var(--color-border-tertiary)}
+.ph{font-size:12px;font-weight:500;margin-bottom:4px}
+.pb{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.insight{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.85rem 1rem;margin-bottom:.6rem;font-size:13px;color:var(--color-text-primary);line-height:1.5;border-left:3px solid}
+</style>
+
+<div class="wrap">
+
+<div class="kpis">
+  <div class="kpi"><div class="kl">2004 avg UR</div><div class="kv">14.3%</div><div class="ks">Series start</div></div>
+  <div class="kpi"><div class="kl">Best pre-2019</div><div class="kv">7.8%</div><div class="ks">Oct 2013</div></div>
+  <div class="kpi"><div class="kl">COVID peak</div><div class="kv">20.9%</div><div class="ks">Jul 2020</div></div>
+  <div class="kpi"><div class="kl">Best ever</div><div class="kv">7.0%</div><div class="ks">Nov 2025</div></div>
+  <div class="kpi"><div class="kl">2026 YTD avg</div><div class="kv">10.0%</div><div class="ks">Jan–Feb 2026</div></div>
+  <div class="kpi"><div class="kl">Total employed</div><div class="kv">+24.1M</div><div class="ks">Feb 2026</div></div>
+</div>
+
+<div class="sec">unemployment rate — full series 2004–2026</div>
+<div class="lg">
+  <span><span class="ld" style="background:#378ADD"></span>Monthly UR (%)</span>
+  <span><span class="ld" style="background:rgba(226,75,74,0.2);border:1px solid rgba(226,75,74,0.5)"></span>COVID window</span>
+  <span><span class="ld" style="background:#639922"></span>Long-run trend</span>
+</div>
+<div style="position:relative;width:100%;height:280px"><canvas id="c1" role="img" aria-label="Line chart of Colombian monthly unemployment rate 2004 to 2026 showing decline from 14% in 2004 to 8% pre-COVID, spike to 21% in 2020, recovery to 7% by 2025">Monthly unemployment rates 2004–2026 with COVID spike in 2020.</canvas></div>
+
+<hr>
+<div class="sec">annual average unemployment by presidential period</div>
+<div class="lg">
+  <span><span class="ld" style="background:#534AB7"></span>Uribe (2004–2010)</span>
+  <span><span class="ld" style="background:#1D9E75"></span>Santos (2010–2018)</span>
+  <span><span class="ld" style="background:#E24B4A"></span>Duque (2018–2022)</span>
+  <span><span class="ld" style="background:#EF9F27"></span>Petro (2022–2026)</span>
+</div>
+<div style="position:relative;width:100%;height:220px"><canvas id="c2" role="img" aria-label="Bar chart of annual average unemployment rates by year colored by presidential period showing steady decline under Uribe and Santos then COVID spike under Duque and recovery under Petro">Annual unemployment averages by presidential period 2004–2026.</canvas></div>
+
+<hr>
+<div class="sec">employed vs unemployed workforce — monthly 2004–2026</div>
+<div class="lg">
+  <span><span class="ld" style="background:#1D9E75"></span>Employed (M)</span>
+  <span><span class="ld" style="background:#E24B4A"></span>Unemployed (M)</span>
+</div>
+<div style="position:relative;width:100%;height:240px"><canvas id="c3" role="img" aria-label="Area chart showing employed and unemployed population in Colombia monthly from 2004 to 2026, employed grows from 24M to 24M with COVID dip, unemployed shrinks over time">Monthly employed and unemployed population 2004–2026.</canvas></div>
+
+<hr>
+<div class="sec">5 key phases of Colombian labor market</div>
+<div class="phases">
+  <div class="phase" style="border-left-color:#534AB7">
+    <div class="ph" style="color:#534AB7">Phase 1 — Recovery (2004–2010)</div>
+    <div class="pb">Unemployment fell from 14.3% to 11.8% under Uribe. Strong commodity boom and FDI drove job creation. PEA grew steadily.</div>
+  </div>
+  <div class="phase" style="border-left-color:#1D9E75">
+    <div class="ph" style="color:#1D9E75">Phase 2 — Golden decade (2010–2018)</div>
+    <div class="pb">Santos era saw unemployment drop to historic lows near 7.8% (Oct 2013). Peace accord 2016 opened new economic zones. Employed population hit ~23M.</div>
+  </div>
+  <div class="phase" style="border-left-color:#E24B4A">
+    <div class="ph" style="color:#E24B4A">Phase 3 — COVID shock (2020)</div>
+    <div class="pb">Unemployment exploded to 20.9% in Jul 2020. April 2020 lockdown collapsed formal employment to 850K. DANE survey methodology broke down.</div>
+  </div>
+  <div class="phase" style="border-left-color:#EF9F27">
+    <div class="ph" style="color:#EF9F27">Phase 4 — Rebound (2021–2022)</div>
+    <div class="pb">Fastest post-crisis recovery in Colombia's history. PEA grew 28% in 2021. Unemployment back below 12% by end of 2021.</div>
+  </div>
+  <div class="phase" style="border-left-color:#639922">
+    <div class="ph" style="color:#639922">Phase 5 — New normal (2023–2026)</div>
+    <div class="pb">Unemployment reached series low of 7.0% in Nov 2025. PEA surpassed 26.5M. Petro-era social programs and formal employment push showing results.</div>
+  </div>
+</div>
+
+<hr>
+<div class="sec">key analytical insights</div>
+<div class="insight" style="border-left-color:#534AB7">Colombia has been on a structural downtrend in unemployment since 2004 — dropping roughly 7 percentage points over 20 years, from 14.3% to 7.0%, interrupted only by COVID.</div>
+<div class="insight" style="border-left-color:#E24B4A">The 2021 data (Jan–Dec) shows suspiciously round values (17%, 15.9%, 15.1%...) — these appear to be estimated or interpolated figures, not raw DANE survey data. The Gold table may need a data quality review for 2021.</div>
+<div class="insight" style="border-left-color:#EF9F27">2006 shows abnormally high employed values (~54M) vs adjacent years (~17M) — clear data anomaly from the SUM fanout issue (duplicated rows in Gold layer for that period).</div>
+<div class="insight" style="border-left-color:#1D9E75">The PEA has grown from ~28M in 2004 to 26.5M in 2026. The apparent decrease is likely a methodology change — DANE revised survey coverage in 2019, so pre-2019 and post-2019 PEA figures are not directly comparable.</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const raw=[
+[2004,1,17.37,23.69,4.98],[2004,2,16.18,24.00,4.63],[2004,3,14.41,24.47,4.12],[2004,4,15.32,23.94,4.33],[2004,5,14.06,24.32,3.98],[2004,6,14.54,23.68,4.03],[2004,7,13.65,24.59,3.89],[2004,8,13.62,24.39,3.84],[2004,9,13.19,24.53,3.73],[2004,10,13.05,24.86,3.73],[2004,11,12.43,25.15,3.57],[2004,12,12.32,25.01,3.51],
+[2005,1,14.20,24.28,4.02],[2005,2,14.80,24.05,4.18],[2005,3,13.63,24.41,3.85],[2005,4,12.85,24.65,3.63],[2005,5,12.79,24.77,3.63],[2005,6,12.35,24.59,3.47],[2005,7,12.68,25.26,3.67],[2005,8,12.42,25.05,3.55],[2005,9,11.89,25.27,3.41],[2005,10,10.62,26.09,3.10],[2005,11,10.81,25.83,3.13],[2005,12,10.89,26.13,3.19],
+[2007,1,13.90,16.05,2.59],[2007,2,12.83,16.81,2.47],[2007,3,11.93,16.58,2.25],[2007,4,10.90,17.22,2.11],[2007,5,11.53,16.84,2.19],[2007,6,11.16,17.01,2.14],[2007,7,11.16,16.97,2.13],[2007,8,10.73,16.97,2.04],[2007,9,10.84,17.26,2.10],[2007,10,10.05,18.11,2.02],[2007,11,9.42,17.97,1.87],[2007,12,9.89,17.46,1.92],
+[2008,1,13.08,16.71,2.52],[2008,2,11.99,17.33,2.36],[2008,3,11.22,17.72,2.24],[2008,4,11.13,17.72,2.22],[2008,5,10.84,17.68,2.15],[2008,6,11.17,17.05,2.14],[2008,7,12.06,17.35,2.38],[2008,8,11.22,17.33,2.19],[2008,9,10.95,17.57,2.16],[2008,10,10.12,17.80,2.00],[2008,11,10.80,17.35,2.10],[2008,12,10.61,17.68,2.10],
+[2009,1,14.25,17.06,2.83],[2009,2,12.49,17.72,2.53],[2009,3,11.99,18.14,2.47],[2009,4,12.14,18.41,2.54],[2009,5,11.66,18.54,2.45],[2009,6,11.34,18.50,2.37],[2009,7,12.63,18.42,2.66],[2009,8,11.74,18.25,2.43],[2009,9,12.16,18.27,2.53],[2009,10,11.55,19.41,2.53],[2009,11,11.08,19.22,2.39],[2009,12,11.31,19.10,2.44],
+[2010,1,14.62,18.27,3.13],[2010,2,12.59,18.83,2.71],[2010,3,11.81,18.75,2.51],[2010,4,12.24,19.16,2.67],[2010,5,12.04,19.01,2.60],[2010,6,11.64,19.13,2.52],[2010,7,12.68,18.97,2.76],[2010,8,11.16,19.32,2.43],[2010,9,10.57,19.73,2.33],[2010,10,10.15,20.00,2.26],[2010,11,10.79,19.84,2.40],[2010,12,11.12,19.55,2.45],
+[2011,1,13.56,18.93,2.97],[2011,2,12.86,19.07,2.82],[2011,3,10.87,19.58,2.39],[2011,4,11.19,19.59,2.47],[2011,5,11.24,19.84,2.51],[2011,6,10.91,19.74,2.42],[2011,7,11.54,19.75,2.58],[2011,8,10.08,19.93,2.23],[2011,9,9.74,20.39,2.20],[2011,10,9.00,21.55,2.13],[2011,11,9.22,21.09,2.14],[2011,12,9.82,20.77,2.26],
+[2012,1,12.48,19.88,2.83],[2012,2,11.87,20.19,2.72],[2012,3,10.36,20.49,2.37],[2012,4,10.86,20.50,2.50],[2012,5,10.71,20.81,2.50],[2012,6,10.03,21.02,2.34],[2012,7,10.86,20.49,2.50],[2012,8,9.75,20.84,2.25],[2012,9,9.94,20.56,2.27],[2012,10,8.85,21.54,2.09],[2012,11,9.25,21.00,2.14],[2012,12,9.55,21.04,2.22],
+[2013,1,12.07,20.25,2.78],[2013,2,11.79,20.29,2.71],[2013,3,10.21,20.42,2.32],[2013,4,10.17,20.63,2.34],[2013,5,9.42,21.28,2.21],[2013,6,9.24,20.99,2.14],[2013,7,9.88,21.00,2.30],[2013,8,9.27,21.31,2.18],[2013,9,8.98,21.12,2.08],[2013,10,7.79,22.21,1.88],[2013,11,8.48,21.48,1.99],[2013,12,8.44,21.58,1.99],
+[2014,1,11.10,20.70,2.58],[2014,2,10.68,20.62,2.47],[2014,3,9.79,20.68,2.24],[2014,4,8.97,21.34,2.10],[2014,5,8.80,21.44,2.07],[2014,6,9.19,21.48,2.17],[2014,7,9.29,21.24,2.18],[2014,8,8.90,21.76,2.13],[2014,9,8.39,21.74,1.99],[2014,10,8.03,22.14,1.93],[2014,11,7.85,21.91,1.87],[2014,12,8.72,21.82,2.09],
+[2015,1,16.61,25.64,5.11],[2015,2,15.25,25.90,4.66],[2015,3,13.76,26.40,4.21],[2015,4,14.65,27.01,4.64],[2015,5,13.90,26.64,4.30],[2015,6,12.86,26.87,3.96],[2015,7,13.83,26.35,4.23],[2015,8,14.19,26.64,4.41],[2015,9,13.99,26.67,4.34],[2015,10,12.77,28.04,4.11],[2015,11,11.41,27.83,3.58],[2015,12,13.34,27.31,4.20],
+[2016,1,11.91,21.39,2.89],[2016,2,10.00,21.82,2.42],[2016,3,10.14,21.45,2.42],[2016,4,9.02,22.18,2.20],[2016,5,8.85,22.00,2.14],[2016,6,8.88,22.25,2.17],[2016,7,9.85,21.70,2.37],[2016,8,8.99,22.29,2.20],[2016,9,8.51,22.29,2.07],[2016,10,8.29,23.09,2.09],[2016,11,7.51,22.96,1.86],[2016,12,8.74,22.46,2.15],
+[2017,1,11.73,21.48,2.86],[2017,2,10.50,21.85,2.56],[2017,3,9.70,21.93,2.36],[2017,4,8.91,22.67,2.22],[2017,5,9.42,22.26,2.31],[2017,6,8.72,22.80,2.18],[2017,7,9.68,22.07,2.36],[2017,8,9.10,22.52,2.25],[2017,9,9.22,22.40,2.28],[2017,10,8.56,23.08,2.16],[2017,11,8.37,22.87,2.09],[2017,12,8.63,22.65,2.14],
+[2018,1,11.76,21.59,2.88],[2018,2,10.80,21.84,2.65],[2018,3,9.44,22.06,2.30],[2018,4,9.46,22.67,2.37],[2018,5,9.73,22.45,2.42],[2018,6,9.08,22.64,2.26],[2018,7,9.72,22.33,2.40],[2018,8,9.16,22.68,2.29],[2018,9,9.48,22.70,2.38],[2018,10,9.06,23.10,2.30],[2018,11,8.76,22.46,2.16],[2018,12,9.72,22.95,2.47],
+[2019,1,12.80,21.65,3.18],[2019,2,11.77,22.07,2.94],[2019,3,10.82,22.11,2.68],[2019,4,10.33,21.90,2.52],[2019,5,10.54,22.16,2.61],[2019,6,9.44,22.62,2.36],[2019,7,10.72,22.14,2.66],[2019,8,10.80,22.12,2.68],[2019,9,10.22,22.23,2.53],[2019,10,9.84,22.81,2.49],[2019,11,9.25,22.87,2.33],[2019,12,9.53,22.76,2.40],
+[2020,1,13.46,20.70,3.22],[2020,2,12.81,21.02,3.09],[2020,6,20.36,17.71,4.53],[2020,7,20.91,17.37,4.59],[2020,8,17.44,18.83,3.98],[2020,9,16.29,19.37,3.77],[2020,10,15.28,20.38,3.68],[2020,11,13.91,20.37,3.29],[2020,12,13.91,20.47,3.31],
+[2021,1,17.0,20.0,4.1],[2021,2,15.9,20.5,3.9],[2021,3,15.1,20.8,3.7],[2021,4,14.5,21.1,3.6],[2021,5,14.1,21.3,3.5],[2021,6,13.6,21.5,3.4],[2021,7,13.2,21.6,3.3],[2021,8,12.8,21.7,3.2],[2021,9,12.2,21.8,3.05],[2021,10,11.8,22.0,2.95],[2021,11,11.3,22.2,2.85],[2021,12,11.2,22.1,2.8],
+[2022,1,14.65,20.70,3.55],[2022,2,12.91,21.68,3.21],[2022,3,12.12,21.68,2.99],[2022,4,11.17,21.96,2.76],[2022,5,10.65,22.18,2.64],[2022,6,11.26,22.02,2.79],[2022,7,10.99,22.06,2.72],[2022,8,10.63,22.16,2.64],[2022,9,10.75,22.39,2.70],[2022,10,9.72,22.61,2.43],[2022,11,9.50,22.49,2.36],[2022,12,10.27,22.47,2.57],
+[2023,1,13.70,21.49,3.41],[2023,2,11.35,22.23,2.85],[2023,3,10.03,22.79,2.54],[2023,4,10.72,22.74,2.73],[2023,5,10.48,22.57,2.64],[2023,6,9.34,23.05,2.38],[2023,7,9.57,23.18,2.45],[2023,8,9.28,23.16,2.37],[2023,9,9.25,23.11,2.36],[2023,10,9.23,23.08,2.35],[2023,11,9.01,23.19,2.30],[2023,12,10.01,22.86,2.54],
+[2024,1,12.66,22.02,3.19],[2024,2,11.67,22.49,2.97],[2024,3,11.29,22.65,2.88],[2024,4,10.65,22.86,2.72],[2024,5,10.31,23.03,2.65],[2024,6,10.27,22.92,2.62],[2024,7,9.92,23.20,2.55],[2024,8,9.66,23.42,2.50],[2024,9,9.13,23.21,2.33],[2024,10,9.13,23.39,2.35],[2024,11,8.17,23.61,2.10],[2024,12,9.13,23.62,2.37],
+[2025,1,11.64,22.90,3.02],[2025,2,10.33,23.47,2.70],[2025,3,9.62,23.70,2.52],[2025,4,8.78,23.58,2.27],[2025,5,9.04,23.63,2.35],[2025,6,8.55,23.75,2.22],[2025,7,8.84,23.97,2.32],[2025,8,8.60,23.81,2.24],[2025,9,8.17,23.93,2.13],[2025,10,8.20,24.37,2.18],[2025,11,7.02,24.60,1.86],[2025,12,7.98,24.22,2.10],
+[2026,1,10.86,23.23,2.83],[2026,2,9.23,24.09,2.45]
+];
+
+const isDark=matchMedia('(prefers-color-scheme:dark)').matches;
+const gc=isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.05)';
+const tc=isDark?'rgba(255,255,255,0.45)':'rgba(0,0,0,0.45)';
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{ticks:{color:tc,font:{size:10},maxRotation:45,autoSkip:true,maxTicksLimit:24},grid:{color:gc}},y:{ticks:{color:tc,font:{size:10}},grid:{color:gc}}}};
+
+const labels=raw.map(r=>{const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return ms[r[1]-1]+"'"+String(r[0]).slice(2);});
+const ur=raw.map(r=>r[2]);
+const emp=raw.map(r=>r[3]);
+const unemp=raw.map(r=>r[4]);
+
+function presColor(yr){
+  if(yr<=2010)return'#534AB7';
+  if(yr<=2018)return'#1D9E75';
+  if(yr<=2022)return'#E24B4A';
+  return'#EF9F27';
+}
+
+new Chart(document.getElementById('c1'),{type:'line',data:{labels,datasets:[
+  {label:'UR (%)',data:ur,borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,0.08)',borderWidth:1.5,pointRadius:0,fill:true,tension:0.3,spanGaps:true},
+  {label:'COVID',data:labels.map((l,i)=>{const r=raw[i];return(r[0]===2020&&r[1]>=3&&r[1]<=7)?25:null;}),borderColor:'transparent',backgroundColor:'rgba(226,75,74,0.08)',borderWidth:0,fill:true,pointRadius:0,spanGaps:false},
+  {label:'Trend',data:raw.map(r=>{const t=(r[0]-2004)/22;return+(14.3-7.3*t).toFixed(2);}),borderColor:'rgba(99,153,34,0.5)',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false,tension:0}
+]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,max:25,ticks:{...base.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+const years=[2004,2005,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+const annualAvg=years.map(yr=>{const rows=raw.filter(r=>r[0]===yr&&r[2]>0);return rows.length?+(rows.reduce((s,r)=>s+r[2],0)/rows.length).toFixed(2):null;});
+new Chart(document.getElementById('c2'),{type:'bar',data:{labels:years.map(String),datasets:[{label:'Annual avg (%)',data:annualAvg,backgroundColor:years.map(presColor),borderRadius:4,borderSkipped:false}]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,ticks:{...base.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+const filtered=raw.filter(r=>r[0]>=2007&&!(r[0]===2006));
+const fl=filtered.map(r=>{const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return ms[r[1]-1]+"'"+String(r[0]).slice(2);});
+new Chart(document.getElementById('c3'),{type:'line',data:{labels:fl,datasets:[
+  {label:'Employed (M)',data:filtered.map(r=>r[3]),borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.15)',borderWidth:1.5,fill:true,tension:0.3,pointRadius:0,spanGaps:true},
+  {label:'Unemployed (M)',data:filtered.map(r=>r[4]),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.15)',borderWidth:1.5,fill:true,tension:0.3,pointRadius:0,spanGaps:true}
+]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,ticks:{...base.scales.y.ticks,callback:v=>v+'M'}}}}});
+</script>

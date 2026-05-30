@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Data Engineering Labor Market Colombia case study" />
-  <title>Data Engineering - Colombian Labor Market</title>
+  <meta name="description" content="Análisis de Ingeniería de Datos y Mercado Laboral en Colombia" />
+  <title>Colombian Labor Market Analysis - Portfolio</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +17,8 @@
       --case-text: var(--text-primary, #0f172a);
       --case-text-soft: var(--text-secondary, #475569);
       --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
-      --case-accent: var(--accent-color, #22d3ee);
-      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-accent: var(--accent-color, #378ADD);
+      --case-accent-strong: var(--primary-color, #0C447C);
       --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
       --case-radius: 24px;
       --case-max: 1180px;
@@ -31,473 +31,56 @@
       --case-text: #e5eef8;
       --case-text-soft: #a8b7cc;
       --case-border: rgba(148, 163, 184, 0.18);
-      --case-accent: #67e8f9;
-      --case-accent-strong: #22d3ee;
+      --case-accent: #378ADD;
+      --case-accent-strong: #B5D4F4;
       --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Inter", sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%),
-        radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%),
-        var(--case-bg);
-      color: var(--case-text);
-      transition: background-color 0.25s ease, color 0.25s ease;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .case-page {
-      min-height: 100vh;
-    }
-
-    .case-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      backdrop-filter: blur(14px);
-      background: color-mix(in srgb, var(--case-bg) 86%, transparent);
-      border-bottom: 1px solid var(--case-border);
-    }
-
-    .case-topbar-inner {
-      max-width: var(--case-max);
-      margin: 0 auto;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .case-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      color: var(--case-text);
-      opacity: 0.94;
-    }
-
-    .case-top-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .case-theme-pill,
-    .case-lang-pill {
-      border: 1px solid var(--case-border);
-      background: var(--case-surface);
-      color: var(--case-text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      box-shadow: var(--case-shadow);
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .case-theme-pill:hover,
-    .case-lang-pill:hover {
-      background: var(--case-surface-alt);
-    }
-
-    .case-hero {
-      max-width: var(--case-max);
-      margin: 0 auto;
-      padding: 56px 20px 28px;
-    }
-
-    .case-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: color-mix(in srgb, var(--case-accent) 18%, transparent);
-      color: var(--case-accent-strong);
-      border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent);
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-weight: 700;
-      font-size: 0.92rem;
-      margin-bottom: 20px;
-    }
-
-    .case-hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .case-hero-main,
-    .case-hero-side {
-      background: var(--case-surface);
-      border: 1px solid var(--case-border);
-      border-radius: var(--case-radius);
-      box-shadow: var(--case-shadow);
-    }
-
-    .case-hero-main {
-      padding: 34px;
-    }
-
-    .case-title {
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 4vw, 3.35rem);
-      line-height: 1.06;
-      letter-spacing: -0.04em;
-    }
-
-    .case-summary {
-      margin: 0;
-      font-size: 1.08rem;
-      line-height: 1.75;
-      color: var(--case-text-soft);
-      max-width: 62ch;
-    }
-
-    .case-key-metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .case-chip {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--case-surface-alt);
-      border: 1px solid var(--case-border);
-      color: var(--case-text);
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
-
-    .case-hero-side {
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      justify-content: space-between;
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
-    .meta-card {
-      border: 1px solid var(--case-border);
-      background: var(--case-surface-alt);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .meta-label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--case-text-soft);
-      font-weight: 700;
-    }
-
-    .meta-value {
-      margin: 0;
-      line-height: 1.6;
-      color: var(--case-text);
-      font-weight: 600;
-    }
-
-    .case-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .case-btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 18px;
-      border-radius: 14px;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
-    }
-
-    .case-btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.96;
-    }
-
-    .case-btn-primary {
-      background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent));
-      color: #06202b;
-    }
-
-    .case-btn-secondary {
-      background: transparent;
-      border-color: var(--case-border);
-      color: var(--case-text);
-    }
-
-    .case-content {
-      max-width: var(--case-max);
-      margin: 0 auto;
-      padding: 10px 20px 72px;
-    }
-
-    .content-section {
-      margin-top: 26px;
-      background: var(--case-surface);
-      border: 1px solid var(--case-border);
-      border-radius: var(--case-radius);
-      box-shadow: var(--case-shadow);
-      padding: 30px;
-    }
-
-    .section-kicker {
-      display: inline-block;
-      margin-bottom: 12px;
-      color: var(--case-accent-strong);
-      font-size: 0.86rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .section-title {
-      margin: 0 0 12px;
-      font-size: clamp(1.35rem, 2vw, 2rem);
-      letter-spacing: -0.03em;
-    }
-
-    .section-intro {
-      margin: 0;
-      color: var(--case-text-soft);
-      line-height: 1.8;
-      font-size: 1rem;
-    }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .overview-card {
-      background: var(--case-surface-alt);
-      border: 1px solid var(--case-border);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .overview-card h3 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-    }
-
-    .overview-card p,
-    .overview-card li {
-      margin: 0;
-      color: var(--case-text-soft);
-      line-height: 1.75;
-    }
-
-    .overview-card ul {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .chart-group {
-      margin-top: 30px;
-    }
-
-    .chart-group-title {
-      margin: 0 0 8px;
-      font-size: 1.25rem;
-      letter-spacing: -0.02em;
-    }
-
-    .chart-group-copy {
-      margin: 0 0 18px;
-      color: var(--case-text-soft);
-      line-height: 1.75;
-    }
-
-    .chart-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .chart-card {
-      overflow: hidden;
-      border-radius: 22px;
-      border: 1px solid var(--case-border);
-      background: var(--case-surface-alt);
-    }
-
-    .chart-image-wrap {
-      padding: 18px;
-      border-bottom: 1px solid var(--case-border);
-      background: color-mix(in srgb, var(--case-surface) 88%, transparent);
-    }
-
-    .chart-image {
-      width: 100%;
-      height: auto;
-      border-radius: 16px;
-      border: 1px solid var(--case-border);
-      background: #ffffff;
-    }
-
-    .chart-body {
-      padding: 22px;
-    }
-
-    .chart-index {
-      display: inline-block;
-      margin-bottom: 10px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--case-accent-strong);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .chart-title {
-      margin: 0 0 12px;
-      font-size: 1.18rem;
-      letter-spacing: -0.02em;
-    }
-
-    .chart-copy {
-      margin: 0;
-      color: var(--case-text-soft);
-      line-height: 1.8;
-    }
-
-    .chart-copy + .chart-copy {
-      margin-top: 10px;
-    }
-
-    .recommendations-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 22px;
-    }
-
-    .recommendation-card {
-      background: var(--case-surface-alt);
-      border: 1px solid var(--case-border);
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .recommendation-card h3 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-    }
-
-    .recommendation-card p {
-      margin: 0;
-      color: var(--case-text-soft);
-      line-height: 1.75;
-    }
-
-    .case-footer {
-      max-width: var(--case-max);
-      margin: 0 auto;
-      padding: 0 20px 72px;
-    }
-
-    .case-footer-box {
-      background: var(--case-surface);
-      border: 1px solid var(--case-border);
-      border-radius: var(--case-radius);
-      box-shadow: var(--case-shadow);
-      padding: 26px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .case-footer-copy {
-      margin: 0;
-      color: var(--case-text-soft);
-      line-height: 1.75;
-      max-width: 58ch;
-    }
-
-    @media (max-width: 960px) {
-      .case-hero-grid,
-      .overview-grid,
-      .recommendations-list {
-        grid-template-columns: 1fr;
-      }
-
-      .case-hero-main,
-      .case-hero-side,
-      .content-section,
-      .case-footer-box {
-        padding: 22px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .case-topbar-inner,
-      .case-hero,
-      .case-content,
-      .case-footer {
-        padding-left: 16px;
-        padding-right: 16px;
-      }
-
-      .case-title {
-        font-size: 2rem;
-      }
-
-      .case-summary {
-        font-size: 1rem;
-      }
-
-      .case-actions,
-      .case-top-actions {
-        width: 100%;
-      }
-
-      .case-btn,
-      .case-theme-pill,
-      .case-lang-pill {
-        width: 100%;
-      }
-    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", sans-serif; background: var(--case-bg); color: var(--case-text); transition: background-color 0.25s ease, color 0.25s ease; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .case-page { min-height: 100vh; }
+    .case-topbar { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--case-bg) 86%, transparent); border-bottom: 1px solid var(--case-border); }
+    .case-topbar-inner { max-width: var(--case-max); margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .case-back { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--case-text); }
+    .case-top-actions { display: flex; align-items: center; gap: 12px; }
+    .case-theme-pill, .case-lang-pill { border: 1px solid var(--case-border); background: var(--case-surface); color: var(--case-text); padding: 10px 14px; border-radius: 999px; font-size: 0.92rem; font-weight: 600; cursor: pointer; }
+    
+    .case-hero { max-width: var(--case-max); margin: 0 auto; padding: 56px 20px 28px; }
+    .case-badge { display: inline-flex; align-items: center; gap: 10px; background: color-mix(in srgb, var(--case-accent) 18%, transparent); color: var(--case-accent); border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent); border-radius: 999px; padding: 10px 16px; font-weight: 700; font-size: 0.92rem; margin-bottom: 20px; }
+    .case-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; }
+    .case-hero-main { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); padding: 34px; box-shadow: var(--case-shadow); }
+    .case-title { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.06; letter-spacing: -0.04em; }
+    .case-summary { margin: 0; font-size: 1.08rem; line-height: 1.75; color: var(--case-text-soft); }
+    .case-hero-side { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); padding: 26px; display: flex; flex-direction: column; gap: 18px; box-shadow: var(--case-shadow); }
+    
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+    .kpi-box { background: var(--case-surface-alt); padding: 16px; border-radius: 16px; border: 1px solid var(--case-border); text-align: center; }
+    .kpi-box-val { display: block; font-size: 1.5rem; font-weight: 800; color: var(--case-accent); }
+    .kpi-box-lbl { display: block; font-size: 0.75rem; color: var(--case-text-soft); text-transform: uppercase; margin-top: 4px; font-weight: 600; }
+
+    .case-content { max-width: var(--case-max); margin: 0 auto; padding: 10px 20px 72px; }
+    .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); padding: 30px; box-shadow: var(--case-shadow); }
+    .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent); font-size: 0.86rem; font-weight: 800; text-transform: uppercase; }
+    .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); }
+
+    .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+    .phase-card { background: var(--case-surface-alt); padding: 20px; border-radius: 20px; border-left: 4px solid var(--case-accent); }
+    .phase-title { font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+    .phase-copy { font-size: 0.9rem; color: var(--case-text-soft); line-height: 1.5; }
+
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
+    .chart-card { overflow: hidden; border-radius: 22px; border: 1px solid var(--case-border); background: var(--case-surface-alt); }
+    .chart-image-wrap { padding: 12px; border-bottom: 1px solid var(--case-border); background: #ffffff; }
+    .chart-image { width: 100%; height: auto; border-radius: 12px; }
+    .chart-body { padding: 30px; }
+
+    .insight-list { list-style: none; padding: 0; margin: 20px 0; }
+    .insight-list li { position: relative; padding-left: 28px; margin-bottom: 16px; color: var(--case-text-soft); line-height: 1.6; }
+    .insight-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-weight: 800; }
+
+    @media (max-width: 960px) { .case-hero-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -505,276 +88,78 @@
     <header class="case-topbar">
       <div class="case-topbar-inner">
         <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
-
         <div class="case-top-actions">
-          <button class="case-lang-pill" id="langIndicator" aria-label="Toggle language">ES</button>
-          <button class="case-theme-pill" id="themeIndicator" aria-label="Toggle theme">🌙 Dark</button>
+          <button class="case-lang-pill" id="langIndicator">ES</button>
+          <button class="case-theme-pill" id="themeIndicator">🌙 Dark</button>
         </div>
       </div>
     </header>
 
     <main>
       <section class="case-hero">
-        <div class="case-badge" id="heroBadge">Caso de estudio de Ingeniería de Datos</div>
-
+        <div class="case-badge" id="heroBadge">Ingeniería de Datos & Mercado Laboral</div>
         <div class="case-hero-grid">
           <div class="case-hero-main">
-            <h1 class="case-title" id="heroTitle">Data Engineering - Colombian Labor Market</h1>
-            <p class="case-summary" id="heroSummary">
-              Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar indicadores del mercado laboral en Colombia utilizando Microsoft Fabric y Power BI.
-            </p>
-
-            <div class="case-key-metrics">
-              <span class="case-chip" id="chip1">Microsoft Fabric</span>
-              <span class="case-chip" id="chip2">PySpark</span>
-              <span class="case-chip" id="chip3">T-SQL</span>
-              <span class="case-chip" id="chip4">Power BI</span>
-              <span class="case-chip" id="chip5">Medallion Architecture</span>
-            </div>
+            <h1 class="case-title" id="heroTitle">Colombian Labor Market Analysis</h1>
+            <p class="case-summary" id="heroSummary">Análisis histórico profundo (2004-2026) sobre las tendencias de desempleo, crecimiento de la fuerza laboral y el impacto de los periodos presidenciales en Colombia.</p>
           </div>
-
           <aside class="case-hero-side">
-            <div class="meta-grid">
-              <div class="meta-card">
-                <span class="meta-label" id="metaLabelRole">Enfoque</span>
-                <p class="meta-value" id="metaValueRole">Ingeniería y Analítica de Datos</p>
-              </div>
-
-              <div class="meta-card">
-                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
-                <p class="meta-value" id="metaValueQuestion">¿Cómo centralizar y procesar indicadores laborales para identificar tendencias y el impacto de políticas económicas mediante una arquitectura nube?</p>
-              </div>
-
-              <div class="meta-card">
-                <span class="meta-label" id="metaLabelOutput">Entregable</span>
-                <p class="meta-value" id="metaValueOutput">Pipeline automatizado, Tablas Delta y Dashboard en Power BI</p>
-              </div>
-            </div>
-
+            <div class="kpi-box"><span class="kpi-box-val" id="kpiMainVal">7.0%</span><span class="kpi-box-lbl" id="kpiMainLbl">Mínimo Histórico (Nov 2025)</span></div>
             <div class="case-actions">
-              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/data-engineering-politics-colombia" target="_blank" rel="noopener noreferrer" id="repoButton">Ver repositorio</a>
-              <a class="case-btn case-btn-secondary" href="../index.html#contact" id="contactButton">Contactar</a>
+              <a class="case-btn" style="background: var(--case-accent); color: white; width: 100%; text-align: center; padding: 12px; border-radius: 12px;" href="https://github.com/angra8410/my-new-portfolio" target="_blank" id="repoButton">Ver Repositorio</a>
             </div>
           </aside>
         </div>
       </section>
 
       <div class="case-content">
+        <!-- Overview KPIs -->
         <section class="content-section">
-          <span class="section-kicker" id="overviewKicker">Overview</span>
-          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
-          <p class="section-intro" id="overviewIntro">
-            Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros crudos del mercado laboral en insights accionables, permitiendo el análisis de desempleo y participación laboral.
-          </p>
-
-          <div class="overview-grid">
-            <article class="overview-card">
-              <h3 id="overviewCard1Title">Objetivo</h3>
-              <p id="overviewCard1Body">
-                Crear una plataforma de datos escalable que centralice la información laboral dispersa y automatice su procesamiento.
-              </p>
-            </article>
-
-            <article class="overview-card">
-              <h3 id="overviewCard2Title">Flujo de trabajo</h3>
-              <ul id="overviewCard2Body">
-                <li>Ingestión de datos a Fabric Lakehouse</li>
-                <li>Limpieza y transformación con PySpark</li>
-                <li>Modelado dimensional (Estrella) en SQL</li>
-                <li>Visualización analítica en Power BI</li>
-              </ul>
-            </article>
-
-            <article class="overview-card">
-              <h3 id="overviewCard3Title">Qué muestra esta página</h3>
-              <p id="overviewCard3Body">
-                La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis laboral.
-              </p>
-            </article>
+          <span class="section-kicker" id="overviewKicker">Indicadores Clave</span>
+          <h2 class="section-title" id="overviewTitle">Resumen Estadístico 2004-2026</h2>
+          <div class="kpi-row">
+            <div class="kpi-box"><span class="kpi-box-val">14.3%</span><span class="kpi-box-lbl">Promedio 2004</span></div>
+            <div class="kpi-box"><span class="kpi-box-val">20.9%</span><span class="kpi-box-lbl">Pico COVID (2020)</span></div>
+            <div class="kpi-box"><span class="kpi-box-val">+24.1M</span><span class="kpi-box-lbl">Ocupados (Feb 2026)</span></div>
+            <div class="kpi-box"><span class="kpi-box-val">10.0%</span><span class="kpi-box-lbl">Promedio 2026 YTD</span></div>
           </div>
         </section>
 
-        <section class="content-section">
-          <span class="section-kicker" id="overviewGeneralKicker">Vista General</span>
-          <h2 class="section-title" id="overviewGeneralTitle">Dashboard Overview</h2>
-          <div class="chart-card">
-            <div class="chart-image-wrap">
-              <img
-                class="chart-image"
-                src="../img/main-photo.png"
-                alt="General Overview of the BI Dashboard"
-                loading="lazy"
-              />
-            </div>
-            <div class="chart-body">
-              <p class="chart-copy" id="overviewGeneralText">
-                Esta vista general muestra el dashboard integral desarrollado en Power BI, consolidando todas las métricas clave y tendencias laborales en una sola interfaz interactiva.
-              </p>
-            </div>
-          </div>
-        </section>
-
+        <!-- Visual Analysis -->
         <section class="content-section">
           <span class="section-kicker" id="visualsKicker">Análisis Visual</span>
-          <h2 class="section-title" id="visualsTitle">Arquitectura y Visualizaciones</h2>
-          <p class="section-intro" id="visualsIntro">
-            El proyecto se estructura en tres capas principales: infraestructura, flujo de procesamiento y entrega de valor visual.
-          </p>
+          <h2 class="section-title" id="visualsTitle">Dashboard Deep Dive</h2>
+          
+          <div class="chart-grid">
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/colombian.png" alt="Labor Market Overview" /></div>
+              <div class="chart-body">
+                <h3 id="tab1Title">Tendencias y Periodos Presidenciales</h3>
+                <ul class="insight-list" id="tab1Insights"></ul>
+              </div>
+            </article>
 
-          <div class="chart-group">
-            <h3 class="chart-group-title" id="group1Title">1. Infraestructura y Diseño</h3>
-            <p class="chart-group-copy" id="group1Copy">
-              Diseño de la arquitectura del sistema y el modelo de datos para garantizar escalabilidad y rendimiento.
-            </p>
-
-            <div class="chart-grid">
-              <article class="chart-card">
-                <div class="chart-image-wrap">
-                  <img
-                    class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/kpi.png"
-                    alt="Dashboard KPIs - Labor Market"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="chart-body">
-                  <span class="chart-index" id="chart1Index">Gráfico 01</span>
-                  <h3 class="chart-title" id="chart1Title">Vista General del Dashboard</h3>
-                  <p class="chart-copy" id="chart1Text1">
-                    Visualización de los KPIs principales del mercado laboral colombiano, incluyendo tasas de desempleo y participación global.
-                  </p>
-                  <p class="chart-copy" id="chart1Text2">
-                    Esta vista permite a los tomadores de decisiones identificar rápidamente el estado actual de la fuerza laboral y las métricas clave de desempeño.
-                  </p>
-                </div>
-              </article>
-
-              <article class="chart-card">
-                <div class="chart-image-wrap">
-                  <img
-                    class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/annualaverage.png"
-                    alt="Annual Average Unemployment Rate"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="chart-body">
-                  <span class="chart-index" id="chart2Index">Gráfico 02</span>
-                  <h3 class="chart-title" id="chart2Title">Tasa de Desempleo Anual</h3>
-                  <p class="chart-copy" id="chart2Text1">
-                    Análisis histórico de la tasa de desempleo desde 2019 hasta 2026, destacando los picos causados por factores económicos y globales.
-                  </p>
-                  <p class="chart-copy" id="chart2Text2">
-                    El gráfico permite comparar el desempeño inter-anual y validar las tendencias de recuperación del mercado laboral.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <div class="chart-group">
-            <h3 class="chart-group-title" id="group2Title">2. Pipeline y Resultados</h3>
-            <p class="chart-group-copy" id="group2Copy">
-              Flujo de datos desde el origen hasta el dashboard final de Power BI.
-            </p>
-
-            <div class="chart-grid">
-              <article class="chart-card">
-                <div class="chart-image-wrap">
-                  <img
-                    class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/heatmapandwaterfall.png"
-                    alt="Employment Heatmap and Waterfall Analysis"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="chart-body">
-                  <span class="chart-index" id="chart3Index">Gráfico 03</span>
-                  <h3 class="chart-title" id="chart3Title">Análisis de Heatmap y Waterfall</h3>
-                  <p class="chart-copy" id="chart3Text1">
-                    Visualización de la distribución regional y los cambios incrementales en la fuerza laboral mediante gráficos de calor y cascada.
-                  </p>
-                  <p class="chart-copy" id="chart3Text2">
-                    Se utilizan técnicas de validación de datos para asegurar que la información geográfica sea precisa para el análisis territorial.
-                  </p>
-                </div>
-              </article>
-
-              <article class="chart-card">
-                <div class="chart-image-wrap">
-                  <img
-                    class="chart-image"
-                    src="https://raw.githubusercontent.com/angra8410/data-engineering-politics-colombia/main/assets/screenshots/linechart.png"
-                    alt="Unemployment Rate Trends"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="chart-body">
-                  <span class="chart-index" id="chart4Index">Gráfico 04</span>
-                  <h3 class="chart-title" id="chart4Title">Tendencias de Desempleo</h3>
-                  <p class="chart-copy" id="chart4Text1">
-                    Gráfico de líneas detallado que muestra la evolución temporal del desempleo y la relación entre empleados y desocupados.
-                  </p>
-                  <p class="chart-copy" id="chart4Text2">
-                    El dashboard integra filtros interactivos para ofrecer una visión clara de las tendencias a largo plazo en el panorama laboral colombiano.
-                  </p>
-                </div>
-              </article>
-            </div>
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/colombian-2.png" alt="Employment Analysis" /></div>
+              <div class="chart-body">
+                <h3 id="tab2Title">Fuerza Laboral y Comparativas</h3>
+                <ul class="insight-list" id="tab2Insights"></ul>
+              </div>
+            </article>
           </div>
         </section>
 
+        <!-- Contextual Phases -->
         <section class="content-section">
-          <span class="section-kicker" id="recKicker">Recomendaciones</span>
-          <h2 class="section-title" id="recTitle">Recomendaciones Técnicas</h2>
-          <p class="section-intro" id="recIntro">
-            A partir de la implementación de este pipeline, se sugieren las siguientes mejoras para la escalabilidad.
-          </p>
-
-          <div class="recommendations-list">
-            <article class="recommendation-card">
-              <h3 id="rec1Title">Implementar CI/CD</h3>
-              <p id="rec1Text">
-                Integrar el despliegue de notebooks y esquemas SQL mediante Azure DevOps o GitHub Actions para automatizar las actualizaciones del pipeline.
-              </p>
-            </article>
-
-            <article class="recommendation-card">
-              <h3 id="rec2Title">Optimización de Delta Tables</h3>
-              <p id="rec2Text">
-                Utilizar Z-Ordering en las columnas de ubicación y fecha para acelerar las consultas geoespaciales y temporales en grandes volúmenes de datos.
-              </p>
-            </article>
-
-            <article class="recommendation-card">
-              <h3 id="rec3Title">Monitoreo Proactivo</h3>
-              <p id="rec3Text">
-                Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información.
-              </p>
-            </article>
-
-            <article class="recommendation-card">
-              <h3 id="rec4Title">Enriquecimiento de Datos</h3>
-              <p id="rec4Text">
-                Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados laborales con indicadores de desarrollo.
-              </p>
-            </article>
-          </div>
+          <span class="section-kicker" id="phasesKicker">Contexto Histórico</span>
+          <h2 class="section-title" id="phasesTitle">5 Fases Clave del Mercado Laboral</h2>
+          <div class="phase-grid" id="phaseGrid"></div>
         </section>
       </div>
     </main>
 
-    <footer class="case-footer">
-      <div class="case-footer-box">
-        <p class="case-footer-copy" id="footerCopy">
-          Esta página resume el proyecto de ingeniería de datos como pieza de portafolio. El repositorio contiene el código completo de los notebooks, scripts SQL y archivos de configuración.
-        </p>
-
-        <div class="case-actions">
-          <a class="case-btn case-btn-primary" href="https://github.com/angra8410/data-engineering-politics-colombia" target="_blank" rel="noopener noreferrer" id="footerRepoButton">Abrir repositorio</a>
-          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
-        </div>
-      </div>
+    <footer class="case-footer" style="max-width: var(--case-max); margin: 0 auto; padding: 40px 20px;">
+      <p id="footerCopy" style="text-align: center; color: var(--case-text-soft);">© 2026 Portfolio de Ingeniería de Datos Profesional.</p>
     </footer>
   </div>
 
@@ -783,272 +168,129 @@
       const translations = {
         es: {
           backToPortfolio: "← Volver al portafolio",
-          heroBadge: "Caso de estudio de Ingeniería de Datos",
-          heroTitle: "Data Engineering - Colombian Labor Market",
-          heroSummary:
-            "Construcción de un pipeline de datos de extremo a extremo para ingestar, transformar y analizar indicadores del mercado laboral en Colombia utilizando Microsoft Fabric y Power BI.",
-          metaLabelRole: "Enfoque",
-          metaValueRole: "Ingeniería y Analítica de Datos",
-          metaLabelQuestion: "Pregunta de negocio",
-          metaValueQuestion:
-            "¿Cómo centralizar y procesar indicadores laborales para identificar tendencias y el impacto de políticas económicas mediante una arquitectura nube?",
-          metaLabelOutput: "Entregable",
-          metaValueOutput:
-            "Pipeline automatizado, Tablas Delta y Dashboard en Power BI",
-          repoButton: "Ver repositorio",
-          contactButton: "Contactar",
-
-          overviewKicker: "Overview",
-          overviewTitle: "Marco del proyecto",
-          overviewIntro:
-            "Este proyecto implementa una arquitectura moderna de datos (Medallion) para transformar registros crudos del mercado laboral en insights accionables, permitiendo el análisis de desempleo y participación laboral.",
-          overviewGeneralKicker: "Vista General",
-          overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText:
-            "Esta vista general muestra el dashboard integral desarrollado en Power BI, consolidando todas las métricas clave y tendencias laborales en una sola interfaz interactiva.",
-          overviewCard1Title: "Objetivo",
-          overviewCard1Body:
-            "Crear una plataforma de datos escalable que centralice la información laboral dispersa y automatice su procesamiento.",
-          overviewCard2Title: "Flujo de trabajo",
-          overviewCard2Body: [
-            "Ingestión de datos a Fabric Lakehouse",
-            "Limpieza y transformación con PySpark",
-            "Modelado dimensional (Estrella) en SQL",
-            "Visualización analítica en Power BI"
-          ],
-          overviewCard3Title: "Qué muestra esta página",
-          overviewCard3Body:
-            "La arquitectura del sistema, el flujo de datos y los resultados visuales del dashboard de análisis laboral.",
-
+          heroBadge: "Ingeniería de Datos & Mercado Laboral",
+          heroTitle: "Análisis del Mercado Laboral en Colombia",
+          heroSummary: "Análisis histórico profundo (2004-2026) sobre las tendencias de desempleo, crecimiento de la fuerza laboral y el impacto de los periodos presidenciales.",
+          kpiMainLbl: "Mínimo Histórico (Nov 2025)",
+          overviewKicker: "Indicadores Clave",
+          overviewTitle: "Resumen Estadístico 2004-2026",
           visualsKicker: "Análisis Visual",
-          visualsTitle: "Arquitectura y Visualizaciones",
-          visualsIntro:
-            "El proyecto se estructura en tres capas principales: infraestructura, flujo de procesamiento y entrega de valor visual.",
-
-          group1Title: "1. Infraestructura y Diseño",
-          group1Copy:
-            "Diseño de la arquitectura del sistema y el modelo de datos para garantizar escalabilidad y rendimiento.",
-          chart1Index: "Gráfico 01",
-          chart1Title: "Vista General del Dashboard",
-          chart1Text1:
-            "Visualización de los KPIs principales del mercado laboral colombiano, incluyendo tasas de desempleo y participación global.",
-          chart1Text2:
-            "Esta vista permite a los tomadores de decisiones identificar rápidamente el estado actual de la fuerza laboral y las métricas clave de desempeño.",
-          chart2Index: "Gráfico 02",
-          chart2Title: "Tasa de Desempleo Anual",
-          chart2Text1:
-            "Análisis histórico de la tasa de desempleo desde 2019 hasta 2026, destacando los picos causados por factores económicos y globales.",
-          chart2Text2:
-            "El gráfico permite comparar el desempeño inter-anual y validar las tendencias de recuperación del mercado laboral.",
-
-          group2Title: "2. Pipeline y Resultados",
-          group2Copy:
-            "Flujo de datos desde el origen hasta el dashboard final de Power BI.",
-          chart3Index: "Gráfico 03",
-          chart3Title: "Análisis de Heatmap y Waterfall",
-          chart3Text1:
-            "Visualización de la distribución regional y los cambios incrementales en la fuerza laboral mediante gráficos de calor y cascada.",
-          chart3Text2:
-            "Se utilizan técnicas de validación de datos para asegurar que la información geográfica sea precisa para el análisis territorial.",
-          chart4Index: "Gráfico 04",
-          chart4Title: "Tendencias de Desempleo",
-          chart4Text1:
-            "Gráfico de líneas detallado que muestra la evolución temporal del desempleo y la relación entre empleados y desocupados.",
-          chart4Text2:
-            "El dashboard integra filtros interactivos para ofrecer una visión clara de las tendencias a largo plazo en el panorama laboral colombiano.",
-
-          recKicker: "Recomendaciones",
-          recTitle: "Recomendaciones Técnicas",
-          recIntro:
-            "A partir de la implementación de este pipeline, se sugieren las siguientes mejoras para la escalabilidad.",
-          rec1Title: "Implementar CI/CD",
-          rec1Text:
-            "Integrar el despliegue de notebooks y esquemas SQL mediante Azure DevOps o GitHub Actions para automatizar las actualizaciones del pipeline.",
-          rec2Title: "Optimización de Delta Tables",
-          rec2Text:
-            "Utilizar Z-Ordering en las columnas de ubicación y fecha para acelerar las consultas geoespaciales y temporales en grandes volúmenes de datos.",
-          rec3Title: "Monitoreo Proactivo",
-          rec3Text:
-            "Configurar alertas de calidad de datos y fallos en el pipeline para asegurar la frescura y veracidad de la información.",
-          rec4Title: "Enriquecimiento de Datos",
-          rec4Text:
-            "Integrar fuentes externas como censos poblacionales o datos socioeconómicos para cruzar resultados laborales con indicadores de desarrollo.",
-
-          footerCopy:
-            "Esta página resume el proyecto de ingeniería de datos como pieza de portafolio. El repositorio contiene el código completo de los notebooks, scripts SQL y archivos de configuración.",
-          footerRepoButton: "Abrir repositorio",
-          footerBackButton: "Volver a proyectos",
-          themeDark: "🌙 Dark",
-          themeLight: "☀️ Light"
+          visualsTitle: "Dashboard Deep Dive",
+          tab1Title: "Tendencias y Periodos Presidenciales",
+          tab1Insights: [
+            "Colombia ha estado en una tendencia bajista estructural desde 2004, cayendo de 14.3% a 7.0%.",
+            "Bajo Uribe (2004-2010), el desempleo cayó de 14.3% a 11.8% impulsado por inversión extranjera.",
+            "La era Santos (2010-2018) vio mínimos históricos de 7.8% antes del choque de 2020.",
+            "El pico de COVID en Jul 2020 (20.9%) fue el mayor desafío para el mercado laboral en décadas."
+          ],
+          tab2Title: "Fuerza Laboral y Ocupación",
+          tab2Insights: [
+            "La población ocupada superó los 24.1M en Febrero 2026, mostrando resiliencia post-pandemia.",
+            "La fase de recuperación (2021-2022) fue la más rápida en la historia de Colombia.",
+            "Los programas sociales y el impulso al empleo formal en la era Petro han llevado al desempleo a mínimos récord (7.0%)."
+          ],
+          phasesKicker: "Contexto Histórico",
+          phasesTitle: "5 Fases Clave del Mercado Laboral",
+          phases: [
+            { t: "Fase 1: Recuperación (2004-2010)", d: "Boom de materias primas y crecimiento constante de la PEA." },
+            { t: "Fase 2: Década de Oro (2010-2018)", d: "Mínimos históricos y apertura de nuevas zonas económicas post-paz." },
+            { t: "Fase 3: Choque COVID (2020)", d: "Explosión del desempleo al 20.9% y ruptura de la metodología DANE." },
+            { t: "Fase 4: Rebote (2021-2022)", d: "Crecimiento de la PEA del 28% en 2021, bajando del 12% rápidamente." },
+            { t: "Fase 5: Nueva Normal (2023-2026)", d: "Récord histórico de 7.0% en 2025 y PEA superando los 26.5M." }
+          ],
+          footerCopy: "© 2026 Portfolio de Ingeniería de Datos Profesional."
         },
-
         en: {
           backToPortfolio: "← Back to portfolio",
-          heroBadge: "Data Engineering Case Study",
-          heroTitle: "Data Engineering - Colombian Labor Market",
-          heroSummary:
-            "End-to-end data pipeline construction to ingest, transform, and analyze labor market indicators in Colombia using Microsoft Fabric and Power BI.",
-          metaLabelRole: "Focus",
-          metaValueRole: "Data Engineering & Analytics",
-          metaLabelQuestion: "Business question",
-          metaValueQuestion:
-            "How to centralize and process labor indicators to identify trends and the impact of economic policies using a cloud architecture?",
-          metaLabelOutput: "Output",
-          metaValueOutput:
-            "Automated pipeline, Delta Tables, and Power BI Dashboard",
-          repoButton: "Open repository",
-          contactButton: "Contact",
-
-          overviewKicker: "Overview",
-          overviewTitle: "Project framing",
-          overviewIntro:
-            "This project implements a modern data architecture (Medallion) to transform raw labor market records into actionable insights, enabling the analysis of unemployment and labor participation.",
-          overviewGeneralKicker: "General Overview",
-          overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText:
-            "This general overview shows the comprehensive dashboard developed in Power BI, consolidating all key metrics and labor trends into a single interactive interface.",
-          overviewCard1Title: "Objective",
-          overviewCard1Body:
-            "Create a scalable data platform that centralizes dispersed labor information and automatizes its processing.",
-          overviewCard2Title: "Workflow",
-          overviewCard2Body: [
-            "Data ingestion to Fabric Lakehouse",
-            "Cleaning and transformation with PySpark",
-            "Dimensional modeling (Star Schema) in SQL",
-            "Analytical visualization in Power BI"
-          ],
-          overviewCard3Title: "What this page shows",
-          overviewCard3Body:
-            "The system architecture, data flow, and visual results of the labor analysis dashboard.",
-
+          heroBadge: "Data Engineering & Labor Market",
+          heroTitle: "Colombian Labor Market Analysis",
+          heroSummary: "Deep historical analysis (2004-2026) of unemployment trends, workforce growth, and the impact of presidential terms in Colombia.",
+          kpiMainLbl: "All-time Low (Nov 2025)",
+          overviewKicker: "Key Indicators",
+          overviewTitle: "2004-2026 Statistical Summary",
           visualsKicker: "Visual Analysis",
-          visualsTitle: "Architecture & Visualizations",
-          visualsIntro:
-            "The project is structured into three main layers: infrastructure, processing flow, and visual value delivery.",
-
-          group1Title: "1. Infrastructure & Design",
-          group1Copy:
-            "Design of the system architecture and data model to ensure scalability and performance.",
-          chart1Index: "Chart 01",
-          chart1Title: "Dashboard Overview",
-          chart1Text1:
-            "Visualization of the main KPIs of the Colombian labor market, including unemployment rates and global participation.",
-          chart1Text2:
-            "This view allows decision-makers to quickly identify the current state of the workforce and key performance metrics.",
-          chart2Index: "Chart 02",
-          chart2Title: "Annual Unemployment Rate",
-          chart2Text1:
-            "Historical analysis of the unemployment rate from 2019 to 2026, highlighting peaks caused by economic and global factors.",
-          chart2Text2:
-            "The chart allows for year-over-year performance comparison and validation of labor market recovery trends.",
-
-          group2Title: "2. Pipeline & Results",
-          group2Copy:
-            "Data flow from source to the final Power BI dashboard.",
-          chart3Index: "Chart 03",
-          chart3Title: "Heatmap and Waterfall Analysis",
-          chart3Text1:
-            "Visualization of regional distribution and incremental changes in the workforce through heatmaps and waterfall charts.",
-          chart3Text2:
-            "Data validation techniques are used to ensure that geographic information is accurate for territorial analysis.",
-          chart4Index: "Chart 04",
-          chart4Title: "Unemployment Trends",
-          chart4Text1:
-            "Detailed line chart showing the temporal evolution of unemployment and the relationship between employed and unemployed individuals.",
-          chart4Text2:
-            "The dashboard integrates interactive filters to offer a clear view of long-term trends in the Colombian labor landscape.",
-
-          recKicker: "Recommendations",
-          recTitle: "Technical Recommendations",
-          recIntro:
-            "Based on the implementation of this pipeline, the following improvements are suggested for scalability.",
-          rec1Title: "Implement CI/CD",
-          rec1Text:
-            "Integrate the deployment of notebooks and SQL schemas using Azure DevOps or GitHub Actions to automate pipeline updates.",
-          rec2Title: "Delta Tables Optimization",
-          rec2Text:
-            "Use Z-Ordering on location and date columns to speed up geospatial and temporal queries on large data volumes.",
-          rec3Title: "Proactive Monitoring",
-          rec3Text:
-            "Set up data quality alerts and pipeline failure notifications to ensure the freshness and veracity of information.",
-          rec4Title: "Data Enrichment",
-          rec4Text:
-            "Integrate external sources such as population censuses or socioeconomic data to cross-reference labor results with development indicators.",
-
-          footerCopy:
-            "This page summarizes the data engineering project as a portfolio piece. The repository contains the full code of the notebooks, SQL scripts, and configuration files.",
-          footerRepoButton: "Open repository",
-          footerBackButton: "Back to projects",
-          themeDark: "🌙 Dark",
-          themeLight: "☀️ Light"
+          visualsTitle: "Dashboard Deep Dive",
+          tab1Title: "Trends & Presidential Periods",
+          tab1Insights: [
+            "Colombia has been on a structural downtrend since 2004, dropping from 14.3% to 7.0%.",
+            "Under Uribe (2004-2010), unemployment fell from 14.3% to 11.8% driven by FDI.",
+            "The Santos era (2010-2018) reached historic lows of 7.8% before the 2020 shock.",
+            "The COVID peak in Jul 2020 (20.9%) was the largest labor market challenge in decades."
+          ],
+          tab2Title: "Workforce & Occupation",
+          tab2Insights: [
+            "Employed population surpassed 24.1M in February 2026, showing post-pandemic resilience.",
+            "The recovery phase (2021-2022) was the fastest in Colombia's history.",
+            "Social programs and formal employment push in the Petro era led to record low unemployment (7.0%)."
+          ],
+          phasesKicker: "Historical Context",
+          phasesTitle: "5 Key Labor Market Phases",
+          phases: [
+            { t: "Phase 1: Recovery (2004-2010)", d: "Commodity boom and steady growth of the active population." },
+            { t: "Phase 2: Golden Decade (2010-2018)", d: "Historical lows and new economic zones post-peace accord." },
+            { t: "Phase 3: COVID Shock (2020)", d: "Unemployment explosion to 20.9% and breakdown of DANE survey methodology." },
+            { t: "Phase 4: Rebound (2021-2022)", d: "Workforce grew 28% in 2021, quickly dropping below 12%." },
+            { t: "Phase 5: New Normal (2023-2026)", d: "Historical low of 7.0% in 2025 and workforce exceeding 26.5M." }
+          ],
+          footerCopy: "© 2026 Professional Data Engineering Portfolio."
         }
       };
 
-      function applySavedTheme() {
-        const savedTheme = localStorage.getItem("theme") || "light";
-        document.documentElement.classList.toggle("dark", savedTheme === "dark");
-        const themeIndicator = document.getElementById("themeIndicator");
-        if (themeIndicator) {
-          const activeLang = localStorage.getItem("language") || "es";
-          themeIndicator.textContent =
-            savedTheme === "dark"
-              ? translations[activeLang].themeDark
-              : translations[activeLang].themeLight;
-        }
-      }
-
-      function setText(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-      }
-
       function setList(id, items) {
         const el = document.getElementById(id);
-        if (!el || !Array.isArray(items)) return;
-        el.innerHTML = items.map(item => `<li>${item}</li>`).join("");
+        if (!el) return;
+        el.innerHTML = items.map(i => `<li>${i}</li>`).join("");
+      }
+
+      function setPhases(phases) {
+        const el = document.getElementById("phaseGrid");
+        if (!el) return;
+        el.innerHTML = phases.map(p => `
+          <div class="phase-card">
+            <div class="phase-title">${p.t}</div>
+            <div class="phase-copy">${p.d}</div>
+          </div>
+        `).join("");
       }
 
       function applyLanguage(lang) {
         const t = translations[lang] || translations.es;
         document.documentElement.lang = lang;
-        setText("langIndicator", lang.toUpperCase());
+        document.getElementById("langIndicator").textContent = lang.toUpperCase();
 
-        Object.keys(t).forEach((key) => {
-          if (Array.isArray(t[key])) return;
-          setText(key, t[key]);
+        Object.keys(t).forEach(key => {
+          const el = document.getElementById(key);
+          if (el && typeof t[key] === 'string') el.textContent = t[key];
         });
 
-        setList("overviewCard2Body", t.overviewCard2Body);
+        setList("tab1Insights", t.tab1Insights);
+        setList("tab2Insights", t.tab2Insights);
+        setPhases(t.phases);
 
         const theme = localStorage.getItem("theme") || "light";
-        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+        document.getElementById("themeIndicator").textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
       }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        const langIndicator = document.getElementById("langIndicator");
-        const themeIndicator = document.getElementById("themeIndicator");
+      document.addEventListener("DOMContentLoaded", () => {
+        const langBtn = document.getElementById("langIndicator");
+        const themeBtn = document.getElementById("themeIndicator");
 
-        if (langIndicator) {
-          langIndicator.addEventListener("click", function () {
-            const currentLang = localStorage.getItem("language") || "es";
-            const newLang = currentLang === "es" ? "en" : "es";
-            localStorage.setItem("language", newLang);
-            applyLanguage(newLang);
-          });
-        }
+        langBtn.addEventListener("click", () => {
+          const newLang = localStorage.getItem("language") === "es" ? "en" : "es";
+          localStorage.setItem("language", newLang);
+          applyLanguage(newLang);
+        });
 
-        if (themeIndicator) {
-          themeIndicator.addEventListener("click", function () {
-            const currentTheme = localStorage.getItem("theme") || "light";
-            const newTheme = currentTheme === "light" ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
-            applySavedTheme();
-          });
-        }
+        themeBtn.addEventListener("click", () => {
+          const newTheme = document.documentElement.classList.contains("dark") ? "light" : "dark";
+          localStorage.setItem("theme", newTheme);
+          document.documentElement.classList.toggle("dark");
+          applyLanguage(localStorage.getItem("language") || "es");
+        });
 
-        const lang = localStorage.getItem("language") || "es";
-        applySavedTheme();
-        applyLanguage(lang);
+        const savedLang = localStorage.getItem("language") || "es";
+        if (localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
+        applyLanguage(savedLang);
       });
     })();
   </script>
