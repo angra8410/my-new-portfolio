@@ -1,0 +1,57 @@
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$ClientId,
+    [Parameter(Mandatory = $true)]
+    [string]$ClientSecret,
+    [Parameter(Mandatory = $false)]
+    [string]$TenantId = "9da4a1e2-db93-42a7-a588-957fd6292e87",
+    [Parameter(Mandatory = $false)]
+    [string]$WorkspaceId = "b14581ac-9906-43e2-809c-c2fd4315ad5b",
+    [Parameter(Mandatory = $false)]
+    [string]$ReportId = "e9ddd516-5772-423e-bf2c-0717f71e0345"
+)
+
+$ErrorActionPreference = "Stop"
+
+Write-Host "`n--- DIAGNÓSTICO DE CONEXIÓN POWER BI ---" -ForegroundColor Cyan
+
+try {
+    Write-Host "1. Autenticando con Azure AD..." -ForegroundColor Gray
+    $tokenUrl = "https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token"
+    $tokenBody = @{
+        client_id     = $ClientId
+        client_secret = $ClientSecret
+        grant_type    = "client_credentials"
+        scope         = "https://analysis.windows.net/powerbi/api/.default"
+    }
+    $tokenResponse = Invoke-RestMethod -Uri $tokenUrl -Method Post -Body $tokenBody
+    $headers = @{"Authorization" = "Bearer $($tokenResponse.access_token)"}
+    Write-Host "✅ Autenticación exitosa." -ForegroundColor Green
+
+    Write-Host "2. Verificando acceso al reporte..." -ForegroundColor Gray
+    $reportUrl = "https://api.powerbi.com/v1.0/myorg/groups/$WorkspaceId/reports/$ReportId"
+    $report = Invoke-RestMethod -Uri $reportUrl -Method Get -Headers $headers
+    Write-Host "✅ Acceso concedido al reporte: $($report.name)" -ForegroundColor Green
+
+    Write-Host "3. Verificando capacidad de exportación (Premium/Fabric)..." -ForegroundColor Gray
+    $exportUrl = "https://api.powerbi.com/v1.0/myorg/groups/$WorkspaceId/reports/$ReportId/ExportTo"
+    try {
+        # Solo probamos si el endpoint responde (usando un formato inválido a propósito para ver el error)
+        Invoke-RestMethod -Uri $exportUrl -Method Post -Headers $headers -Body "{}"
+    } catch {
+        if ($_.Exception.Message -like "*403*") {
+            Write-Host "❌ ERROR 403: El App tiene acceso al reporte, pero NO puede exportar." -ForegroundColor Red
+            Write-Host "   CAUSA: El Workspace no tiene capacidad Premium/Fabric o el ajuste 'Exportar a imagen' está apagado." -ForegroundColor Yellow
+        } elseif ($_.Exception.Message -like "*400*") {
+            Write-Host "✅ La capacidad parece estar activa (recibimos 400 Bad Request como se esperaba)." -ForegroundColor Green
+        } else {
+            Write-Host "❓ Error inesperado: $($_.Exception.Message)" -ForegroundColor Yellow
+        }
+    }
+} catch {
+    Write-Host "❌ ERROR CRÍTICO: $($_.Exception.Message)" -ForegroundColor Red
+    if ($_.Exception.Message -like "*401*") { Write-Host "   Revisa el ClientId y ClientSecret." -ForegroundColor Yellow }
+    if ($_.Exception.Message -like "*403*") { Write-Host "   Asegúrate de que el App es MIEMBRO del Workspace en Power BI." -ForegroundColor Yellow }
+}
+
+Write-Host "---------------------------------------`n"
