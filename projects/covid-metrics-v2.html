@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Análisis de datos para covid-metrics-v2" />
-  <title>covid-metrics-v2 - Portfolio</title>
+  <title>COVID-19 Global Metrics - Portfolio</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -71,31 +71,29 @@
     .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent-strong); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.03em; }
     .section-intro { margin: 0; color: var(--case-text-soft); line-height: 1.8; font-size: 1rem; }
-    .overview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
-    .overview-card { background: var(--case-surface-alt); border: 1px solid var(--case-border); border-radius: 18px; padding: 18px; }
-    .overview-card h3 { margin: 0 0 10px; font-size: 1rem; }
-    .overview-card p, .overview-card li { margin: 0; color: var(--case-text-soft); line-height: 1.75; }
-    .overview-card ul { margin: 0; padding-left: 18px; }
-    .chart-group { margin-top: 30px; }
-    .chart-group-title { margin: 0 0 8px; font-size: 1.25rem; letter-spacing: -0.02em; }
-    .chart-group-copy { margin: 0 0 18px; color: var(--case-text-soft); line-height: 1.75; }
-    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    
+    /* KPI Grid Specific Styles */
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+    .kpi-box { background: var(--case-surface-alt); padding: 16px; border-radius: 16px; border: 1px solid var(--case-border); text-align: center; }
+    .kpi-box-val { display: block; font-size: 1.5rem; font-weight: 800; color: var(--case-accent-strong); }
+    .kpi-box-lbl { display: block; font-size: 0.75rem; color: var(--case-text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; font-weight: 600; }
+
+    /* Insight List Specific Styles */
+    .insight-block { margin-top: 24px; padding: 20px; background: color-mix(in srgb, var(--case-accent) 5%, transparent); border-radius: 20px; border-left: 4px solid var(--case-accent-strong); }
+    .insight-block h4 { margin: 0 0 12px; font-size: 0.9rem; color: var(--case-accent-strong); text-transform: uppercase; letter-spacing: 0.1em; }
+    .insight-list { list-style: none; padding: 0; margin: 0; }
+    .insight-list li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--case-text-soft); line-height: 1.6; font-size: 0.95rem; }
+    .insight-list li::before { content: "→"; position: absolute; left: 0; color: var(--case-accent-strong); font-weight: 800; }
+
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
     .chart-card { overflow: hidden; border-radius: 22px; border: 1px solid var(--case-border); background: var(--case-surface-alt); }
-    .chart-image-wrap { padding: 18px; border-bottom: 1px solid var(--case-border); background: color-mix(in srgb, var(--case-surface) 88%, transparent); }
-    .chart-image { width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--case-border); background: #ffffff; }
-    .chart-body { padding: 22px; }
+    .chart-image-wrap { padding: 12px; border-bottom: 1px solid var(--case-border); background: #ffffff; }
+    .chart-image { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--case-border); }
+    .chart-body { padding: 30px; }
     .chart-index { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; font-weight: 800; color: var(--case-accent-strong); letter-spacing: 0.08em; text-transform: uppercase; }
-    .chart-title { margin: 0 0 12px; font-size: 1.18rem; letter-spacing: -0.02em; }
-    .chart-copy { margin: 0; color: var(--case-text-soft); line-height: 1.8; }
-    .recommendations-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
-    .recommendation-card { background: var(--case-surface-alt); border: 1px solid var(--case-border); border-radius: 18px; padding: 20px; }
-    .recommendation-card h3 { margin: 0 0 10px; font-size: 1rem; }
-    .recommendation-card p { margin: 0; color: var(--case-text-soft); line-height: 1.75; }
-    .case-footer { max-width: var(--case-max); margin: 0 auto; padding: 0 20px 72px; }
-    .case-footer-box { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 26px; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .case-footer-copy { margin: 0; color: var(--case-text-soft); line-height: 1.75; max-width: 58ch; }
-    @media (max-width: 960px) { .case-hero-grid, .overview-grid, .recommendations-list { grid-template-columns: 1fr; } .case-hero-main, .case-hero-side, .content-section, .case-footer-box { padding: 22px; } }
-    @media (max-width: 640px) { .case-topbar-inner, .case-hero, .case-content, .case-footer { padding-left: 16px; padding-right: 16px; } .case-title { font-size: 2rem; } .case-summary { font-size: 1rem; } .case-actions, .case-top-actions { width: 100%; } .case-btn, .case-theme-pill, .case-lang-pill { width: 100%; } }
+    .chart-title { margin: 0 0 16px; font-size: 1.5rem; letter-spacing: -0.02em; }
+    
+    @media (max-width: 960px) { .case-hero-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -104,8 +102,8 @@
       <div class="case-topbar-inner">
         <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
         <div class="case-top-actions">
-          <button class="case-lang-pill" id="langIndicator" aria-label="Toggle language">ES</button>
-          <button class="case-theme-pill" id="themeIndicator" aria-label="Toggle theme">🌙 Dark</button>
+          <button class="case-lang-pill" id="langIndicator">ES</button>
+          <button class="case-theme-pill" id="themeIndicator">🌙 Dark</button>
         </div>
       </div>
     </header>
@@ -116,25 +114,23 @@
 
         <div class="case-hero-grid">
           <div class="case-hero-main">
-            <h1 class="case-title" id="heroTitle">covid-metrics-v2</h1>
-            <p class="case-summary" id="heroSummary">Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre covid-metrics-v2.</p>
-
+            <h1 class="case-title" id="heroTitle">COVID-19 Global Metrics</h1>
+            <p class="case-summary" id="heroSummary">Análisis integral de la pandemia global utilizando un modelo de datos estrella para integrar métricas de salud, respuesta política y vacunación.</p>
             <div class="case-key-metrics">
               <span class="case-chip">Power BI</span>
               <span class="case-chip">DAX</span>
-              <span class="case-chip">Business Intelligence</span>
+              <span class="case-chip">Data Modeling</span>
             </div>
           </div>
-
           <aside class="case-hero-side">
             <div class="meta-grid">
               <div class="meta-card">
-                <span class="meta-label" id="metaLabelRole">Enfoque</span>
-                <p class="meta-value" id="metaValueRole">Analítica de Datos</p>
+                <span class="meta-label" id="metaLabelRole">Rol</span>
+                <p class="meta-value" id="metaValueRole">Data Analyst & BI Developer</p>
               </div>
               <div class="meta-card">
-                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
-                <p class="meta-value" id="metaValueQuestion">¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?</p>
+                <span class="meta-label" id="metaLabelQuestion">DataSet</span>
+                <p class="meta-value" id="metaValueQuestion">Our World in Data (OWID)</p>
               </div>
             </div>
             <div class="case-actions">
@@ -145,86 +141,102 @@
       </section>
 
       <div class="case-content">
-        <!-- Overview Section -->
+        <!-- Visual Analysis Sections -->
         <section class="content-section">
-          <span class="section-kicker" id="overviewKicker">Overview</span>
-          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
-          <p class="section-intro" id="overviewIntro">Introducción detallada sobre el origen de los datos y el propósito del análisis.</p>
-          <div class="overview-grid">
-            <article class="overview-card">
-              <h3 id="overviewCard1Title">Objetivo</h3>
-              <p id="overviewCard1Body">Definir el objetivo principal alcanzado con este reporte.</p>
-            </article>
-            <article class="overview-card">
-              <h3 id="overviewCard2Title">Metodología</h3>
-              <ul id="overviewCard2Body">
-                <li>Extracción y limpieza</li>
-                <li>Modelado de datos</li>
-                <li>Creación de medidas DAX</li>
-                <li>Diseño de interfaz</li>
-              </ul>
-            </article>
-            <article class="overview-card">
-              <h3 id="overviewCard3Title">Resultados</h3>
-              <p id="overviewCard3Body">Resumen del impacto de los hallazgos encontrados.</p>
-            </article>
-          </div>
-        </section>
-
-        <!-- Main Dashboard View -->
-        <section class="content-section">
-          <span class="section-kicker" id="overviewGeneralKicker">Vista General</span>
-          <h2 class="section-title" id="overviewGeneralTitle">Dashboard Overview</h2>
-          <div class="chart-card">
-            <div class="chart-image-wrap">
-              <img class="chart-image" src="../img/covid-metrics-v2.png" alt="Dashboard Overview" loading="lazy" />
-            </div>
-            <div class="chart-body">
-              <p class="chart-copy" id="overviewGeneralText">Esta vista consolidada permite entender las métricas de un vistazo.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Visual Analysis -->
-        <section class="content-section">
-          <span class="section-kicker" id="visualsKicker">Análisis Visual</span>
-          <h2 class="section-title" id="visualsTitle">Detalles y Visualizaciones</h2>
+          <span class="section-kicker" id="visualsKicker">Análisis de Datos por Pestaña</span>
+          <h2 class="section-title" id="visualsTitle">Dashboard Deep Dive</h2>
+          
           <div class="chart-grid">
+            <!-- TAB 1: EXECUTIVE SUMMARY -->
             <article class="chart-card">
-              <div class="chart-image-wrap">
-                <img class="chart-image" src="../img/covid-metrics-v2-2.png" alt="Report Page 2" loading="lazy" />
-              </div>
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/covid-metrics-v2.png" alt="Executive Summary" /></div>
               <div class="chart-body">
-                <span class="chart-index" id="chart1Index">Página 02</span>
-                <h3 class="chart-title" id="chart1Title">Desglose de Métricas</h3>
-                <p class="chart-copy" id="chart1Text1">Análisis detallado de la segunda página del reporte.</p>
+                <span class="chart-index" id="tab1Index">Pestaña 01</span>
+                <h3 class="chart-title" id="tab1Title">Executive Summary</h3>
+                <div class="kpi-row" id="tab1Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">775.6M</span><span class="kpi-box-lbl">Cases</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">7.06M</span><span class="kpi-box-lbl">Deaths</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">0.91%</span><span class="kpi-box-lbl">CFR</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader1">Key Insights</h4>
+                  <ul class="insight-list" id="tab1Insights"></ul>
+                </div>
               </div>
             </article>
-            <article class="chart-card">
-              <div class="chart-image-wrap">
-                <img class="chart-image" src="../img/covid-metrics-v2-3.png" alt="Report Page 3" loading="lazy" />
-              </div>
-              <div class="chart-body">
-                <span class="chart-index" id="chart2Index">Página 03</span>
-                <h3 class="chart-title" id="chart2Title">Tendencias y Proyecciones</h3>
-                <p class="chart-copy" id="chart2Text1">Exploración de tendencias históricas y proyecciones.</p>
-              </div>
-            </article>
-          </div>
-        </section>
 
-        <!-- Recommendations -->
-        <section class="content-section">
-          <span class="section-kicker" id="recKicker">Conclusiones</span>
-          <h2 class="section-title" id="recTitle">Recomendaciones del Analista</h2>
-          <div class="recommendations-list">
-            <article class="recommendation-card">
-              <h3 id="rec1Title">Acción 1</h3>
-              <p id="rec1Text">Recomendación basada en los datos analizados.</p>
+            <!-- TAB 2: CASE PROGRESSION -->
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/covid-metrics-v2-2.png" alt="Case Progression" /></div>
+              <div class="chart-body">
+                <span class="chart-index" id="tab2Index">Pestaña 02</span>
+                <h3 class="chart-title" id="tab2Title">Case Progression</h3>
+                <div class="insight-block">
+                  <h4 id="insightsHeader2">Key Insights</h4>
+                  <ul class="insight-list" id="tab2Insights"></ul>
+                </div>
+              </div>
             </article>
-            <article class="recommendation-card">
-              <h3 id="rec2Title">Acción 2</h3>
-              <p id="rec2Text">Segunda recomendación estratégica.</p>
+
+            <!-- TAB 3: MORTALITY & HEALTHCARE -->
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/covid-metrics-v2-3.png" alt="Mortality" /></div>
+              <div class="chart-body">
+                <span class="chart-index" id="tab3Index">Pestaña 03</span>
+                <h3 class="chart-title" id="tab3Title">Mortality & Healthcare</h3>
+                <div class="kpi-row" id="tab3Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">3.55M</span><span class="kpi-box-lbl">Deaths 2021</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">19.5%</span><span class="kpi-box-lbl">Excess Mort.</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">5,053</span><span class="kpi-box-lbl">DPM Peru</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader3">Key Insights</h4>
+                  <ul class="insight-list" id="tab3Insights"></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- TAB 4: VACCINATION ROLLOUT -->
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/covid-metrics-v2-4.png" alt="Vaccination" /></div>
+              <div class="chart-body">
+                <span class="chart-index" id="tab4Index">Pestaña 04</span>
+                <h3 class="chart-title" id="tab4Title">Vaccination Rollout</h3>
+                <div class="insight-block">
+                  <h4 id="insightsHeader4">Key Insights</h4>
+                  <ul class="insight-list" id="tab4Insights"></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- TAB 5: TESTING & POLICY -->
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/covid-metrics-v2-5.png" alt="Testing" /></div>
+              <div class="chart-body">
+                <span class="chart-index" id="tab5Index">Pestaña 05</span>
+                <h3 class="chart-title" id="tab5Title">Testing & Policy</h3>
+                <div class="kpi-row" id="tab5Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">100</span><span class="kpi-box-lbl">Stringency</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">14.1%</span><span class="kpi-box-lbl">Positivity</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader5">Key Insights</h4>
+                  <ul class="insight-list" id="tab5Insights"></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- TAB 6: COUNTRY DETAIL -->
+            <article class="chart-card">
+              <div class="chart-image-wrap"><img class="chart-image" src="../img/covid-metrics-v2-6.png" alt="Country Detail" /></div>
+              <div class="chart-body">
+                <span class="chart-index" id="tab6Index">Pestaña 06</span>
+                <h3 class="chart-title" id="tab6Title">Country Detail Breakdown</h3>
+                <div class="insight-block">
+                  <h4 id="insightsHeader6">Key Insights</h4>
+                  <ul class="insight-list" id="tab6Insights"></ul>
+                </div>
+              </div>
             </article>
           </div>
         </section>
@@ -234,9 +246,7 @@
     <footer class="case-footer">
       <div class="case-footer-box">
         <p class="case-footer-copy" id="footerCopy">Portafolio de Análisis de Datos profesional.</p>
-        <div class="case-actions">
-          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
-        </div>
+        <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
       </div>
     </footer>
   </div>
@@ -246,102 +256,153 @@
       const translations = {
         es: {
           backToPortfolio: "← Volver al portafolio",
-          heroBadge: "Caso de estudio de Análisis de Datos",
-          heroTitle: "covid-metrics-v2",
-          heroSummary: "Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre covid-metrics-v2.",
+          heroBadge: "Proyecto de Inteligencia de Negocios",
+          heroTitle: "COVID-19 Global Insights",
+          heroSummary: "Dashboard profesional que analiza el ciclo completo de la pandemia, desde el brote inicial hasta la fase endémica, utilizando modelado de datos avanzado.",
           metaLabelRole: "Enfoque",
-          metaValueRole: "Analítica de Datos",
-          metaLabelQuestion: "Pregunta de negocio",
-          metaValueQuestion: "¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?",
-          repoButton: "Ver repositorio",
-          overviewKicker: "Overview",
-          overviewTitle: "Marco del proyecto",
-          overviewIntro: "Introducción detallada sobre el origen de los datos y el propósito del análisis.",
-          overviewCard1Title: "Objetivo",
-          overviewCard1Body: "Definir el objetivo principal alcanzado con este reporte.",
-          overviewCard2Title: "Metodología",
-          overviewCard2Body: ["Extracción y limpieza", "Modelado de datos", "DAX", "Diseño"],
-          overviewCard3Title: "Resultados",
-          overviewCard3Body: "Resumen del impacto de los hallazgos encontrados.",
-          overviewGeneralKicker: "Vista General",
-          overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "Esta vista consolidada permite entender las métricas de un vistazo.",
-          visualsKicker: "Análisis Visual",
-          visualsTitle: "Detalles y Visualizaciones",
-          chart1Index: "Gráfico 01",
-          chart1Title: "Tendencia Temporal",
-          chart1Text1: "Descripción de la primera visualización clave.",
-          chart2Index: "Gráfico 02",
-          chart2Title: "Distribución de Categorías",
-          chart2Text1: "Descripción de la segunda visualización clave.",
-          recKicker: "Conclusiones",
-          recTitle: "Recomendaciones",
-          rec1Title: "Acción 1",
-          rec1Text: "Recomendación basada en los datos analizados.",
-          rec2Title: "Acción 2",
-          rec2Text: "Segunda recomendación estratégica.",
-          footerCopy: "Portafolio de Análisis de Datos profesional.",
-          footerBackButton: "Volver a proyectos",
+          metaValueRole: "Análisis de Datos Críticos",
+          metaLabelQuestion: "Dataset",
+          metaValueQuestion: "Our World in Data (Full Pandemic)",
+          repoButton: "Ver código",
+          visualsKicker: "Deep Dive por Pestaña",
+          visualsTitle: "Hallazgos y Métricas Clave",
+          insightsHeader1: "Hallazgos Clave",
+          insightsHeader2: "Hallazgos Clave",
+          insightsHeader3: "Hallazgos Clave",
+          insightsHeader4: "Hallazgos Clave",
+          insightsHeader5: "Hallazgos Clave",
+          insightsHeader6: "Hallazgos Clave",
+          tab1Index: "Pestaña 01",
+          tab1Title: "Resumen Ejecutivo — Números Globales",
+          tab1Insights: [
+            "El conjunto de datos abarca de enero de 2020 a agosto de 2024, cubriendo todo el arco pandémico.",
+            "Europa y Asia representan más del 70% de los casos reportados (252M + 301M).",
+            "La tasa de mortalidad de Europa por millón (1,767) es casi 4 veces la de Asia (446).",
+            "África reporta solo 13.1M de casos, lo que probablemente indica un subregistro masivo por falta de infraestructura.",
+            "Solo el 16.8% de África fue completamente vacunado frente al 52% en Europa."
+          ],
+          tab2Index: "Pestaña 02",
+          tab2Title: "Progresión de Casos — Año tras Año",
+          tab2Insights: [
+            "2022 fue el peor año en volumen: 424M de casos (55% de la pandemia) impulsados por Omicron.",
+            "El pico máximo en un solo día en 2022 fue de 44.2M de casos, 7 veces más que el pico de 2021.",
+            "Para 2023, la tasa R colapsó a 0.48, marcando el fin de la fase crítica.",
+            "A pesar del volumen récord en 2022, la letalidad (CFR) bajó al 0.95% gracias a las vacunas."
+          ],
+          tab3Index: "Pestaña 03",
+          tab3Title: "Mortalidad y Salud — Presión en UCIs",
+          tab3Insights: [
+            "2021 fue el año más letal con 3.55M de muertes, superando a 2020 y 2022.",
+            "Europa del Este domina el ranking de muertes por millón debido a menor vacunación y capacidad sanitaria.",
+            "La carga hospitalaria alcanzó su pico en 2021 con 12.8M de días-paciente en UCI.",
+            "La letalidad (CFR) cayó del 2.36% (2020) al 0.91% (2023+) de forma constante.",
+            "El exceso de mortalidad alcanzó un pico del 19.5% en 2021."
+          ],
+          tab4Index: "Pestaña 04",
+          tab4Title: "Despliegue de Vacunación — Cobertura y Velocidad",
+          tab4Insights: [
+            "2021 fue el año del 'esprint': 7.94 mil millones de dosis administradas.",
+            "Gibraltar superó el 100% de vacunación. China llegó al 84% y Emiratos Árabes al 88%.",
+            "La brecha en África es alarmante: solo 16.8% de vacunación completa promedio.",
+            "En 2023 las dosis cayeron un 97% al saturarse las poblaciones objetivo.",
+            "Los países con más del 60% de vacunación mantienen la letalidad por debajo del 1%."
+          ],
+          tab5Index: "Pestaña 05",
+          tab5Title: "Pruebas y Respuesta Política — Positividad y Rigor",
+          tab5Insights: [
+            "Todos los años superaron el umbral del 5% de positividad de la OMS, confirmando falta de pruebas.",
+            "El índice de rigor alcanzó el 100/100 en 2020 (confinamientos totales).",
+            "En 2021 se alcanzó la infraestructura máxima de pruebas (3,262 pruebas por caso).",
+            "Para 2022, la correlación entre rigor y casos se rompió por la alta transmisibilidad de Omicron."
+          ],
+          tab6Index: "Pestaña 06",
+          tab6Title: "Desglose Continental — Comparativa Cruzada",
+          tab6Insights: [
+            "Oceanía tuvo la letalidad más baja (0.22%) por su geografía y estrictos controles fronterizos.",
+            "La brecha de equidad en salud más grande es la vacunación en África (16% vs 52% en Europa).",
+            "Sudamérica tiene una mortalidad (1,687/M) casi tan alta como Europa, impulsada por Brasil y Perú.",
+            "La baja cifra de casos en África refleja falta de testeo, no necesariamente bajo impacto real."
+          ],
+          footerCopy: "Portfolio Profesional de Análisis de Datos.",
+          footerBackButton: "Volver a Proyectos",
           themeDark: "🌙 Dark",
           themeLight: "☀️ Light"
         },
         en: {
           backToPortfolio: "← Back to portfolio",
-          heroBadge: "Data Analysis Case Study",
-          heroTitle: "covid-metrics-v2",
-          heroSummary: "Detailed data analysis developed in Power BI to extract actionable insights about covid-metrics-v2.",
+          heroBadge: "Business Intelligence Project",
+          heroTitle: "COVID-19 Global Insights",
+          heroSummary: "Professional dashboard analyzing the full pandemic cycle, from initial outbreak to endemic phase, using advanced data modeling.",
           metaLabelRole: "Focus",
-          metaValueRole: "Data Analytics",
-          metaLabelQuestion: "Business question",
-          metaValueQuestion: "What are the main findings and trends identified in the dataset?",
-          repoButton: "Open repository",
-          overviewKicker: "Overview",
-          overviewTitle: "Project Framework",
-          overviewIntro: "Detailed introduction about data origin and analysis purpose.",
-          overviewCard1Title: "Objective",
-          overviewCard1Body: "Define the main goal achieved with this report.",
-          overviewCard2Title: "Methodology",
-          overviewCard2Body: ["Extraction & Cleaning", "Data Modeling", "DAX", "Design"],
-          overviewCard3Title: "Results",
-          overviewCard3Body: "Summary of the impact of the findings.",
-          overviewGeneralKicker: "General Overview",
-          overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "This consolidated view allows understanding metrics at a glance.",
-          visualsKicker: "Visual Analysis",
-          visualsTitle: "Details & Visualizations",
-          chart1Index: "Chart 01",
-          chart1Title: "Temporal Trend",
-          chart1Text1: "Description of the first key visualization.",
-          chart2Index: "Chart 02",
-          chart2Title: "Category Distribution",
-          chart2Text1: "Description of the second key visualization.",
-          recKicker: "Conclusions",
-          recTitle: "Recommendations",
-          rec1Title: "Action 1",
-          rec1Text: "Recommendation based on the analyzed data.",
-          rec2Title: "Action 2",
-          rec2Text: "Second strategic recommendation.",
+          metaValueRole: "Critical Data Analysis",
+          metaLabelQuestion: "Dataset",
+          metaValueQuestion: "Our World in Data (Full Pandemic)",
+          repoButton: "View code",
+          visualsKicker: "Tab-by-Tab Deep Dive",
+          visualsTitle: "Key Findings & Metrics",
+          insightsHeader1: "Key Insights",
+          insightsHeader2: "Key Insights",
+          insightsHeader3: "Key Insights",
+          insightsHeader4: "Key Insights",
+          insightsHeader5: "Key Insights",
+          insightsHeader6: "Key Insights",
+          tab1Index: "Tab 01",
+          tab1Title: "Executive Summary — Global Numbers",
+          tab1Insights: [
+            "Dataset spans Jan 2020 – Aug 2024, covering the full pandemic arc.",
+            "Europe and Asia together account for over 70% of all reported cases.",
+            "Europe's death rate per million (1,767) is nearly 4× Asia's (446).",
+            "Africa reports only 13.1M cases — likely severe undercounting due to limited infrastructure.",
+            "Only 16.8% of Africa was fully vaccinated vs 52% in Europe."
+          ],
+          tab2Index: "Tab 02",
+          tab2Title: "Case Progression — Year by Year",
+          tab2Insights: [
+            "2022 was the worst year for case volume: 424M cases (55% of all pandemic cases).",
+            "The peak single day in 2022 was 44.2M cases — 7× larger than 2021's peak.",
+            "By 2023 the R-rate collapsed to 0.48, pandemic functionally ended as a mass-casualty event.",
+            "Despite record volume in 2022, CFR dropped to 0.95% reflecting vaccine protection."
+          ],
+          tab3Index: "Tab 03",
+          tab3Title: "Mortality & Healthcare — ICU Pressure",
+          tab3Insights: [
+            "2021 was the deadliest year with 3.55M deaths, exceeding 2020 and 2022.",
+            "Eastern Europe dominates deaths-per-million ranking due to lower vax rates.",
+            "ICU + hospital load peaked in 2021 with 12.8M patient-days.",
+            "CFR fell steadily from 2.36% (2020) to 0.91% (2023+).",
+            "Excess mortality peaked at 19.5% above baseline in 2021."
+          ],
+          tab4Index: "Tab 04",
+          tab4Title: "Vaccination Rollout — Coverage & Speed",
+          tab4Insights: [
+            "2021 was the vaccination sprint: 7.94 billion doses in a single year.",
+            "Gibraltar topped vaccination at 101%. China reached 84%, UAE 88%.",
+            "Africa's vaccination gap is stark: only 16.8% average fully vaccinated.",
+            "In 2023 dosage fell by 97% as populations became saturated.",
+            "Countries with vax rates above 60% consistently keep CFR below 1%."
+          ],
+          tab5Index: "Tab 05",
+          tab5Title: "Testing & Policy Response — Positivity & Stringency",
+          tab5Insights: [
+            "Every year exceeded WHO 5% positivity threshold, confirming widespread undertesting.",
+            "Stringency peaked at 100/100 in 2020 (full global lockdowns).",
+            "Tests per case were highest in 2021 (3,262 per confirmed case).",
+            "By 2022 the stringency correlation broke down as Omicron spread regardless of restrictions."
+          ],
+          tab6Index: "Tab 06",
+          tab6Title: "Continent Breakdown — Cross-tab Comparison",
+          tab6Insights: [
+            "Oceania had the lowest CFR (0.22%) due to island geography and strict controls.",
+            "Africa's vaccination gap (16% vs 52% in Europe) is the starkest global health equity gap.",
+            "South America's mortality (1,687/M) is nearly as high as Europe's, driven by Brazil and Peru.",
+            "Africa's low reported numbers reflect testing capacity, not genuine impact."
+          ],
           footerCopy: "Professional Data Analysis Portfolio.",
-          footerBackButton: "Back to projects",
+          footerBackButton: "Back to Projects",
           themeDark: "🌙 Dark",
           themeLight: "☀️ Light"
         }
       };
-
-      function applySavedTheme() {
-        const savedTheme = localStorage.getItem("theme") || "light";
-        document.documentElement.classList.toggle("dark", savedTheme === "dark");
-        const themeIndicator = document.getElementById("themeIndicator");
-        if (themeIndicator) {
-          const activeLang = localStorage.getItem("language") || "es";
-          themeIndicator.textContent = savedTheme === "dark" ? translations[activeLang].themeDark : translations[activeLang].themeLight;
-        }
-      }
-
-      function setText(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-      }
 
       function setList(id, items) {
         const el = document.getElementById(id);
@@ -352,42 +413,46 @@
       function applyLanguage(lang) {
         const t = translations[lang] || translations.es;
         document.documentElement.lang = lang;
-        const langIndicator = document.getElementById("langIndicator");
-        if(langIndicator) langIndicator.textContent = lang.toUpperCase();
+        document.getElementById("langIndicator").textContent = lang.toUpperCase();
 
         Object.keys(t).forEach(function(key) {
           if (typeof t[key] === 'string') {
-            setText(key, t[key]);
+            const el = document.getElementById(key);
+            if (el) el.textContent = t[key];
+          } else if (key.endsWith('Insights')) {
+            setList(key, t[key]);
           }
         });
 
-        setList("overviewCard2Body", t.overviewCard2Body);
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.getElementById("themeIndicator").textContent = savedTheme === "dark" ? t.themeDark : t.themeLight;
+      }
 
-        const theme = localStorage.getItem("theme") || "light";
-        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const activeLang = localStorage.getItem("language") || "es";
+        const themeIndicator = document.getElementById("themeIndicator");
+        if(themeIndicator) themeIndicator.textContent = savedTheme === "dark" ? translations[activeLang].themeDark : translations[activeLang].themeLight;
       }
 
       document.addEventListener("DOMContentLoaded", function () {
         const langIndicator = document.getElementById("langIndicator");
         const themeIndicator = document.getElementById("themeIndicator");
 
-        if (langIndicator) {
-          langIndicator.addEventListener("click", function () {
-            const currentLang = localStorage.getItem("language") || "es";
-            const newLang = currentLang === "es" ? "en" : "es";
-            localStorage.setItem("language", newLang);
-            applyLanguage(newLang);
-          });
-        }
+        langIndicator.addEventListener("click", function () {
+          const currentLang = localStorage.getItem("language") || "es";
+          const newLang = currentLang === "es" ? "en" : "es";
+          localStorage.setItem("language", newLang);
+          applyLanguage(newLang);
+        });
 
-        if (themeIndicator) {
-          themeIndicator.addEventListener("click", function () {
-            const currentTheme = localStorage.getItem("theme") || "light";
-            const newTheme = currentTheme === "light" ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
-            applySavedTheme();
-          });
-        }
+        themeIndicator.addEventListener("click", function () {
+          const currentTheme = localStorage.getItem("theme") || "light";
+          const newTheme = currentTheme === "light" ? "dark" : "light";
+          localStorage.setItem("theme", newTheme);
+          applySavedTheme();
+        });
 
         const lang = localStorage.getItem("language") || "es";
         applySavedTheme();
