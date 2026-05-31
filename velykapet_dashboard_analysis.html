@@ -1,0 +1,427 @@
+
+<style>
+*{box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer}
+.tab.active{background:var(--color-background-primary);border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.panel{display:none}.panel.active{display:block}
+.krow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.krow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.km{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px}
+.km-l{font-size:11px;color:var(--color-text-secondary);margin:0 0 4px}
+.km-v{font-size:20px;font-weight:500;margin:0;line-height:1.1}
+.km-s{font-size:11px;margin:3px 0 0}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:12px}
+.card-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px}
+.sl{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px}
+.finding{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start}
+.finding:last-child{border-bottom:none}
+.fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;margin-top:2px}
+.fi-g{background:#E1F5EE;color:#085041}
+.fi-r{background:#FCEBEB;color:#791F1F}
+.fi-a{background:#FAEEDA;color:#633806}
+.fi-b{background:#E6F1FB;color:#0C447C}
+.fb{flex:1}
+.fb p{margin:0;font-size:13px;color:var(--color-text-primary);line-height:1.5}
+.fb small{font-size:11px;color:var(--color-text-secondary)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rule{height:0.5px;background:var(--color-border-tertiary);margin:1rem 0}
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px}
+.bg{background:#E1F5EE;color:#085041}
+.br{background:#FCEBEB;color:#791F1F}
+.ba{background:#FAEEDA;color:#633806}
+.bb{background:#E6F1FB;color:#0C447C}
+.bp{background:#EEEDFE;color:#3C3489}
+.tbl{width:100%;font-size:12px;border-collapse:collapse;table-layout:fixed}
+.tbl th{font-size:11px;color:var(--color-text-secondary);font-weight:500;text-align:left;padding:6px 8px;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.tbl td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
+.tbl tr:last-child td{border-bottom:none;font-weight:500}
+.bar-mini{display:flex;align-items:center;gap:6px;margin-top:4px}
+.bm-bg{flex:1;height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden}
+.bm-f{height:100%;border-radius:2px}
+</style>
+
+<h2 class="sr-only">Detailed analysis of the Velykapet dashboard across 3 pages: executive summary, monthly sales evaluation, and profitability. Covers revenue trends, margin breakdowns, channel concentration, and category-level P&L.</h2>
+
+<div style="padding:1rem 0 0">
+
+<div class="krow">
+  <div class="km"><p class="km-l">Total ventas</p><p class="km-v">$8.67M COP</p><p class="km-s" style="color:var(--color-text-secondary)">Sep 2025 – May 2026</p></div>
+  <div class="km"><p class="km-l">Margen bruto</p><p class="km-v">17.9%</p><p class="km-s" style="color:var(--color-text-success)">$1.55M utilidad bruta</p></div>
+  <div class="km"><p class="km-l">Margen neto</p><p class="km-v">13.3%</p><p class="km-s" style="color:var(--color-text-secondary)">$1.15M ganancia neta</p></div>
+  <div class="km"><p class="km-l">Crecimiento MoM</p><p class="km-v">+30.6%</p><p class="km-s" style="color:var(--color-text-success)">promedio periodo</p></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('p1',this)"><i class="ti ti-layout-dashboard" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Resumen ejecutivo</div>
+  <div class="tab" onclick="show('p2',this)"><i class="ti ti-chart-line" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Ventas mensuales</div>
+  <div class="tab" onclick="show('p3',this)"><i class="ti ti-chart-pie" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Rentabilidad</div>
+  <div class="tab" onclick="show('p4',this)"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Alertas & acciones</div>
+</div>
+
+<div id="p1" class="panel active">
+  <p class="sl">Hallazgos — página 1: resumen ejecutivo</p>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-trending-up" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#1D9E75"></i>Crecimiento sostenido pero con inicio pequeño</p>
+    <div style="position:relative;width:100%;height:200px;margin-bottom:8px">
+      <canvas id="c1" role="img" aria-label="Bar chart showing monthly sales from Sep 2025 to May 2026, growing from 60K to 2.03M COP">Sales grew from 60K in Sep 2025 to 2.03M COP in May 2026.</canvas>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--color-text-secondary)">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>Total ventas</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#444441"></span>Total costo</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Total gastos</span>
+    </div>
+    <div class="finding" style="margin-top:10px">
+      <div class="fi fi-g">+</div>
+      <div class="fb"><p>El negocio pasó de $60K en septiembre a $2.03M en mayo — un crecimiento de 33x en 9 meses. La curva es ascendente en casi todos los meses, lo que confirma que la tracción no es puntual sino estructural.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-g">+</div>
+      <div class="fb"><p>El costo de ventas (barra oscura) crece proporcionalmente con las ventas, lo que indica que el margen bruto se mantiene estable — no hay degradación de precios oculta.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-a">~</div>
+      <div class="fb"><p>Los gastos operativos (rojo) son prácticamente invisibles en el gráfico — 4.6% sobre ventas. Esto es sano hoy, pero a medida que el negocio crezca habrá que incorporar costos de personal, bodega y marketing que hoy no aparecen.</p></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <p class="card-title"><i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#1D9E75"></i>Canal de ventas</p>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Whatsapp</span><span style="font-weight:500">94.4%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:94%;background:#1D9E75"></div></div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Tienda física</span><span style="font-weight:500">4.6%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:4.6%;background:#888780"></div></div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Fiesta Paris + Rappi</span><span style="font-weight:500">1.1%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:1.1%;background:#B4B2A9"></div></div>
+      </div>
+      <div class="finding" style="margin-top:8px;padding-top:8px">
+        <div class="fi fi-r">!</div>
+        <div class="fb"><p>Concentración crítica en Whatsapp (94%). Es una fortaleza hoy, pero si el canal falla (bloqueo, cambio de política, pérdida del número) el negocio para. Diversificar activamente.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="card-title"><i class="ti ti-credit-card" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#185FA5"></i>Método de pago</p>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Bancolombia</span><span style="font-weight:500">48.7%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:49%;background:#185FA5"></div></div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Nequi</span><span style="font-weight:500">23.6%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:24%;background:#378ADD"></div></div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Efectivo</span><span style="font-weight:500">21.0%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:21%;background:#85B7EB"></div></div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Davivienda</span><span style="font-weight:500">3.9%</span></div>
+        <div class="bm-bg"><div class="bm-f" style="width:4%;background:#B5D4F4"></div></div>
+      </div>
+      <div class="finding" style="margin-top:8px;padding-top:8px">
+        <div class="fi fi-b">i</div>
+        <div class="fb"><p>El 21% en efectivo en un negocio virtual es inusualmente alto — indica entregas en mano o puntos de recogida. Monitorear: el efectivo no deja rastro de devolución y complica la conciliación.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p2" class="panel">
+  <p class="sl">Hallazgos — página 2: evaluación de ventas mensuales</p>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-calendar-stats" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#185FA5"></i>Dinámica MoM — alta volatilidad controlada</p>
+    <div style="position:relative;width:100%;height:200px;margin-bottom:8px">
+      <canvas id="c2" role="img" aria-label="Monthly MoM growth rate chart showing high volatility between -50% and +254% across 9 months">MoM growth: Sep +0%, Oct +138%, Nov +253%, Dec -3%, Jan +103%, Feb +50%, Mar -50%, Apr +121%, May +22%.</canvas>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--color-text-secondary);margin-bottom:8px">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>Ventas mes</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:3px;background:#E24B4A;display:inline-block"></span>Crecimiento MoM %</span>
+    </div>
+    <div class="finding">
+      <div class="fi fi-g">+</div>
+      <div class="fb"><p>Noviembre 2025 fue el mes de mayor crecimiento relativo (+253.5%) — el negocio encontró tracción real ese mes. Diciembre creció en absoluto ($1.03M) pero el MoM cayó levemente (-3.4%) porque la base ya era alta.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-r">!</div>
+      <div class="fb"><p>Marzo 2026 fue el único mes con caída significativa (-49.5%), pasando de $1.49M a $750K. Coincide con un mes sin categorías medicamentos fuertes. Investigar si hay un patrón estacional o fue pérdida de clientes.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-g">+</div>
+      <div class="fb"><p>Mayo 2026 alcanza el pico histórico de $2.03M, con un MoM de +22% sobre un abril ya fuerte ($1.67M). Esta es la señal más positiva — el rebote de abril sostenido en mayo sugiere que la caída de marzo fue un evento puntual, no tendencia.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-chart-area" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#1D9E75"></i>YTD vs MTD — acumulación saludable</p>
+    <div class="finding">
+      <div class="fi fi-g">+</div>
+      <div class="fb"><p>El YTD llega a $6.9M COP a final de mayo 2026, con una curva que nunca retrocede — cada mes suma al acumulado. La línea MTD muestra que mayo ($2M) fue el mes de mayor aporte individual, representando el 29% del YTD total.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-b">i</div>
+      <div class="fb"><p>La brecha entre YTD y MTD se ensancha progresivamente — señal de aceleración, no de desaceleración. Si este ritmo continúa, el negocio podría terminar 2026 con $15–18M COP en ventas anuales proyectadas.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#7F77DD"></i>Categorías — volumen vs ticket: una imagen que sorprende</p>
+    <div style="position:relative;width:100%;height:260px;margin-bottom:8px">
+      <canvas id="c3" role="img" aria-label="Horizontal bar chart of top 5 categories by total sales and quantity. Concentrados leads in sales at 2.66M, Snacks leads in quantity at 600+ units.">Top categories: Concentrados 2.66M COP 59 units, Medicamentos 1.44M 40 units, Arena 931K 28 units, Snacks humedo 905K 102 units, Snacks 556K 63 units.</canvas>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--color-text-secondary);margin-bottom:8px">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>Total ventas (COP)</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#7F77DD"></span>Cantidad</span>
+    </div>
+    <div class="finding">
+      <div class="fi fi-g">+</div>
+      <div class="fb"><p>Concentrados lidera en ventas ($2.66M) con solo 59 unidades — ticket unitario promedio ~$45,000 COP. Alta valor por transacción, ideal para el margen.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-a">~</div>
+      <div class="fb"><p>Snacks húmedo tiene la mayor cantidad de unidades (102) pero mucho menor ingreso que Medicamentos. Son compras pequeñas y frecuentes — útiles como enganche pero no mueven el P&L solos.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-b">i</div>
+      <div class="fb"><p>Medicamentos con $1.44M en solo 40 unidades tiene el ticket más alto después de Concentrados medicado (~$36,000 COP/unidad). Una categoría de alto valor sin volumen masivo — la oportunidad de crecer aquí es enorme sin necesitar más clientes.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="p3" class="panel">
+  <p class="sl">Hallazgos — página 3: rentabilidad</p>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-waterfall" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#1D9E75"></i>Cascada P&L — dónde se va el dinero</p>
+    <div style="position:relative;width:100%;height:160px;margin-bottom:8px">
+      <canvas id="c4" role="img" aria-label="Simplified P&L waterfall: Sales 8.67M, minus Cost 7.12M = Gross profit 1.55M, minus Operating expenses 397K = Net profit 1.15M">P&L: Ventas 8.67M, Costo -7.12M, Utilidad Bruta 1.55M, Gastos -397K, Ganancia Neta 1.15M.</canvas>
+    </div>
+    <div class="two" style="margin-top:10px">
+      <div class="finding" style="border:none;padding:0">
+        <div class="fi fi-r">!</div>
+        <div class="fb"><p>El 82% del ingreso se va en costo de producto. Con márgenes brutos del 18%, el negocio es rentable pero frágil — un aumento de costos del 5% reduce el margen neto a la mitad.</p></div>
+      </div>
+      <div class="finding" style="border:none;padding:0">
+        <div class="fi fi-g">+</div>
+        <div class="fb"><p>Los gastos operativos ($397K, 4.6%) son excepcionalmente bajos, lo que indica un modelo muy liviano en overhead. Esto es una ventaja competitiva real mientras el volumen sea pequeño.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#7F77DD"></i>Margen bruto por categoría — la foto real</p>
+    <div style="position:relative;width:100%;height:260px;margin-bottom:8px">
+      <canvas id="c5" role="img" aria-label="Dual axis bar and line chart showing gross profit and margin percentage by category. Comederos leads with 47% margin, Snacks at 32.8%, Concentrados at 14.5%.">Margin by category: Comederos 47%, Snacks 32.8%, Suplementos 21%, Accesorios 25%, Arena 23%, Juguetes 23%, Snacks humedo 14.7%, Concentrados 14.5%, Medicamentos 12.8%, Concentrados medicado 9.5%, Aseo 16.9%, Bienestar 8%.</canvas>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--color-text-secondary);margin-bottom:12px">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#7F77DD"></span>Utilidad bruta COP</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:3px;background:#EF9F27;display:inline-block"></span>Margen bruto %</span>
+    </div>
+    <div class="finding">
+      <div class="fi fi-r">!</div>
+      <div class="fb"><p>Existe una paradoja de rentabilidad: las categorías con mayor margen % (Comederos 47%, Snacks 33%) aportan poca utilidad absoluta porque el volumen es bajo. Las que aportan más utilidad en COP (Concentrados $396K, Medicamentos $222K) tienen el margen % más bajo del portafolio.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-a">~</div>
+      <div class="fb"><p>Snacks tiene 32.8% de margen — el más alto entre las categorías de volumen real. Si se duplican las ventas de Snacks manteniendo el margen, la ganancia neta total del negocio crece un 10% sin necesitar más clientes de concentrados.</p></div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-r">!</div>
+      <div class="fb"><p>Concentrados medicado tiene 9.5% de margen — el más bajo del portafolio. Con $806K en ventas y solo $84K de utilidad bruta, es la categoría de mayor facturación de margen comprimido. Su única justificación es que el cliente la necesita y vuelve — pero hay que negociar mejor precio con el proveedor.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><i class="ti ti-table" aria-hidden="true" style="font-size:15px;margin-right:6px;color:#444441"></i>P&L completo por categoría</p>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:22%">Categoría</th>
+            <th style="width:14%;text-align:right">Ventas</th>
+            <th style="width:13%;text-align:right">Utilidad</th>
+            <th style="width:11%;text-align:right">Margen</th>
+            <th style="width:13%;text-align:right">G. Neta</th>
+            <th style="width:12%;text-align:right">MoM</th>
+            <th style="width:15%;text-align:right">Ticket prom</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Snacks húmedo</td><td style="text-align:right">889K</td><td style="text-align:right">168K</td><td style="text-align:right">18.9%</td><td style="text-align:right">228K</td><td style="text-align:right;color:#1D9E75">+5.9K</td><td style="text-align:right">8.7K</td></tr>
+          <tr><td>Snacks</td><td style="text-align:right">557K</td><td style="text-align:right">183K</td><td style="text-align:right"><span class="badge bg">32.8%</span></td><td style="text-align:right;color:#E24B4A">-214K</td><td style="text-align:right;color:#1D9E75">+66.9%</td><td style="text-align:right">649</td></tr>
+          <tr><td>Concentrados</td><td style="text-align:right">2,664K</td><td style="text-align:right">396K</td><td style="text-align:right">14.5%</td><td style="text-align:right;color:#E24B4A">-482</td><td style="text-align:right;color:#1D9E75">+19.4%</td><td style="text-align:right">38.4K</td></tr>
+          <tr><td>Medicamentos</td><td style="text-align:right">1,436K</td><td style="text-align:right">223K</td><td style="text-align:right">15.5%</td><td style="text-align:right;color:#E24B4A">-174K</td><td style="text-align:right;color:#1D9E75">+51.1%</td><td style="text-align:right">16.2K</td></tr>
+          <tr><td>Arena</td><td style="text-align:right">932K</td><td style="text-align:right">215K</td><td style="text-align:right">23.1%</td><td style="text-align:right;color:#E24B4A">-182K</td><td style="text-align:right;color:#1D9E75">+24.4%</td><td style="text-align:right">24.7K</td></tr>
+          <tr><td>Juguetes</td><td style="text-align:right">206K</td><td style="text-align:right">48K</td><td style="text-align:right">23.4%</td><td style="text-align:right;color:#E24B4A">-348K</td><td style="text-align:right;color:#1D9E75">+31.3%</td><td style="text-align:right">6.1K</td></tr>
+          <tr><td>Accesorios</td><td style="text-align:right">226K</td><td style="text-align:right">57K</td><td style="text-align:right">25.4%</td><td style="text-align:right;color:#E24B4A">-339K</td><td style="text-align:right;color:#1D9E75">+11.7%</td><td style="text-align:right">10.1K</td></tr>
+          <tr><td>Aseo</td><td style="text-align:right">268K</td><td style="text-align:right">45K</td><td style="text-align:right">16.9%</td><td style="text-align:right;color:#E24B4A">-351K</td><td style="text-align:right;color:#E24B4A">-66.9%</td><td style="text-align:right">10.1K</td></tr>
+          <tr><td>Conc. medicado</td><td style="text-align:right">806K</td><td style="text-align:right">84K</td><td style="text-align:right"><span class="badge br">9.5%</span></td><td style="text-align:right;color:#E24B4A">-313K</td><td style="text-align:right;color:#1D9E75">+61.2%</td><td style="text-align:right">90.3K</td></tr>
+          <tr><td>Suplementos</td><td style="text-align:right">374K</td><td style="text-align:right">79K</td><td style="text-align:right">21.3%</td><td style="text-align:right;color:#E24B4A">-217K</td><td style="text-align:right;color:#E24B4A">-12.0%</td><td style="text-align:right">26.8K</td></tr>
+          <tr style="background:var(--color-background-secondary)"><td>Total</td><td style="text-align:right">8,674K</td><td style="text-align:right">1,552K</td><td style="text-align:right">17.9%</td><td style="text-align:right">1,155K</td><td style="text-align:right;color:#1D9E75">+30.6%</td><td style="text-align:right">7.3K</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding" style="margin-top:12px">
+      <div class="fi fi-r">!</div>
+      <div class="fb"><p>La columna "Ganancia Neta" por categoría es negativa en casi todas las categorías porque los $397K de gastos operativos se aplican globalmente al total, no están distribuidos. Esto no significa que cada categoría sea deficitaria individualmente — significa que los gastos se cargan todos en el total.</p><small>Recomendación: asignar gastos por categoría según participación en ventas para un P&L por línea de negocio más preciso.</small></div>
+    </div>
+  </div>
+</div>
+
+<div id="p4" class="panel">
+  <p class="sl">Alertas críticas y acciones inmediatas</p>
+
+  <div class="card">
+    <div class="finding">
+      <div class="fi fi-r">1</div>
+      <div class="fb">
+        <p><span class="badge br">Crítico</span> Concentración de canal (94% Whatsapp)</p>
+        <small>Un solo fallo en el canal tumba el negocio. Acción: activar tienda en Instagram, catálogo en WhatsApp Business API con backup en otro número, y crecer Rappi/tienda física al menos al 15% en los próximos 6 meses.</small>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-r">2</div>
+      <div class="fb">
+        <p><span class="badge br">Crítico</span> 3 productos con margen negativo + 8 con margen cero</p>
+        <small>Arena Tofu Café y Baño Seco Ikipets se venden por debajo del costo. Subir precio o eliminar del catálogo esta semana. Los 8 de margen cero (Simparica Trio, Vermiplex, etc.) pueden ser errores de precio o ventas de muestra — revisar y corregir.</small>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-a">3</div>
+      <div class="fb">
+        <p><span class="badge ba">Urgente</span> Marzo 2026: caída de -49.5% sin explicación clara</p>
+        <small>El único mes con caída fuerte. ¿Fue vacaciones? ¿Pérdida de cliente clave? ¿Falta de stock? Identificar la causa raíz antes de que se repita. Si fue estacional (semana santa), anticiparse en 2027 con stock y campañas previas.</small>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-a">4</div>
+      <div class="fb">
+        <p><span class="badge ba">Urgente</span> Gastos operativos subestimados</p>
+        <small>$397K en 9 meses para un negocio que factura $8.67M parece muy bajo. ¿Está el tiempo del dueño contabilizado? ¿El empaque, domicilios, transporte? Si estos costos ocultos se incorporan, el margen neto real probablemente sea 5–8%, no 13.3%.</small>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-b">5</div>
+      <div class="fb">
+        <p><span class="badge bb">Oportunidad</span> Snacks tiene 32.8% de margen — el más alto de volumen real</p>
+        <small>Si las ventas de Snacks crecen de $557K a $1M manteniendo el margen, la ganancia bruta adicional es $145K — casi equivalente a todos los gastos operativos actuales. Priorizar visibilidad, combos y variedad en esta categoría.</small>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-b">6</div>
+      <div class="fb">
+        <p><span class="badge bb">Oportunidad</span> Medicamentos explotó en mayo (+51.1% MoM, $486K)</p>
+        <small>El mes de mayor crecimiento relativo de una categoría de alto ticket. ¿Fue un evento puntual (descuento, nuevo cliente) o tendencia? Si es tendencia, redoblar inventario de Nexgard, Simparica y Fortiflora antes de junio.</small>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="fi fi-b">7</div>
+      <div class="fb">
+        <p><span class="badge bb">Oportunidad</span> Proyección anual: $15–18M COP si se mantiene el ritmo de mayo</p>
+        <small>Mayo generó $2.03M. Si el promedio mensual del H2 2026 es $1.5–1.8M, el total anual 2026 estaría entre $15M y $18M COP. Planificar capital de trabajo, logística y atención al cliente para absorber ese crecimiento sin degradar el servicio.</small>
+      </div>
+    </div>
+    <div class="finding" style="border:none">
+      <div class="fi fi-b">8</div>
+      <div class="fb">
+        <p><span class="badge bp">Modelo</span> 21% de ventas en efectivo en un negocio virtual</p>
+        <small>El efectivo en Whatsapp commerce implica pago contraentrega o recogida en punto. Mapearlo correctamente: ¿cuántos domicilios se están haciendo? ¿Hay costo logístico real asociado que no aparece en gastos? El efectivo bien manejado puede ser ventaja; no rastreado es un riesgo.</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function show(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'p1' && !window.c1done) buildC1();
+  if (id === 'p2' && !window.c2done) { buildC2(); buildC3(); }
+  if (id === 'p3' && !window.c3done) { buildC4(); buildC5(); }
+}
+
+const months = ['Sep 25','Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26','May 26'];
+const ventas = [60,100,510,1030,990,1490,750,1670,2030];
+const costos = [45,90,430,870,870,1290,630,1370,1620];
+const gastos = [0,0,40,20,30,10,0,32,108];
+const mom = [null,138,253.5,-3.4,103.1,50.3,-49.5,121.3,22.0];
+
+function buildC1() {
+  window.c1done = true;
+  new Chart(document.getElementById('c1'), {
+    type:'bar',
+    data:{labels:months,datasets:[
+      {label:'Ventas',data:ventas,backgroundColor:'#1D9E75',borderRadius:3},
+      {label:'Costo',data:costos,backgroundColor:'#444441',borderRadius:3},
+      {label:'Gastos',data:gastos,backgroundColor:'#E24B4A',borderRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: $${ctx.raw}K COP`}}},scales:{x:{ticks:{font:{size:10},autoSkip:false,maxRotation:35},grid:{display:false}},y:{ticks:{callback:v=>'$'+v+'K',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}}}}
+  });
+}
+
+function buildC2() {
+  window.c2done = true;
+  new Chart(document.getElementById('c2'), {
+    type:'bar',
+    data:{labels:months,datasets:[
+      {label:'Ventas',data:ventas,backgroundColor:'#1D9E75',borderRadius:3,yAxisID:'y'},
+      {type:'line',label:'MoM %',data:mom,borderColor:'#E24B4A',borderWidth:2,pointRadius:3,pointBackgroundColor:'#E24B4A',tension:0.3,yAxisID:'y2',borderDash:[]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.dataset.label==='MoM %'?`MoM: ${ctx.raw}%`:`$${ctx.raw}K COP`}}},scales:{x:{ticks:{font:{size:10},autoSkip:false,maxRotation:35},grid:{display:false}},y:{ticks:{callback:v=>'$'+v+'K',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}},y2:{position:'right',ticks:{callback:v=>v+'%',font:{size:10}},grid:{display:false}}}}
+  });
+}
+
+function buildC3() {
+  new Chart(document.getElementById('c3'), {
+    type:'bar',
+    data:{labels:['Snacks húmedo','Snacks','Concentrados','Medicamentos','Arena'],datasets:[
+      {label:'Ventas (K COP)',data:[889,557,2664,1436,932],backgroundColor:'#1D9E75',borderRadius:3},
+      {label:'Cantidad',data:[102,63,59,40,28],backgroundColor:'#7F77DD',borderRadius:3}
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}},y:{ticks:{font:{size:10}},grid:{display:false}}}}
+  });
+}
+
+function buildC4() {
+  window.c3done = true;
+  new Chart(document.getElementById('c4'), {
+    type:'bar',
+    data:{labels:['Ventas','Costo','Utilidad Bruta','Gastos','Ganancia Neta'],datasets:[{
+      data:[8674,-7122,1552,-397,1155],
+      backgroundColor:['#1D9E75','#E24B4A','#1D9E75','#E24B4A','#185FA5'],
+      borderRadius:3
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`$${Math.abs(ctx.raw).toLocaleString()} COP`}}},scales:{x:{ticks:{font:{size:10},autoSkip:false},grid:{display:false}},y:{ticks:{callback:v=>(v<0?'-':'')+'$'+Math.abs(v/1000).toFixed(1)+'M',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}}}}
+  });
+}
+
+function buildC5() {
+  const cats = ['Conc.med','Medicam.','Conc.','Snacks hum.','Aseo','Arena','Supl.','Acces.','Juguetes','Snacks'];
+  const util = [84,223,396,168,45,215,79,57,48,183];
+  const marg = [9.5,15.5,14.5,18.9,16.9,23.1,21.3,25.4,23.4,32.8];
+  new Chart(document.getElementById('c5'), {
+    type:'bar',
+    data:{labels:cats,datasets:[
+      {label:'Utilidad bruta',data:util,backgroundColor:'#7F77DD',borderRadius:3,yAxisID:'y'},
+      {type:'line',label:'Margen %',data:marg,borderColor:'#EF9F27',borderWidth:2,pointRadius:3,pointBackgroundColor:'#EF9F27',tension:0.3,yAxisID:'y2'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},autoSkip:false,maxRotation:40},grid:{display:false}},y:{ticks:{callback:v=>'$'+v+'K',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}},y2:{position:'right',ticks:{callback:v=>v+'%',font:{size:10}},grid:{display:false},min:0,max:50}}}
+  });
+}
+
+window.c1done=false;window.c2done=false;window.c3done=false;
+document.addEventListener('DOMContentLoaded',()=>buildC1());
+setTimeout(()=>{if(!window.c1done)buildC1();},300);
+</script>

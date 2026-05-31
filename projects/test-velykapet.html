@@ -74,15 +74,25 @@
     .overview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
     .overview-card h3 { margin: 0 0 10px; font-size: 1rem; }
     .overview-card p { margin: 0; }
-    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; }
-    .chart-card { padding: 0; overflow: hidden; }
-    .chart-img { width: 100%; height: auto; display: block; }
-    .chart-body { padding: 20px; }
-    .chart-title { margin: 0 0 8px; font-size: 1.1rem; }
-    .chart-desc { margin: 0; color: var(--case-text-soft); font-size: 0.95rem; line-height: 1.6; }
-    .case-footer { max-width: var(--case-max); margin: 0 auto; padding: 0 20px 72px; }
-    .case-footer-box { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 26px; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .case-footer-copy { margin: 0; color: var(--case-text-soft); max-width: 58ch; }
+    /* KPI Grid Specific Styles */
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+    .kpi-box { background: var(--case-surface-alt); padding: 16px; border-radius: 16px; border: 1px solid var(--case-border); text-align: center; }
+    .kpi-box-val { display: block; font-size: 1.5rem; font-weight: 800; color: var(--case-accent-strong); }
+    .kpi-box-lbl { display: block; font-size: 0.75rem; color: var(--case-text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; font-weight: 600; }
+
+    /* Insight List Specific Styles */
+    .insight-block { margin-top: 24px; padding: 20px; background: color-mix(in srgb, var(--case-accent) 5%, transparent); border-radius: 20px; border-left: 4px solid var(--case-accent-strong); }
+    .insight-block h4 { margin: 0 0 12px; font-size: 0.9rem; color: var(--case-accent-strong); text-transform: uppercase; letter-spacing: 0.1em; }
+    .insight-list { list-style: none; padding: 0; margin: 0; }
+    .insight-list li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--case-text-soft); line-height: 1.6; font-size: 0.95rem; }
+    .insight-list li::before { content: "→"; position: absolute; left: 0; color: var(--case-accent-strong); font-weight: 800; }
+
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
+    .chart-card { overflow: hidden; border-radius: 22px; border: 1px solid var(--case-border); background: var(--case-surface-alt); }
+    .chart-img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--case-border); }
+    .chart-body { padding: 30px; }
+    .chart-index { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; font-weight: 800; color: var(--case-accent-strong); letter-spacing: 0.08em; text-transform: uppercase; }
+    .chart-title { margin: 0 0 16px; font-size: 1.5rem; letter-spacing: -0.02em; }
 
     @media (max-width: 960px) {
       .case-hero-grid, .overview-grid { grid-template-columns: 1fr; }
@@ -132,6 +142,7 @@
               </div>
             </div>
             <div class="case-actions">
+              <!-- Repositorio opcional -->
               <a class="case-btn case-btn-primary" href="#" id="repoButton">Ver repositorio</a>
             </div>
           </aside>
@@ -183,29 +194,62 @@
           </div>
         </section>
 
+        <!-- DASHBOARD DEEP DIVE SECTION -->
         <section class="content-section">
-          <span class="section-kicker" id="visualsKicker">Visualizaciones</span>
-          <h2 class="section-title" id="visualsTitle">Dashboard de Control</h2>
+          <span class="section-kicker" id="visualsKicker">Análisis de Datos por Pestaña</span>
+          <h2 class="section-title" id="visualsTitle">Dashboard Deep Dive</h2>
+          
           <div class="chart-grid">
+            <!-- TAB 1: EXECUTIVE OVERVIEW -->
             <article class="chart-card">
-              <img src="../img/test-velyka.png" class="chart-img" alt="Velykapet Main Dashboard">
+              <img src="../img/test-velyka.png" class="chart-img" alt="Vista General Ejecutiva" />
               <div class="chart-body">
-                <h3 class="chart-title" id="chart1Title">Vista General Ejecutiva</h3>
-                <p class="chart-desc" id="chart1Desc">Consolidado de ventas y métricas principales de rendimiento.</p>
+                <span class="chart-index" id="tab1Index">Pestaña 01</span>
+                <h3 class="chart-title" id="tab1Title">Vista General Ejecutiva</h3>
+                <div class="kpi-row" id="tab1Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">$7.2M</span><span class="kpi-box-lbl" id="kpiSales">Ventas Totales</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">17.9%</span><span class="kpi-box-lbl" id="kpiMargin">Margen Prom.</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">181</span><span class="kpi-box-lbl" id="kpiSkus">Total SKUs</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader1">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab1Insights"></ul>
+                </div>
               </div>
             </article>
+
+            <!-- TAB 2: CATEGORY ANALYSIS -->
             <article class="chart-card">
-              <img src="../img/test-velyka-2.png" class="chart-img" alt="Velykapet Analysis 2">
+              <img src="../img/test-velyka-2.png" class="chart-img" alt="Análisis Detallado de Categorías" />
               <div class="chart-body">
-                <h3 class="chart-title" id="chart2Title">Análisis Detallado</h3>
-                <p class="chart-desc" id="chart2Desc">Desglose por categorías y tendencias temporales.</p>
+                <span class="chart-index" id="tab2Index">Pestaña 02</span>
+                <h3 class="chart-title" id="tab2Title">Análisis Detallado de Categorías</h3>
+                <div class="kpi-row" id="tab2Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">14</span><span class="kpi-box-lbl" id="kpiCats">Categorías</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">$699K</span><span class="kpi-box-lbl" id="kpiTopSku">Top SKU Fact.</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader2">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab2Insights"></ul>
+                </div>
               </div>
             </article>
+
+            <!-- TAB 3: OPERATIONAL ROI -->
             <article class="chart-card">
-              <img src="../img/test-velyka-3.png" class="chart-img" alt="Velykapet Analysis 3">
+              <img src="../img/test-velyka-3.png" class="chart-img" alt="Métricas Operativas y ROI" />
               <div class="chart-body">
-                <h3 class="chart-title" id="chart3Title">Métricas Operativas</h3>
-                <p class="chart-desc" id="chart3Desc">Seguimiento de inventarios y eficiencia de procesos.</p>
+                <span class="chart-index" id="tab3Index">Pestaña 03</span>
+                <h3 class="chart-title" id="tab3Title">Métricas Operativas y ROI</h3>
+                <div class="kpi-row" id="tab3Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">1,194%</span><span class="kpi-box-lbl" id="kpiTopRoi">Max ROI</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">108%</span><span class="kpi-box-lbl" id="kpiSnackRoi">ROI Snacks</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">-13.7%</span><span class="kpi-box-lbl" id="kpiLoss">Pérdida Crítica</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader3">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab3Insights"></ul>
+                </div>
               </div>
             </article>
           </div>
@@ -256,14 +300,43 @@
           strategyCard2Body: "<strong>Joyas Ocultas:</strong> ROI excepcional (>40%) con bajo volumen actual. Ejemplo: <em>Total FLC</em> (1,194% ROI). Estrategia: Visibilidad y combos.",
           strategyCard3Title: "⚠️ Evitar",
           strategyCard3Body: "<strong>Fugas de Dinero:</strong> Margen negativo o cero. Ejemplo: <em>Arena Tofu</em> (-13.7% margen). Estrategia: Descontinuar o renegociar costos.",
-          visualsKicker: "Visualizaciones",
-          visualsTitle: "Dashboard de Control",
-          chart1Title: "Vista General Ejecutiva",
-          chart1Desc: "Consolidado de ventas y métricas principales de rendimiento.",
-          chart2Title: "Análisis Detallado",
-          chart2Desc: "Desglose por categorías y tendencias temporales.",
-          chart3Title: "Métricas Operativas",
-          chart3Desc: "Seguimiento de inventarios y eficiencia de procesos.",
+          visualsKicker: "Deep Dive por Pestaña",
+          visualsTitle: "Análisis Detallado del Dashboard",
+          insightsHeader1: "Hallazgos Clave",
+          insightsHeader2: "Hallazgos Clave",
+          insightsHeader3: "Hallazgos Clave",
+          kpiSales: "Ventas Totales",
+          kpiMargin: "Margen Prom.",
+          kpiSkus: "Total SKUs",
+          kpiCats: "Categorías",
+          kpiTopSku: "Top SKU Fact.",
+          kpiTopRoi: "Max ROI",
+          kpiSnackRoi: "ROI Snacks",
+          kpiLoss: "Pérdida Crítica",
+          tab1Index: "Pestaña 01",
+          tab1Title: "Vista General Ejecutiva",
+          tab1Insights: [
+            "Consolidado de ventas brutas de 9 meses, permitiendo identificar la estacionalidad del negocio.",
+            "El margen promedio del 17.9% es saludable para el sector retail de mascotas en microempresa.",
+            "Visualización de KPIs principales (Ventas, Costo, Utilidad) con comparativa mensual.",
+            "Identificación rápida de los 5 productos con mayor facturación para asegurar stock."
+          ],
+          tab2Index: "Pestaña 02",
+          tab2Title: "Análisis Detallado de Categorías",
+          tab2Insights: [
+            "La categoría de 'Concentrados' es el motor de volumen, representando la mayor facturación.",
+            "Desglose por 14 categorías operativas para entender la mezcla de ventas.",
+            "Identificación del SKU líder: Agility Adulto Gato con ventas de $699,300.",
+            "Análisis de Pareto: el 20% de las categorías generan el 80% de los ingresos."
+          ],
+          tab3Index: "Pestaña 03",
+          tab3Title: "Métricas Operativas y ROI",
+          tab3Insights: [
+            "Descubrimiento de 'Joyas Ocultas' como Total FLC con un ROI del 1,194%.",
+            "Los Snacks a granel presentan un ROI del 108%, siendo mucho más rentables que productos premium.",
+            "Detección de productos con margen negativo (-13.7%) que requieren ajuste de precio inmediato.",
+            "Análisis de eficiencia por proveedor para optimizar las órdenes de compra."
+          ],
           footerCopy: "Este proyecto demuestra la capacidad de escalar soluciones de BI para negocios de cualquier tamaño.",
           footerBackButton: "Volver a proyectos",
           themeDark: "Dark",
@@ -297,20 +370,55 @@
           strategyCard2Body: "<strong>Hidden Gems:</strong> Exceptional ROI (>40%) with low current volume. Example: <em>Total FLC</em> (1,194% ROI). Strategy: Visibility and bundles.",
           strategyCard3Title: "⚠️ Avoid",
           strategyCard3Body: "<strong>Money Leaks:</strong> Negative or zero margin. Example: <em>Arena Tofu</em> (-13.7% margin). Strategy: Discontinue or renegotiate costs.",
-          visualsKicker: "Visualizations",
-          visualsTitle: "Control Dashboard",
-          chart1Title: "Executive Overview",
-          chart1Desc: "Consolidated sales and main performance metrics.",
-          chart2Title: "Detailed Analysis",
-          chart2Desc: "Category breakdown and temporal trends.",
-          chart3Title: "Operational Metrics",
-          chart3Desc: "Inventory tracking and process efficiency.",
+          visualsKicker: "Tab-by-Tab Deep Dive",
+          visualsTitle: "Detailed Dashboard Analysis",
+          insightsHeader1: "Key Insights",
+          insightsHeader2: "Key Insights",
+          insightsHeader3: "Key Insights",
+          kpiSales: "Total Sales",
+          kpiMargin: "Avg. Margin",
+          kpiSkus: "Total SKUs",
+          kpiCats: "Categories",
+          kpiTopSku: "Top SKU Fact.",
+          kpiTopRoi: "Max ROI",
+          kpiSnackRoi: "Snacks ROI",
+          kpiLoss: "Critical Loss",
+          tab1Index: "Tab 01",
+          tab1Title: "Executive Overview",
+          tab1Insights: [
+            "Consolidated 9-month gross sales, enabling identification of business seasonality.",
+            "The 17.9% average margin is healthy for the pet retail sector in a micro-enterprise.",
+            "Main KPI visualization (Sales, Cost, Profit) with monthly comparison.",
+            "Quick identification of the top 5 revenue-generating products to ensure stock."
+          ],
+          tab2Index: "Tab 02",
+          tab2Title: "Detailed Category Analysis",
+          tab2Insights: [
+            "The 'Concentrates' category is the volume driver, representing the highest revenue.",
+            "Breakdown by 14 operational categories to understand the sales mix.",
+            "Leading SKU identification: Agility Adult Cat with sales of $699,300.",
+            "Pareto analysis: 20% of the categories generate 80% of the revenue."
+          ],
+          tab3Index: "Tab 03",
+          tab3Title: "Operational Metrics & ROI",
+          tab3Insights: [
+            "Discovery of 'Hidden Gems' like Total FLC with a 1,194% ROI.",
+            "Bulk Snacks show a 108% ROI, being significantly more profitable than premium products.",
+            "Detection of products with negative margin (-13.7%) requiring immediate price adjustment.",
+            "Provider efficiency analysis to optimize purchase orders."
+          ],
           footerCopy: "This project demonstrates the ability to scale BI solutions for businesses of any size.",
           footerBackButton: "Back to projects",
           themeDark: "Dark",
           themeLight: "Light"
         }
       };
+
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
+      }
 
       function applySavedTheme() {
         const savedTheme = localStorage.getItem("theme") || "light";
@@ -337,7 +445,15 @@
         const t = translations[lang] || translations.es;
         document.documentElement.lang = lang;
         setText("langIndicator", lang.toUpperCase());
-        Object.keys(t).forEach(key => setText(key, t[key]));
+        
+        Object.keys(t).forEach(function(key) {
+          if (typeof t[key] === 'string') {
+            setText(key, t[key]);
+          } else if (key.endsWith('Insights')) {
+            setList(key, t[key]);
+          }
+        });
+
         const theme = localStorage.getItem("theme") || "light";
         setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
       }
