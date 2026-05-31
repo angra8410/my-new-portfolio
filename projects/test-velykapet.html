@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Velykapet Business Intelligence project case study" />
+  <title>Velykapet - Business Intelligence para Microempresas</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --case-bg: var(--bg-primary, #f8fafc);
+      --case-surface: var(--bg-secondary, #ffffff);
+      --case-surface-alt: var(--bg-tertiary, #f1f5f9);
+      --case-text: var(--text-primary, #0f172a);
+      --case-text-soft: var(--text-secondary, #475569);
+      --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
+      --case-accent: var(--accent-color, #22d3ee);
+      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --case-radius: 24px;
+      --case-max: 1180px;
+    }
+
+    html.dark {
+      --case-bg: #0b1220;
+      --case-surface: #111a2b;
+      --case-surface-alt: #162135;
+      --case-text: #e5eef8;
+      --case-text-soft: #a8b7cc;
+      --case-border: rgba(148, 163, 184, 0.18);
+      --case-accent: #67e8f9;
+      --case-accent-strong: #22d3ee;
+      --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", sans-serif; background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%), radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%), var(--case-bg); color: var(--case-text); transition: background-color 0.25s ease, color 0.25s ease; }
+    a { color: inherit; text-decoration: none; }
+    .case-page { min-height: 100vh; }
+    .case-topbar { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--case-bg) 86%, transparent); border-bottom: 1px solid var(--case-border); }
+    .case-topbar-inner { max-width: var(--case-max); margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .case-back { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--case-text); opacity: 0.94; }
+    .case-top-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .case-theme-pill, .case-lang-pill { border: 1px solid var(--case-border); background: var(--case-surface); color: var(--case-text); padding: 10px 14px; border-radius: 999px; font-size: 0.92rem; font-weight: 600; box-shadow: var(--case-shadow); cursor: pointer; transition: background-color 0.2s ease; }
+    .case-theme-pill:hover, .case-lang-pill:hover { background: var(--case-surface-alt); }
+    .case-hero { max-width: var(--case-max); margin: 0 auto; padding: 56px 20px 28px; }
+    .case-badge { display: inline-flex; align-items: center; gap: 10px; background: color-mix(in srgb, var(--case-accent) 18%, transparent); color: var(--case-accent-strong); border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent); border-radius: 999px; padding: 10px 16px; font-weight: 700; font-size: 0.92rem; margin-bottom: 20px; }
+    .case-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: stretch; }
+    .case-hero-main, .case-hero-side { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); }
+    .case-hero-main { padding: 34px; }
+    .case-title { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.06; letter-spacing: -0.04em; }
+    .case-summary { margin: 0; font-size: 1.08rem; line-height: 1.75; color: var(--case-text-soft); max-width: 62ch; }
+    .case-key-metrics { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .case-chip { padding: 10px 14px; border-radius: 999px; background: var(--case-surface-alt); border: 1px solid var(--case-border); color: var(--case-text); font-size: 0.92rem; font-weight: 600; }
+    .case-hero-side { padding: 26px; display: flex; flex-direction: column; gap: 18px; justify-content: space-between; }
+    .meta-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .meta-card, .overview-card, .chart-card { border: 1px solid var(--case-border); background: var(--case-surface-alt); border-radius: 18px; padding: 16px; }
+    .meta-label { display: block; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--case-text-soft); font-weight: 700; }
+    .meta-value { margin: 0; line-height: 1.6; color: var(--case-text); font-weight: 600; }
+    .case-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .case-btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 14px; font-weight: 700; border: 1px solid transparent; transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease; }
+    .case-btn:hover { transform: translateY(-1px); opacity: 0.96; }
+    .case-btn-primary { background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent)); color: #06202b; }
+    .case-btn-secondary { background: transparent; border-color: var(--case-border); color: var(--case-text); }
+    .case-content { max-width: var(--case-max); margin: 0 auto; padding: 10px 20px 72px; }
+    .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 30px; }
+    .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent-strong); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.03em; }
+    .section-intro, .overview-card p, .overview-card li { color: var(--case-text-soft); line-height: 1.75; }
+    .section-intro { margin: 0; font-size: 1rem; }
+    .overview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .overview-card h3 { margin: 0 0 10px; font-size: 1rem; }
+    .overview-card p { margin: 0; }
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; }
+    .chart-card { padding: 0; overflow: hidden; }
+    .chart-img { width: 100%; height: auto; display: block; }
+    .chart-body { padding: 20px; }
+    .chart-title { margin: 0 0 8px; font-size: 1.1rem; }
+    .chart-desc { margin: 0; color: var(--case-text-soft); font-size: 0.95rem; line-height: 1.6; }
+    .case-footer { max-width: var(--case-max); margin: 0 auto; padding: 0 20px 72px; }
+    .case-footer-box { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 26px; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .case-footer-copy { margin: 0; color: var(--case-text-soft); max-width: 58ch; }
+
+    @media (max-width: 960px) {
+      .case-hero-grid, .overview-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="case-page">
+    <header class="case-topbar">
+      <div class="case-topbar-inner">
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">Volver al portafolio</a>
+        <div class="case-top-actions">
+          <button class="case-lang-pill" id="langIndicator">ES</button>
+          <button class="case-theme-pill" id="themeIndicator">Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-hero">
+        <div class="case-badge" id="heroBadge">Caso de estudio de BI</div>
+        <div class="case-hero-grid">
+          <div class="case-hero-main">
+            <h1 class="case-title" id="heroTitle">Velykapet - Inteligencia de Negocios para Microempresas</h1>
+            <p class="case-summary" id="heroSummary">
+              Solución integral de Business Intelligence desarrollada para una microempresa, utilizando el ecosistema de Microsoft Fabric y Power BI para transformar datos operativos en decisiones estratégicas.
+            </p>
+            <div class="case-key-metrics">
+              <span class="case-chip">Microsoft Fabric</span>
+              <span class="case-chip">Power BI</span>
+              <span class="case-chip">DAX</span>
+              <span class="case-chip">SQL</span>
+              <span class="case-chip">181 SKUs</span>
+              <span class="case-chip">17.9% Margen Prom.</span>
+            </div>
+          </div>
+
+          <aside class="case-hero-side">
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelRole">Enfoque</span>
+                <p class="meta-value" id="metaValueRole">Estrategia de producto y optimización de ROI</p>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
+                <p class="meta-value" id="metaValueQuestion">¿Cómo optimizar el portafolio de 181 productos para maximizar la rentabilidad y el crecimiento?</p>
+              </div>
+            </div>
+            <div class="case-actions">
+              <a class="case-btn case-btn-primary" href="#" id="repoButton">Ver repositorio</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="case-content">
+        <section class="content-section">
+          <span class="section-kicker" id="overviewKicker">Overview</span>
+          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
+          <p class="section-intro" id="overviewIntro">
+            El proyecto Velykapet se centra en proporcionar visibilidad total sobre las operaciones de una microempresa, eliminando silos de información y automatizando el reporte de KPIs críticos.
+          </p>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="goalTitle">Objetivo</h3>
+              <p id="goalBody">Implementar un pipeline de datos que permita monitorear ventas, inventarios y rentabilidad en tiempo real, categorizando el portafolio estratégicamente.</p>
+            </article>
+            <article class="overview-card">
+              <h3 id="techTitle">Tecnología</h3>
+              <p id="techBody">Uso de Microsoft Fabric para la gestión del Lakehouse y Power BI para el modelado semántico avanzado y análisis de ROI.</p>
+            </article>
+            <article class="overview-card">
+              <h3 id="impactTitle">Impacto</h3>
+              <p id="impactBody">Identificación de productos con pérdida real (-13% margen) y oportunidades de alto ROI (>1000%) en categorías de medicamentos.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="strategyKicker">Estrategia</span>
+          <h2 class="section-title" id="strategyTitle">Análisis de Portafolio y Optimización</h2>
+          <p class="section-intro" id="strategyIntro">
+            Se realizó una clasificación avanzada de 181 SKUs basada en ROI, margen bruto y frecuencia de compra, definiendo rutas de acción claras para cada segmento.
+          </p>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 style="color:#27500A" id="strategyCard1Title">⭐ Fortalecer</h3>
+              <p id="strategyCard1Body"><strong>Productos Ancla:</strong> Alto volumen y margen estable. Ejemplo: <em>Arena Maíz 10kg</em> (31% ROI). Estrategia: Suscripción y fidelización.</p>
+            </article>
+            <article class="overview-card">
+              <h3 style="color:#0C447C" id="strategyCard2Title">📈 Crecer</h3>
+              <p id="strategyCard2Body"><strong>Joyas Ocultas:</strong> ROI excepcional (>40%) con bajo volumen actual. Ejemplo: <em>Total FLC</em> (1,194% ROI). Estrategia: Visibilidad y combos.</p>
+            </article>
+            <article class="overview-card">
+              <h3 style="color:#791F1F" id="strategyCard3Title">⚠️ Evitar</h3>
+              <p id="strategyCard3Body"><strong>Fugas de Dinero:</strong> Margen negativo o cero. Ejemplo: <em>Arena Tofu</em> (-13.7% margen). Estrategia: Descontinuar o renegociar costos.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Visualizaciones</span>
+          <h2 class="section-title" id="visualsTitle">Dashboard de Control</h2>
+          <div class="chart-grid">
+            <article class="chart-card">
+              <img src="../img/test-velyka.png" class="chart-img" alt="Velykapet Main Dashboard">
+              <div class="chart-body">
+                <h3 class="chart-title" id="chart1Title">Vista General Ejecutiva</h3>
+                <p class="chart-desc" id="chart1Desc">Consolidado de ventas y métricas principales de rendimiento.</p>
+              </div>
+            </article>
+            <article class="chart-card">
+              <img src="../img/test-velyka-2.png" class="chart-img" alt="Velykapet Analysis 2">
+              <div class="chart-body">
+                <h3 class="chart-title" id="chart2Title">Análisis Detallado</h3>
+                <p class="chart-desc" id="chart2Desc">Desglose por categorías y tendencias temporales.</p>
+              </div>
+            </article>
+            <article class="chart-card">
+              <img src="../img/test-velyka-3.png" class="chart-img" alt="Velykapet Analysis 3">
+              <div class="chart-body">
+                <h3 class="chart-title" id="chart3Title">Métricas Operativas</h3>
+                <p class="chart-desc" id="chart3Desc">Seguimiento de inventarios y eficiencia de procesos.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">
+          Este proyecto demuestra la capacidad de escalar soluciones de BI para negocios de cualquier tamaño.
+        </p>
+        <div class="case-actions">
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const translations = {
+        es: {
+          backToPortfolio: "Volver al portafolio",
+          heroBadge: "Caso de estudio de BI",
+          heroTitle: "Velykapet - Inteligencia de Negocios para Microempresas",
+          heroSummary: "Solución integral de Business Intelligence desarrollada para una microempresa, utilizando el ecosistema de Microsoft Fabric y Power BI para transformar datos operativos en decisiones estratégicas.",
+          metaLabelRole: "Enfoque",
+          metaValueRole: "Estrategia de producto y optimización de ROI",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion: "¿Cómo optimizar el portafolio de 181 productos para maximizar la rentabilidad y el crecimiento?",
+          repoButton: "Ver repositorio",
+          overviewKicker: "Overview",
+          overviewTitle: "Marco del proyecto",
+          overviewIntro: "El proyecto Velykapet se centra en proporcionar visibilidad total sobre las operaciones de una microempresa, eliminando silos de información y automatizando el reporte de KPIs críticos.",
+          goalTitle: "Objetivo",
+          goalBody: "Implementar un pipeline de datos que permita monitorear ventas, inventarios y rentabilidad en tiempo real, categorizando el portafolio estratégicamente.",
+          techTitle: "Tecnología",
+          techBody: "Uso de Microsoft Fabric para la gestión del Lakehouse y Power BI para el modelado semántico avanzado y análisis de ROI.",
+          impactTitle: "Impacto",
+          impactBody: "Identificación de productos con pérdida real (-13% margen) y oportunidades de alto ROI (>1000%) en categorías de medicamentos.",
+          strategyKicker: "Estrategia",
+          strategyTitle: "Análisis de Portafolio y Optimización",
+          strategyIntro: "Se realizó una clasificación avanzada de 181 SKUs basada en ROI, margen bruto y frecuencia de compra, definiendo rutas de acción claras para cada segmento.",
+          strategyCard1Title: "⭐ Fortalecer",
+          strategyCard1Body: "<strong>Productos Ancla:</strong> Alto volumen y margen estable. Ejemplo: <em>Arena Maíz 10kg</em> (31% ROI). Estrategia: Suscripción y fidelización.",
+          strategyCard2Title: "📈 Crecer",
+          strategyCard2Body: "<strong>Joyas Ocultas:</strong> ROI excepcional (>40%) con bajo volumen actual. Ejemplo: <em>Total FLC</em> (1,194% ROI). Estrategia: Visibilidad y combos.",
+          strategyCard3Title: "⚠️ Evitar",
+          strategyCard3Body: "<strong>Fugas de Dinero:</strong> Margen negativo o cero. Ejemplo: <em>Arena Tofu</em> (-13.7% margen). Estrategia: Descontinuar o renegociar costos.",
+          visualsKicker: "Visualizaciones",
+          visualsTitle: "Dashboard de Control",
+          chart1Title: "Vista General Ejecutiva",
+          chart1Desc: "Consolidado de ventas y métricas principales de rendimiento.",
+          chart2Title: "Análisis Detallado",
+          chart2Desc: "Desglose por categorías y tendencias temporales.",
+          chart3Title: "Métricas Operativas",
+          chart3Desc: "Seguimiento de inventarios y eficiencia de procesos.",
+          footerCopy: "Este proyecto demuestra la capacidad de escalar soluciones de BI para negocios de cualquier tamaño.",
+          footerBackButton: "Volver a proyectos",
+          themeDark: "Dark",
+          themeLight: "Light"
+        },
+        en: {
+          backToPortfolio: "Back to portfolio",
+          heroBadge: "BI Case Study",
+          heroTitle: "Velykapet - Business Intelligence for Micro-Enterprises",
+          heroSummary: "Comprehensive Business Intelligence solution developed for a micro-enterprise, using the Microsoft Fabric ecosystem and Power BI to transform operational data into strategic decisions.",
+          metaLabelRole: "Focus",
+          metaValueRole: "Product strategy and ROI optimization",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion: "How to optimize the 181-product portfolio to maximize profitability and growth?",
+          repoButton: "View repository",
+          overviewKicker: "Overview",
+          overviewTitle: "Project Framework",
+          overviewIntro: "The Velykapet project focuses on providing full visibility into micro-enterprise operations, eliminating information silos and automating critical KPI reporting.",
+          goalTitle: "Objective",
+          goalBody: "Implement a data pipeline to monitor sales, inventory, and profitability in real-time, strategically categorizing the portfolio.",
+          techTitle: "Technology",
+          techBody: "Use of Microsoft Fabric for Lakehouse management and Power BI for advanced semantic modeling and ROI analysis.",
+          impactTitle: "Impact",
+          impactBody: "Identification of products with real loss (-13% margin) and high ROI opportunities (>1000%) in medication categories.",
+          strategyKicker: "Strategy",
+          strategyTitle: "Portfolio Analysis and Optimization",
+          strategyIntro: "An advanced classification of 181 SKUs was performed based on ROI, gross margin, and purchase frequency, defining clear action paths for each segment.",
+          strategyCard1Title: "⭐ Strengthen",
+          strategyCard1Body: "<strong>Anchor Products:</strong> High volume and stable margin. Example: <em>Arena Maíz 10kg</em> (31% ROI). Strategy: Subscription and loyalty.",
+          strategyCard2Title: "📈 Grow",
+          strategyCard2Body: "<strong>Hidden Gems:</strong> Exceptional ROI (>40%) with low current volume. Example: <em>Total FLC</em> (1,194% ROI). Strategy: Visibility and bundles.",
+          strategyCard3Title: "⚠️ Avoid",
+          strategyCard3Body: "<strong>Money Leaks:</strong> Negative or zero margin. Example: <em>Arena Tofu</em> (-13.7% margin). Strategy: Discontinue or renegotiate costs.",
+          visualsKicker: "Visualizations",
+          visualsTitle: "Control Dashboard",
+          chart1Title: "Executive Overview",
+          chart1Desc: "Consolidated sales and main performance metrics.",
+          chart2Title: "Detailed Analysis",
+          chart2Desc: "Category breakdown and temporal trends.",
+          chart3Title: "Operational Metrics",
+          chart3Desc: "Inventory tracking and process efficiency.",
+          footerCopy: "This project demonstrates the ability to scale BI solutions for businesses of any size.",
+          footerBackButton: "Back to projects",
+          themeDark: "Dark",
+          themeLight: "Light"
+        }
+      };
+
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (themeIndicator) {
+          const activeLang = localStorage.getItem("language") || "es";
+          themeIndicator.textContent = savedTheme === "dark" ? translations[activeLang].themeDark : translations[activeLang].themeLight;
+        }
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) {
+          if (value.includes('<strong>') || value.includes('<em>')) {
+            el.innerHTML = value;
+          } else {
+            el.textContent = value;
+          }
+        }
+      }
+
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations.es;
+        document.documentElement.lang = lang;
+        setText("langIndicator", lang.toUpperCase());
+        Object.keys(t).forEach(key => setText(key, t[key]));
+        const theme = localStorage.getItem("theme") || "light";
+        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const langIndicator = document.getElementById("langIndicator");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (langIndicator) {
+          langIndicator.addEventListener("click", function () {
+            const currentLang = localStorage.getItem("language") || "es";
+            const newLang = currentLang === "es" ? "en" : "es";
+            localStorage.setItem("language", newLang);
+            applyLanguage(newLang);
+          });
+        }
+        if (themeIndicator) {
+          themeIndicator.addEventListener("click", function () {
+            const currentTheme = localStorage.getItem("theme") || "light";
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            applySavedTheme();
+          });
+        }
+        const lang = localStorage.getItem("language") || "es";
+        applySavedTheme();
+        applyLanguage(lang);
+      });
+    })();
+  </script>
+</body>
+</html>

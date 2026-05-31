@@ -1,0 +1,501 @@
+
+<style>
+*{box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.tab.active{background:var(--color-background-primary);border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.panel{display:none}.panel.active{display:block}
+.krow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.km{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px}
+.km-l{font-size:11px;color:var(--color-text-secondary);margin:0 0 4px}
+.km-v{font-size:20px;font-weight:500;margin:0;line-height:1}
+.km-s{font-size:11px;margin:3px 0 0}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px}
+.pcard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;margin-bottom:8px}
+.pcard-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px}
+.pcard-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0;line-height:1.3}
+.pcard-cat{font-size:11px;color:var(--color-text-tertiary);margin:2px 0 0}
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.b-star{background:#EAF3DE;color:#27500A}
+.b-grow{background:#E6F1FB;color:#0C447C}
+.b-hook{background:#EEEDFE;color:#3C3489}
+.b-avoid{background:#FCEBEB;color:#791F1F}
+.b-watch{background:#FAEEDA;color:#633806}
+.pcard-metrics{display:flex;gap:16px;flex-wrap:wrap}
+.pm{font-size:11px;color:var(--color-text-secondary)}
+.pm span{font-size:12px;font-weight:500;color:var(--color-text-primary);display:block}
+.bar-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+.bar-bg{flex:1;height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rule{height:0.5px;background:var(--color-border-tertiary);margin:1.25rem 0}
+.action-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.action-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.action-body p{margin:0;font-size:13px;color:var(--color-text-primary);line-height:1.5}
+.action-body small{font-size:11px;color:var(--color-text-secondary)}
+</style>
+
+<h2 class="sr-only">Product strategy analysis for velykapet: 181 SKUs classified into strengthen, grow, hook, watch, and avoid categories based on ROI, margin, volume and trend data.</h2>
+
+<div style="padding:1rem 0 0">
+
+<div class="krow">
+  <div class="km"><p class="km-l">Total SKUs analizados</p><p class="km-v">181</p><p class="km-s" style="color:var(--color-text-secondary)">14 categorías</p></div>
+  <div class="km"><p class="km-l">Margen bruto promedio</p><p class="km-v">17.9%</p><p class="km-s" style="color:var(--color-text-success)">sobre ventas totales</p></div>
+  <div class="km"><p class="km-l">Productos con ROI &gt;40%</p><p class="km-v">11</p><p class="km-s" style="color:var(--color-text-secondary)">6% del portafolio</p></div>
+  <div class="km"><p class="km-l">Productos con pérdida</p><p class="km-v">3</p><p class="km-s" style="color:var(--color-text-danger)">venta por debajo del costo</p></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('strengthen')"><i class="ti ti-star" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Fortalecer (4)</div>
+  <div class="tab" onclick="showTab('grow')"><i class="ti ti-trending-up" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Crecer (6)</div>
+  <div class="tab" onclick="showTab('hook')"><i class="ti ti-anchor" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Enganche (5)</div>
+  <div class="tab" onclick="showTab('avoid')"><i class="ti ti-ban" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Evitar (3)</div>
+  <div class="tab" onclick="showTab('watch')"><i class="ti ti-eye" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Vigilar (5)</div>
+  <div class="tab" onclick="showTab('matrix')"><i class="ti ti-chart-scatter" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Matriz</div>
+</div>
+
+<div id="panel-strengthen" class="panel active">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1rem">Alto volumen + margen estable + demanda recurrente. Invertir en stock, visibilidad y fidelización.</p>
+  
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">ARENA MAIZ CAT 10 KG</p><p class="pcard-cat">Arena</p></div>
+      <span class="badge b-star">Fortalecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$637,000</span>ventas totales</div>
+      <div class="pm"><span>23.7%</span>margen bruto</div>
+      <div class="pm"><span>31.1%</span>ROI</div>
+      <div class="pm"><span>14 und</span>cantidad</div>
+      <div class="pm"><span>14 txns</span>transacciones</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:62%;background:#1D9E75"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">31%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">El producto de mayor venta individual. Compra repetida garantizada (el gato siempre necesita arena). Considera empaque mensual / suscripción para anclar el cliente.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">AGILITY ADULTO GATO X 3 KG</p><p class="pcard-cat">Concentrados</p></div>
+      <span class="badge b-star">Fortalecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$699,300</span>ventas totales</div>
+      <div class="pm"><span>13.8%</span>margen bruto</div>
+      <div class="pm"><span>16.0%</span>ROI</div>
+      <div class="pm"><span>9 und</span>cantidad</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:32%;background:#1D9E75"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">16%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">El SKU de mayor facturación total del portafolio. Margen moderado pero volumen consistente. Clave sostener el precio y negociar costo con proveedor para subir el margen hacia 20%+.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">AGILITY GOLD GATITOS 1.5 KG</p><p class="pcard-cat">Concentrados</p></div>
+      <span class="badge b-star">Fortalecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$576,000</span>ventas totales</div>
+      <div class="pm"><span>14.8%</span>margen bruto</div>
+      <div class="pm"><span>17.4%</span>ROI</div>
+      <div class="pm"><span>12 und</span>cantidad</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:35%;background:#1D9E75"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">17%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Producto de entrada para nuevos dueños de gatito — cliente de largo plazo si se fideliza aquí. Combinar con arena y snack húmedo para elevar el ticket promedio de la transacción.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">CHUNKY ADULTO POLLO X 2 KG</p><p class="pcard-cat">Concentrados</p></div>
+      <span class="badge b-star">Fortalecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$273,000</span>ventas totales</div>
+      <div class="pm"><span>19.3%</span>margen bruto</div>
+      <div class="pm"><span>23.9%</span>ROI</div>
+      <div class="pm"><span>13 und</span>cantidad</div>
+      <div class="pm"><span>13 txns</span>transacciones</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:48%;background:#1D9E75"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">24%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Alta frecuencia de compra (13 transacciones independientes) y margen sólido. Ideal para paquetes recurrentes cada 2-3 semanas.</p>
+  </div>
+</div>
+
+<div id="panel-grow" class="panel">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1rem">ROI alto y margen excelente pero con pocas transacciones aún. Gran potencial si se les da visibilidad y se crean combos.</p>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">TOTAL FLC HASTA 60KG – 3 UNIDADES</p><p class="pcard-cat">Medicamentos</p></div>
+      <span class="badge b-grow">Crecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$44,000</span>ventas</div>
+      <div class="pm"><span>92.3%</span>margen bruto</div>
+      <div class="pm"><span>1,194%</span>ROI</div>
+      <div class="pm"><span>1 txn</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#185FA5"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">1194%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">El ROI más alto de todo el portafolio — costo de $3,400, venta de $44,000. Solo 1 transacción. Verificar si el costo es correcto en la fuente; si lo es, este producto debería ser prioritario en catálogo.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">NUTRAMAX COSEQUIN MSM 60 TABS</p><p class="pcard-cat">Suplementos</p></div>
+      <span class="badge b-grow">Crecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$100,000</span>ventas</div>
+      <div class="pm"><span>30.0%</span>margen bruto</div>
+      <div class="pm"><span>42.9%</span>ROI</div>
+      <div class="pm"><span>1 txn</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:86%;background:#185FA5"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">43%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Ticket alto ($100K), margen excelente, un solo cliente. Suplementos articulares son un nicho en crecimiento — promover activamente a dueños de perros adultos y senior.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">NATURAL FRESHLY ESBELT PELO LINDO 300 G</p><p class="pcard-cat">Suplementos</p></div>
+      <span class="badge b-grow">Crecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$164,000</span>ventas</div>
+      <div class="pm"><span>20.0%</span>margen bruto</div>
+      <div class="pm"><span>25.0%</span>ROI</div>
+      <div class="pm"><span>3 txns</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:50%;background:#185FA5"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">25%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Suplemento de pelaje con ticket alto. Tendencia Feb 2026 fuerte ($164K en un mes). Crear combo: concentrado + suplemento pelo = "paquete bienestar completo".</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">SIMPARICA TRIO 1.25–2.5 KG</p><p class="pcard-cat">Medicamentos</p></div>
+      <span class="badge b-grow">Crecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$121,500</span>ventas</div>
+      <div class="pm"><span>22.9%</span>margen bruto</div>
+      <div class="pm"><span>29.7%</span>ROI</div>
+      <div class="pm"><span>3 txns</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:59%;background:#185FA5"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">30%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Antiparasitario de alto margen. Medicamentos en mayo 2026 explotaron (+$485K). Crear recordatorio mensual al cliente: "¿Ya le diste la tableta este mes?"</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">ARENA MAIZ CAT 2 KG</p><p class="pcard-cat">Arena</p></div>
+      <span class="badge b-grow">Crecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$58,400</span>ventas</div>
+      <div class="pm"><span>39.2%</span>margen bruto</div>
+      <div class="pm"><span>64.5%</span>ROI</div>
+      <div class="pm"><span>5 txns</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#185FA5"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">64%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">La presentación pequeña tiene el mayor margen de la familia arena. Ideal para clientes nuevos o de prueba. Empujar como "primera compra" con un CTA claro en catálogo de Whatsapp.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">NEXGARD SPECTRA XS (2–3.5 KG)</p><p class="pcard-cat">Medicamentos</p></div>
+      <span class="badge b-grow">Crecer</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$135,000</span>ventas</div>
+      <div class="pm"><span>19.2%</span>margen bruto</div>
+      <div class="pm"><span>23.7%</span>ROI</div>
+      <div class="pm"><span>3 txns</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:47%;background:#185FA5"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">24%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Nexgard es una marca premium con alta reputación. Frecuencia mensual garantizada. Ofrecer los 3 tamaños (XS, S, L) juntos como línea visible — actualmente solo 3 txns cada uno.</p>
+  </div>
+</div>
+
+<div id="panel-hook" class="panel">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1rem">Bajo margen o precio bajo, pero alta frecuencia o función de enganche. No son rentables solos — su valor es traer al cliente y acompañar la venta principal.</p>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">INABA CHURU ATUN – 4 PIEZAS</p><p class="pcard-cat">Snacks húmedo</p></div>
+      <span class="badge b-hook">Enganche</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$51,550</span>ventas</div>
+      <div class="pm"><span>21.2%</span>margen bruto</div>
+      <div class="pm"><span>26.9%</span>ROI</div>
+      <div class="pm"><span>12 txns</span>frecuencia</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">Freq</span><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#7F77DD"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">12 txns</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">El snack más comprado del portafolio. 12 transacciones independientes — clientes que vuelven solo por esto. Úsalo como "gancho recurrente": ofrecerlo siempre en combo con concentrado o arena.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">NUSKË CABANO CORDERO X 1 KG (180 und)</p><p class="pcard-cat">Snacks</p></div>
+      <span class="badge b-hook">Enganche</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$159,000</span>ventas</div>
+      <div class="pm"><span>51.8%</span>margen bruto</div>
+      <div class="pm"><span>107.6%</span>ROI</div>
+      <div class="pm"><span>540 und</span>volumen</div>
+      <div class="pm"><span>30 txns</span>frecuencia</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#7F77DD"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">108%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Sorpresa del análisis: el snack a granel tiene 108% de ROI, el mayor margen absoluto después de Total FLC. 30 transacciones y 540 unidades vendidas. Tratar como producto estrella secundario, no como accesorio.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">FORTIFLORA PERRO – SOBRE X UNIDAD</p><p class="pcard-cat">Medicamentos</p></div>
+      <span class="badge b-hook">Enganche</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$180,100</span>ventas</div>
+      <div class="pm"><span>7.2%</span>margen bruto</div>
+      <div class="pm"><span>7.7%</span>ROI</div>
+      <div class="pm"><span>38 und</span>volumen</div>
+      <div class="pm"><span>9 txns</span>frecuencia</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:15%;background:#7F77DD"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">7.7%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Alto facturado ($180K) pero margen muy bajo. El cliente lo compra de forma recurrente (probiótico diario). Su función es anclar la visita mensual. No subir precio — usar como pretexto para ofrecer el concentrado mensual.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">GARGANTILLA X 12 UND (combo)</p><p class="pcard-cat">Accesorios</p></div>
+      <span class="badge b-hook">Enganche</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$29,300</span>ventas</div>
+      <div class="pm"><span>49.8%</span>margen bruto</div>
+      <div class="pm"><span>99.3%</span>ROI</div>
+      <div class="pm"><span>4 txns</span></div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#7F77DD"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">99%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">El accesorio de mayor ROI. En combo es muy rentable. Perfecta para regalo o impulso en diciembre. Diciembre 2025 fue el mejor mes en accesorios ($102K).</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">INABA CHURU VARIEDAD ATUN – BOMBONERA 50 PZS</p><p class="pcard-cat">Snacks húmedo</p></div>
+      <span class="badge b-hook">Enganche</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$290,000</span>ventas</div>
+      <div class="pm"><span>21.4%</span>margen bruto</div>
+      <div class="pm"><span>27.3%</span>ROI</div>
+      <div class="pm"><span>1 txn</span>venta mayorista</div>
+    </div>
+    <div class="bar-row"><span style="font-size:11px;color:var(--color-text-secondary);width:36px">ROI</span><div class="bar-bg"><div class="bar-fill" style="width:55%;background:#7F77DD"></div></div><span style="font-size:11px;color:var(--color-text-secondary)">27%</span></div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">$290K en una sola transacción — venta de volumen (posiblemente a otro negocio o evento). El margen es bueno. Desarrollar el canal mayorista activamente; una transacción así equivale a 5+ meses de ventas de snack individual.</p>
+  </div>
+</div>
+
+<div id="panel-avoid" class="panel">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1rem">Se venden por debajo del costo o con margen cero. Cada venta genera pérdida o subsidia al proveedor. Discontinuar o renegociar urgente.</p>
+
+  <div class="pcard" style="border-color:var(--color-border-danger)">
+    <div class="pcard-header">
+      <div><p class="pcard-name">ARENA ULTRA CAT TOFU CAFÉ X 2.5 KG</p><p class="pcard-cat">Arena</p></div>
+      <span class="badge b-avoid">Pérdida real</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$46,000</span>ventas</div>
+      <div class="pm"><span style="color:var(--color-text-danger)">-$6,300</span>utilidad</div>
+      <div class="pm"><span style="color:var(--color-text-danger)">-13.7%</span>margen bruto</div>
+      <div class="pm"><span>2 und</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Costo $52,300 vs venta $46,000. Cada unidad genera -$3,150 de pérdida neta. El precio de venta está por debajo del costo de compra. Subir precio a mínimo $27,000/unidad o retirar del catálogo inmediatamente.</p>
+  </div>
+
+  <div class="pcard" style="border-color:var(--color-border-danger)">
+    <div class="pcard-header">
+      <div><p class="pcard-name">BAÑO SECO IKIPETS PERROS 200 ML</p><p class="pcard-cat">Aseo</p></div>
+      <span class="badge b-avoid">Pérdida real</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$12,000</span>ventas</div>
+      <div class="pm"><span style="color:var(--color-text-danger)">-$4,000</span>utilidad</div>
+      <div class="pm"><span style="color:var(--color-text-danger)">-33.3%</span>margen bruto</div>
+      <div class="pm"><span>1 und</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Costo $16,000 vendido a $12,000. Margen de -33%. No tiene futuro a este precio. Si hay stock existente, liquidar al costo. No reponer.</p>
+  </div>
+
+  <div class="pcard" style="border-color:var(--color-border-warning)">
+    <div class="pcard-header">
+      <div><p class="pcard-name">Medicamentos con costo = precio (Simparica Trio 10-20 KG, Vermiplex, Disugual latas, otros)</p><p class="pcard-cat">Medicamentos / Snacks húmedo</p></div>
+      <span class="badge b-avoid">Margen cero</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>8 SKUs</span>afectados</div>
+      <div class="pm"><span>0%</span>margen bruto</div>
+      <div class="pm"><span>~$176K</span>en ventas sin utilidad</div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">8 productos tienen utilidad exactamente $0 — probablemente el precio de venta fue copiado igual que el costo. Revisar si el precio está mal ingresado en la fuente o si se hicieron ventas sin margen intencionalmente (ej: muestra, canje). Si son ventas reales, subir precio mínimo 15% sobre el costo.</p>
+  </div>
+</div>
+
+<div id="panel-watch" class="panel">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1rem">Productos con señales mixtas: buen margen pero volumen errático, o categoría emergente que aún no despega. Monitorear 2 meses más antes de decidir.</p>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">PRO PLAN UR URINARY PERRO 2 KG</p><p class="pcard-cat">Concentrados medicado</p></div>
+      <span class="badge b-watch">Vigilar</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$700,000</span>ventas</div>
+      <div class="pm"><span>9.5%</span>margen bruto</div>
+      <div class="pm"><span>10.5%</span>ROI</div>
+      <div class="pm"><span>7 und / 7 txns</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">El segundo producto más facturado ($700K) pero con el margen más bajo de los concentrados (9.5%). El paciente veterinario lo necesita sin opción — cliente cautivo. Negociar con el proveedor un 5% más de descuento por volumen. Si no se consigue, al menos cubrir enviando junto con una consulta o producto complementario.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">Categoría Bienestar y cuidado (Desenredante, Beeps Dry Bath, Septiderm, CBD)</p><p class="pcard-cat">Bienestar y cuidado</p></div>
+      <span class="badge b-watch">Vigilar</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$139,269</span>ventas categoría</div>
+      <div class="pm"><span>~8%</span>margen prom</div>
+      <div class="pm"><span>Solo mar-may 26</span>inicio</div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Categoría muy nueva — solo 3 meses de datos. Margenes bajos (3 productos con utilidad $0 o mínima). El único con buen ROI es CALMING COLLAR (50%). Depurar esta categoría: mantener solo el collar y el spray CBD, eliminar los de margen cero.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">Juguetes (pelotas, báculos, huesos)</p><p class="pcard-cat">Juguetes</p></div>
+      <span class="badge b-watch">Vigilar</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$204,800</span>ventas categoría</div>
+      <div class="pm"><span>~22%</span>margen prom</div>
+      <div class="pm"><span>Diciembre pico</span>estacionalidad</div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Buen margen promedio (~22%) pero muy estacional — dic 2025 generó $98K, enero solo $20K. No invertir en stock fuerte fuera de noviembre-enero. Usar como producto de regalo/impulso en eventos o pedidos grandes.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">Snacks húmedos – líneas Disugual, Evolve, Tiki Cat</p><p class="pcard-cat">Snacks húmedo</p></div>
+      <span class="badge b-watch">Vigilar</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>ABR 2026 pico</span>$421K</div>
+      <div class="pm"><span>MAY 2026</span>$94K (caída -78%)</div>
+      <div class="pm"><span>~14%</span>margen prom línea</div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Abril tuvo un pico masivo ($421K) que no se sostuvo en mayo ($94K). Revisar si fue una compra puntual grande o una tendencia real. Hasta confirmar, no ampliar inventario de estas líneas.</p>
+  </div>
+
+  <div class="pcard">
+    <div class="pcard-header">
+      <div><p class="pcard-name">Suplementos (categoría)</p><p class="pcard-cat">Suplementos</p></div>
+      <span class="badge b-watch">Vigilar</span>
+    </div>
+    <div class="pcard-metrics">
+      <div class="pm"><span>$373,700</span>ventas categoría</div>
+      <div class="pm"><span>~21%</span>margen prom</div>
+      <div class="pm"><span>Feb 2026 pico</span>$164K</div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Tres productos con margen 20-30%, pero cada uno se vendió 1-3 veces en 9 meses. Enorme potencial si se trabaja recurrencia. La clave es comunicar al cliente que los suplementos son de uso continuo — no compra única.</p>
+  </div>
+</div>
+
+<div id="panel-matrix" class="panel">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1rem">Posición de cada categoría según su margen promedio vs el volumen de ventas generado. El tamaño de cada burbuja representa el total de transacciones.</p>
+  <div style="position:relative;width:100%;height:380px">
+    <canvas id="matrixChart" role="img" aria-label="Scatter chart mapping product categories by gross margin percentage vs total sales volume. Concentrados and Snacks húmedo are high volume. Snacks and Suplementos have high margins. Arena is balanced. Avoid quadrant shows negative margin items.">Category matrix: Concentrados high volume moderate margin, Snacks high margin moderate volume, Arena balanced, Medicamentos high volume low margin.</canvas>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:11px;color:var(--color-text-secondary)">
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#1D9E75;display:inline-block"></span>Fortalecer</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#378ADD;display:inline-block"></span>Crecer</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#7F77DD;display:inline-block"></span>Enganche</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Vigilar</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#E24B4A;display:inline-block"></span>Evitar</span>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (id === 'matrix' && !window.matrixBuilt) buildMatrix();
+}
+
+function buildMatrix() {
+  window.matrixBuilt = true;
+  const cats = [
+    {label:'Concentrados', x:2663200, y:14.5, r:20, color:'#1D9E75'},
+    {label:'Arena', x:931300, y:23.1, r:14, color:'#1D9E75'},
+    {label:'Medicamentos', x:1436294, y:12.8, r:16, color:'#378ADD'},
+    {label:'Snacks húmedo', x:905528, y:14.7, r:13, color:'#7F77DD'},
+    {label:'Snacks', x:556572, y:28.9, r:11, color:'#378ADD'},
+    {label:'Suplementos', x:373700, y:21.3, r:9, color:'#EF9F27'},
+    {label:'Concentrados med.', x:806200, y:9.5, r:10, color:'#EF9F27'},
+    {label:'Accesorios', x:225900, y:24.8, r:8, color:'#7F77DD'},
+    {label:'Juguetes', x:204800, y:22.1, r:8, color:'#EF9F27'},
+    {label:'Aseo', x:268100, y:14.2, r:7, color:'#EF9F27'},
+    {label:'Alim. húmedo med.', x:145200, y:17.9, r:6, color:'#EF9F27'},
+    {label:'Bienestar', x:139269, y:8.1, r:6, color:'#E24B4A'},
+    {label:'Comederos', x:12800, y:46.9, r:5, color:'#378ADD'},
+    {label:'Accesorios no pet', x:19000, y:33.2, r:4, color:'#7F77DD'},
+  ];
+
+  new Chart(document.getElementById('matrixChart'), {
+    type: 'bubble',
+    data: {
+      datasets: cats.map(c => ({
+        label: c.label,
+        data: [{x: c.x/1000, y: c.y, r: c.r}],
+        backgroundColor: c.color + 'CC',
+        borderColor: c.color,
+        borderWidth: 1
+      }))
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: $${Math.round(ctx.raw.x)}K | Margen ${ctx.raw.y.toFixed(1)}%`
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: {display: true, text: 'Ventas totales (miles COP)', font:{size:11}},
+          ticks: {callback: v => '$' + v + 'K', font:{size:10}},
+          min: -50,
+          grid: {color: 'rgba(128,128,128,0.1)'}
+        },
+        y: {
+          title: {display: true, text: 'Margen bruto %', font:{size:11}},
+          ticks: {callback: v => v + '%', font:{size:10}},
+          min: -5,
+          max: 55,
+          grid: {color: 'rgba(128,128,128,0.1)'}
+        }
+      },
+      layout: {padding: {top: 20, right: 20}}
+    }
+  });
+}
+</script>

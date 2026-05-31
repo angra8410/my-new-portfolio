@@ -80,6 +80,21 @@ const blogPosts = [
 
 const projects = [
   {
+    title: 'Velykapet - Inteligencia de Negocios para Microempresas',
+    title_en: 'Velykapet - Business Intelligence for Micro-Enterprises',
+    category: 'Caso de estudio',
+    category_en: 'Case Study',
+    date: '2026-05-31',
+    image: 'img/test-velyka.png',
+    excerpt: 'Solución integral de BI para una microempresa, desarrollada con Microsoft Fabric y Power BI para optimizar la toma de decisiones.',
+    excerpt_en: 'Comprehensive BI solution for a micro-enterprise, developed with Microsoft Fabric and Power BI to optimize decision-making.',
+    tech: ['Microsoft Fabric', 'Power BI', 'DAX', 'SQL'],
+    metrics: ['Optimización de procesos', 'Dashboards interactivos', 'Métricas de negocio'],
+    metrics_en: ['Process optimization', 'Interactive dashboards', 'Business metrics'],
+    detailUrl: 'projects/test-velykapet.html',
+    repoUrl: '#'
+  },
+  {
     title: 'covid-metrics-v2',
     title_en: 'covid-metrics-v2',
     category: 'Caso de estudio',
