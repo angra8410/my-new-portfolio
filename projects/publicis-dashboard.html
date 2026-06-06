@@ -66,7 +66,7 @@
     .case-btn-primary { background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent)); color: #06202b; }
     .case-btn-secondary { background: transparent; border-color: var(--case-border); color: var(--case-text); }
     .case-content { max-width: var(--case-max); margin: 0 auto; padding: 10px 20px 72px; }
-    .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 30px; }
+    .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--border-color); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 30px; }
     .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent-strong); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.03em; }
     .section-intro, .overview-card p, .overview-card li { color: var(--case-text-soft); line-height: 1.75; }
@@ -114,9 +114,9 @@
             <div class="case-key-metrics">
               <span class="case-chip">Power BI</span>
               <span class="case-chip">DAX</span>
-              <span class="case-chip">SQL</span>
-              <span class="case-chip">Marketing Analytics</span>
-              <span class="case-chip">Optimización ROI</span>
+              <span class="case-chip">Digital Marketing</span>
+              <span class="case-chip">Cross-Source Reconciliation</span>
+              <span class="case-chip">275M Impressions</span>
             </div>
           </div>
 
@@ -142,37 +142,60 @@
         <section class="content-section">
           <span class="section-kicker" id="overviewKicker">Overview</span>
           <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
-          <p class="section-intro" id="overviewIntro">Este proyecto visualiza el rendimiento multicanal de campañas publicitarias, permitiendo a los equipos de marketing ajustar sus estrategias en tiempo real basándose en datos de conversión y costo.</p>
+          <p class="section-intro" id="overviewIntro">Reconciliación cruzada entre DCM (impresiones/clicks pagados) y GA (sesiones/usuarios en sitio), unificados por sitio de publicación y mes.</p>
           <div class="overview-grid">
             <article class="overview-card">
-              <h3 id="goalTitle">Objetivo</h3>
-              <p id="goalBody">Centralizar métricas de diferentes plataformas para ofrecer una visión única del rendimiento publicitario y la eficiencia del gasto.</p>
+              <h3 id="goalTitle">Enfoque Analítico</h3>
+              <p id="goalBody">Análisis por capas: Emplazamiento → Creativo → Dispositivo → Tiempo, para identificar dónde el gasto es efectivo y dónde no lo es.</p>
             </article>
             <article class="overview-card">
               <h3 id="techTitle">Tecnología</h3>
-              <p id="techBody">Modelado de datos complejo en Power BI con medidas DAX avanzadas para el cálculo de ROAS, CPA y tendencias de rendimiento.</p>
+              <p id="techBody">Modelado en Power BI integrando DCM y Google Analytics para medir la brecha de atribución (54% click-to-session rate).</p>
             </article>
             <article class="overview-card">
               <h3 id="impactTitle">Impacto</h3>
-              <p id="impactBody">Mejora en la toma de decisiones para la asignación de presupuestos, identificando canales con bajo rendimiento y escalando los de mayor impacto.</p>
+              <p id="impactBody">Identificación de un potencial de mejora del 40% en clicks mediante la reasignación del 15% del presupuesto de canales ineficientes.</p>
             </article>
           </div>
         </section>
 
+        <!-- RECOMMENDATIONS SECTION -->
         <section class="content-section">
-          <span class="section-kicker" id="visualsKicker">Análisis de Datos por Pestaña</span>
+          <span class="section-kicker" id="recKicker">Estrategia</span>
+          <h2 class="section-title" id="recTitle">Recomendaciones del Marketer</h2>
+          <p class="section-intro" id="recIntro">Acciones concretas basadas en el análisis de eficiencia y comportamiento del usuario.</p>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 style="color:#27500A" id="recCard1Title">⭐ Rebalancear</h3>
+              <p id="recCard1Body">Reasignar 15-20% del presupuesto de Aptus/Zeta hacia Facebook (CTR 1.23%) y Sharecare (CTR 0.55%).</p>
+            </article>
+            <article class="overview-card">
+              <h3 style="color:#0C447C" id="recCard2Title">📈 Mobile-First</h3>
+              <p id="recCard2Body">Mobile genera el 71% de las sesiones. Priorizar el formato 320x50 y optimizar landing pages para carga móvil.</p>
+            </article>
+            <article class="overview-card">
+              <h3 style="color:#791F1F" id="recCard3Title">⚠️ Optimizar</h3>
+              <p id="recCard3Body">Eliminar creativos "Transparent 1x1" y "(not set)" que distorsionan los cálculos de CTR y presupuesto.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- DASHBOARD DEEP DIVE SECTION -->
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Análisis Detallado</span>
           <h2 class="section-title" id="visualsTitle">Dashboard Deep Dive</h2>
           
           <div class="chart-grid">
+            <!-- TAB 1: EXECUTIVE OVERVIEW -->
             <article class="chart-card">
               <img src="../img/publicis-dashboard.png" class="chart-img" alt="Vista General Ejecutiva" />
               <div class="chart-body">
                 <span class="chart-index" id="tab1Index">Pestaña 01</span>
                 <h3 class="chart-title" id="tab1Title">Resumen Ejecutivo de Campañas</h3>
                 <div class="kpi-row" id="tab1Kpis">
-                  <div class="kpi-box"><span class="kpi-box-val">ROAS</span><span class="kpi-box-lbl" id="kpiSales">Eficiencia</span></div>
-                  <div class="kpi-box"><span class="kpi-box-val">CPA</span><span class="kpi-box-lbl" id="kpiMargin">Costo Adq.</span></div>
-                  <div class="kpi-box"><span class="kpi-box-val">CTR</span><span class="kpi-box-lbl" id="kpiSkus">Relevancia</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">275M</span><span class="kpi-box-lbl" id="kpiImpressions">Impresiones</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">0.24%</span><span class="kpi-box-lbl" id="kpiCtr">Overall CTR</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">71%</span><span class="kpi-box-lbl" id="kpiMobile">Mobile Share</span></div>
                 </div>
                 <div class="insight-block">
                   <h4 id="insightsHeader1">Hallazgos Clave</h4>
@@ -181,38 +204,59 @@
               </div>
             </article>
 
+            <!-- TAB 2: CHANNEL ANALYSIS -->
             <article class="chart-card">
               <img src="../img/publicis-dashboard-2.png" class="chart-img" alt="Análisis de Canales" />
               <div class="chart-body">
                 <span class="chart-index" id="tab2Index">Pestaña 02</span>
-                <h3 class="chart-title" id="tab2Title">Análisis Detallado por Canal</h3>
+                <h3 class="chart-title" id="tab2Title">Eficiencia vs Volumen por Emplazamiento</h3>
                 <div class="insight-block">
-                  <h4 id="insightsHeader2">Hallazgos Clave</h4>
+                  <h4 id="insightsHeader2">Análisis de Emplazamiento</h4>
                   <ul class="insight-list" id="tab2Insights"></ul>
                 </div>
               </div>
             </article>
 
+            <!-- TAB 3: SEASONALITY -->
             <article class="chart-card">
               <img src="../img/publicis-dashboard-3.png" class="chart-img" alt="Tendencias Temporales" />
               <div class="chart-body">
                 <span class="chart-index" id="tab3Index">Pestaña 03</span>
                 <h3 class="chart-title" id="tab3Title">Tendencias y Estacionalidad</h3>
                 <div class="insight-block">
-                  <h4 id="insightsHeader3">Hallazgos Clave</h4>
+                  <h4 id="insightsHeader3">Insights Temporales</h4>
                   <ul class="insight-list" id="tab3Insights"></ul>
                 </div>
               </div>
             </article>
 
+            <!-- TAB 4: AUDIT & GAP -->
             <article class="chart-card">
-              <img src="../img/publicis-dashboard-4.png" class="chart-img" alt="Métricas Operativas" />
+              <img src="../img/publicis-dashboard-4.png" class="chart-img" alt="Auditoría de Atribución" />
               <div class="chart-body">
                 <span class="chart-index" id="tab4Index">Pestaña 04</span>
-                <h3 class="chart-title" id="tab4Title">Optimización de Audiencias</h3>
+                <h3 class="chart-title" id="tab4Title">Auditoría de Atribución DCM-GA</h3>
                 <div class="insight-block">
-                  <h4 id="insightsHeader4">Hallazgos Clave</h4>
+                  <h4 id="insightsHeader4">Gap de Atribución</h4>
                   <ul class="insight-list" id="tab4Insights"></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- UI/UX ANALYSIS SECTION -->
+            <article class="chart-card">
+              <img src="../img/publicis-analysis-snapshot.png" class="chart-img" alt="Análisis UI/UX y Performance" />
+              <div class="chart-body">
+                <span class="chart-index">UI/UX Audit</span>
+                <h3 class="chart-title">Optimización de Experiencia de Usuario (UX)</h3>
+                <p class="section-intro">Auditoría del embudo de conversión y rendimiento técnico de las landing pages.</p>
+                <div class="insight-block">
+                  <h4>Optimización UI</h4>
+                  <ul class="insight-list">
+                    <li><strong>Mobile-First Design:</strong> Dado que el 71% del tráfico es móvil, se rediseñaron los componentes críticos para asegurar legibilidad en pantallas pequeñas.</li>
+                    <li><strong>Reducción de Latencia:</strong> Optimización de activos visuales para mejorar el LCP (Largest Contentful Paint) y reducir el gap de rebote.</li>
+                    <li><strong>Claridad en CTA:</strong> Reubicación de botones de conversión (ISI y Formularios) para mejorar la tasa de clics en dispositivos táctiles.</li>
+                  </ul>
                 </div>
               </div>
             </article>
@@ -223,7 +267,7 @@
 
     <footer class="case-footer">
       <div class="case-footer-box">
-        <p class="case-footer-copy" id="footerCopy">Este proyecto demuestra la capacidad de transformar datos publicitarios complejos en insights accionables para el negocio.</p>
+        <p class="case-footer-copy" id="footerCopy">Portafolio de Marketing Analytics profesional.</p>
         <div class="case-actions">
           <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
         </div>
@@ -246,51 +290,64 @@
           repoButton: "Ver repositorio",
           overviewKicker: "Overview",
           overviewTitle: "Marco del proyecto",
-          overviewIntro: "Este proyecto visualiza el rendimiento multicanal de campañas publicitarias, permitiendo a los equipos de marketing ajustar sus estrategias en tiempo real basándose en datos de conversión y costo.",
-          goalTitle: "Objetivo",
-          goalBody: "Centralizar métricas de diferentes plataformas para ofrecer una visión única del rendimiento publicitario y la eficiencia del gasto.",
+          overviewIntro: "Reconciliación cruzada entre DCM (impresiones/clicks pagados) y GA (sesiones/usuarios en sitio), unificados por sitio de publicación y mes.",
+          goalTitle: "Enfoque Analítico",
+          goalBody: "Análisis por capas: Emplazamiento → Creativo → Dispositivo → Tiempo, para identificar dónde el gasto es efectivo.",
           techTitle: "Tecnología",
-          techBody: "Modelado de datos complejo en Power BI con medidas DAX avanzadas para el cálculo de ROAS, CPA y tendencias de rendimiento.",
+          techBody: "Modelado en Power BI integrando DCM y Google Analytics para medir la brecha de atribución (54% click-to-session rate).",
           impactTitle: "Impacto",
-          impactBody: "Mejora en la toma de decisiones para la asignación de presupuestos, identificando canales con bajo rendimiento y escalando los de mayor impacto.",
-          visualsKicker: "Deep Dive por Pestaña",
-          visualsTitle: "Análisis Detallado del Dashboard",
+          impactBody: "Identificación de un potencial de mejora del 40% en clicks mediante la reasignación inteligente del presupuesto.",
+          recKicker: "Estrategia",
+          recTitle: "Recomendaciones del Marketer",
+          recIntro: "Acciones concretas basadas en el análisis de eficiencia y comportamiento del usuario.",
+          recCard1Title: "⭐ Rebalancear",
+          recCard1Body: "Reasignar 15-20% del presupuesto de Aptus/Zeta hacia Facebook (CTR 1.23%) y Sharecare (CTR 0.55%).",
+          recCard2Title: "📈 Mobile-First",
+          recCard2Body: "Mobile genera el 71% de las sesiones. Priorizar el formato 320x50 y optimizar landing pages.",
+          recCard3Title: "⚠️ Optimizar",
+          recCard3Body: "Eliminar creativos 'Transparent 1x1' que distorsionan los cálculos de CTR y presupuesto.",
+          visualsKicker: "Análisis Detallado",
+          visualsTitle: "Dashboard Deep Dive",
           insightsHeader1: "Hallazgos Clave",
-          insightsHeader2: "Hallazgos Clave",
-          insightsHeader3: "Hallazgos Clave",
-          insightsHeader4: "Hallazgos Clave",
-          kpiSales: "Eficiencia",
-          kpiMargin: "Costo Adq.",
-          kpiSkus: "Relevancia",
+          insightsHeader2: "Análisis de Emplazamiento",
+          insightsHeader3: "Insights Temporales",
+          insightsHeader4: "Gap de Atribución",
+          kpiImpressions: "Impresiones",
+          kpiCtr: "Overall CTR",
+          kpiMobile: "Mobile Share",
           tab1Index: "Pestaña 01",
           tab1Title: "Resumen Ejecutivo de Campañas",
           tab1Insights: [
-            "Visualización de las principales métricas de rendimiento (Spend, Clicks, Conversions).",
-            "Identificación del ROAS general para validar la rentabilidad de la pauta.",
-            "Comparativa de rendimiento contra objetivos establecidos."
+            "Total de 275M de impresiones con un CTR promedio de 0.24%.",
+            "Se identificaron 2.38M de sesiones totales con 111K usuarios únicos.",
+            "Mobile domina el tráfico con un 71% de las sesiones de Google Analytics.",
+            "Identificación de picos estacionales en Septiembre-Octubre."
           ],
           tab2Index: "Pestaña 02",
-          tab2Title: "Análisis Detallado por Canal",
+          tab2Title: "Eficiencia vs Volumen por Emplazamiento",
           tab2Insights: [
-            "Desglose de eficiencia por plataforma (Facebook, Google, LinkedIn).",
-            "Identificación del CPA por canal para optimizar la distribución del presupuesto.",
-            "Análisis de la calidad del tráfico a través del CTR y tasa de rebote."
+            "Facebook entrega el CTR más alto (1.23%), 5 veces el promedio de la campaña.",
+            "Aptus domina el volumen (77M impresiones) pero con un CTR bajo de 0.17%.",
+            "Zeta y MediaIQ consumen el 32% de las impresiones con el CTR más bajo (0.08%).",
+            "Oportunidad de escalar Sharecare (0.55% CTR) para mejorar el volumen de clicks eficientes."
           ],
           tab3Index: "Pestaña 03",
           tab3Title: "Tendencias y Estacionalidad",
           tab3Insights: [
-            "Análisis temporal para identificar días y horas de mayor conversión.",
-            "Seguimiento de tendencias de costo (CPC/CPM) a lo largo del tiempo.",
-            "Identificación de patrones estacionales para planificar futuras campañas."
+            "Las impresiones saltaron de 27M en Julio a 59M en Septiembre (incremento del 117%).",
+            "Las sesiones siguieron la tendencia: 528K en Septiembre vs 312K en Julio.",
+            "El comportamiento del usuario sugiere una fuerte estacionalidad ligada a brotes de piel en otoño.",
+            "Recomendación: Adelantar las pautas de Agosto para capturar la intención temprana."
           ],
           tab4Index: "Pestaña 04",
-          tab4Title: "Optimización de Audiencias",
+          tab4Title: "Auditoría de Atribución DCM-GA",
           tab4Insights: [
-            "Evaluación del rendimiento por segmentos demográficos y geográficos.",
-            "Identificación de audiencias con mayor propensión a la conversión.",
-            "Insights para el ajuste de pujas y creatividades basadas en el comportamiento."
+            "Brecha crítica: 296K clicks en DCM vs 136K sesiones en GA (54% de efectividad).",
+            "El gap del 46% sugiere latencia en landing pages o pérdida de parámetros UTM.",
+            "Detección de artefactos de tracking: 'Transparent 1x1' distorsionan los reportes.",
+            "Necesidad de auditar los redireccionamientos de los top 5 emplazamientos."
           ],
-          footerCopy: "Este proyecto demuestra la capacidad de transformar datos publicitarios complejos en insights accionables para el negocio.",
+          footerCopy: "Portafolio de Marketing Analytics profesional.",
           footerBackButton: "Volver a proyectos",
           themeDark: "Dark",
           themeLight: "Light"
@@ -307,51 +364,64 @@
           repoButton: "View repository",
           overviewKicker: "Overview",
           overviewTitle: "Project Framework",
-          overviewIntro: "This project visualizes multi-channel performance of advertising campaigns, allowing marketing teams to adjust strategies in real-time based on conversion and cost data.",
-          goalTitle: "Objective",
-          goalBody: "Centralize metrics from different platforms to offer a single view of advertising performance and spending efficiency.",
+          overviewIntro: "Cross-source reconciliation between DCM (paid impressions/clicks) and GA (on-site sessions/users).",
+          goalTitle: "Analytical Approach",
+          goalBody: "Layered analysis: Placement → Creative → Device → Time, to identify spend efficiency.",
           techTitle: "Technology",
-          techBody: "Complex data modeling in Power BI with advanced DAX measures for calculating ROAS, CPA, and performance trends.",
+          techBody: "Power BI modeling integrating DCM and Google Analytics to measure attribution gap (54% click-to-session rate).",
           impactTitle: "Impact",
-          impactBody: "Improved decision-making for budget allocation, identifying underperforming channels and scaling high-impact ones.",
-          visualsKicker: "Tab-by-Tab Deep Dive",
-          visualsTitle: "Detailed Dashboard Analysis",
-          insightsHeader1: "Key Insights",
-          insightsHeader2: "Key Insights",
-          insightsHeader3: "Key Insights",
-          insightsHeader4: "Key Insights",
-          kpiSales: "Efficiency",
-          kpiMargin: "Acq. Cost",
-          kpiSkus: "Relevance",
+          impactBody: "Identification of a 40% improvement potential in clicks through smart budget reallocation.",
+          recKicker: "Strategy",
+          recTitle: "Marketer Recommendations",
+          recIntro: "Concrete actions based on efficiency and user behavior analysis.",
+          recCard1Title: "⭐ Rebalance",
+          recCard1Body: "Reallocate 15-20% budget from Aptus/Zeta to Facebook (1.23% CTR) and Sharecare (0.55%).",
+          recCard2Title: "📈 Mobile-First",
+          recCard2Body: "Mobile drives 71% of sessions. Prioritize 320x50 format and optimize landing pages.",
+          recCard3Title: "⚠️ Optimize",
+          recCard3Body: "Suppress 'Transparent 1x1' creatives that distort CTR and budget calculations.",
+          visualsKicker: "Detailed Analysis",
+          visualsTitle: "Dashboard Deep Dive",
+          insightsHeader1: "Key Findings",
+          insightsHeader2: "Placement Analysis",
+          insightsHeader3: "Temporal Insights",
+          insightsHeader4: "Attribution Gap",
+          kpiImpressions: "Impressions",
+          kpiCtr: "Overall CTR",
+          kpiMobile: "Mobile Share",
           tab1Index: "Tab 01",
           tab1Title: "Campaign Executive Summary",
           tab1Insights: [
-            "Visualization of key performance metrics (Spend, Clicks, Conversions).",
-            "Identification of overall ROAS to validate ad profitability.",
-            "Performance comparison against established goals."
+            "Total 275M impressions with an average CTR of 0.24%.",
+            "Identified 2.38M total sessions with 111K unique users.",
+            "Mobile dominates traffic with 71% of Google Analytics sessions.",
+            "Identification of seasonal peaks in September-October."
           ],
           tab2Index: "Tab 02",
-          tab2Title: "Detailed Channel Analysis",
+          tab2Title: "Efficiency vs Volume by Placement",
           tab2Insights: [
-            "Efficiency breakdown by platform (Facebook, Google, LinkedIn).",
-            "CPA identification by channel to optimize budget distribution.",
-            "Traffic quality analysis through CTR and bounce rate."
+            "Facebook delivers the highest CTR (1.23%), 5x the campaign average.",
+            "Aptus dominates volume (77M impressions) but with low 0.17% CTR.",
+            "Zeta and MediaIQ consume 32% of impressions with the lowest CTR (0.08%).",
+            "Opportunity to scale Sharecare (0.55% CTR) to improve efficient click volume."
           ],
           tab3Index: "Tab 03",
           tab3Title: "Trends & Seasonality",
           tab3Insights: [
-            "Temporal analysis to identify peak conversion days and times.",
-            "Cost trend tracking (CPC/CPM) over time.",
-            "Identification of seasonal patterns to plan future campaigns."
+            "Impressions jumped from 27M in July to 59M in September (117% increase).",
+            "Sessions followed the trend: 528K in September vs 312K in July.",
+            "User behavior suggests strong seasonality tied to fall skin flare-ups.",
+            "Recommendation: Pre-load August flights to capture early intent."
           ],
           tab4Index: "Tab 04",
-          tab4Title: "Audience Optimization",
+          tab4Title: "DCM-GA Attribution Audit",
           tab4Insights: [
-            "Performance evaluation by demographic and geographic segments.",
-            "Identification of audiences with higher conversion propensity.",
-            "Insights for bid and creative adjustments based on behavior."
+            "Critical gap: 296K DCM clicks vs 136K GA sessions (54% effectiveness).",
+            "The 46% gap suggests landing page latency or UTM parameter loss.",
+            "Detection of tracking artifacts: 'Transparent 1x1' distorting reports.",
+            "Need to audit redirection chains for top 5 placements."
           ],
-          footerCopy: "This project demonstrates the ability to transform complex advertising data into actionable business insights.",
+          footerCopy: "Professional Marketing Analytics Portfolio.",
           footerBackButton: "Back to projects",
           themeDark: "Dark",
           themeLight: "Light"
