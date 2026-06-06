@@ -80,17 +80,17 @@ const blogPosts = [
 
 const projects = [
   {
-    title: 'publicis-dashboard',
-    title_en: 'publicis-dashboard',
+    title: 'Análisis de Publicidad y Rendimiento - Publicis',
+    title_en: 'Publicis - Advertising & Performance Analysis',
     category: 'Caso de estudio',
     category_en: 'Case Study',
     date: '2026-06-06',
     image: 'img/publicis-dashboard.png',
-    excerpt: 'Análisis de datos detallado para publicis-dashboard.',
-    excerpt_en: 'Detailed data analysis for publicis-dashboard.',
-    tech: ['Power BI', 'SQL', 'DAX'],
-    metrics: ['Análisis en progreso'],
-    metrics_en: ['Analysis in progress'],
+    excerpt: 'Análisis integral de campañas publicitarias y métricas de rendimiento para optimizar el retorno de inversión en medios digitales.',
+    excerpt_en: 'Comprehensive analysis of advertising campaigns and performance metrics to optimize ROI in digital media.',
+    tech: ['Power BI', 'SQL', 'DAX', 'Digital Marketing'],
+    metrics: ['Optimización de ROI', 'Análisis de Campañas', 'KPIs de Medios'],
+    metrics_en: ['ROI Optimization', 'Campaign Analysis', 'Media KPIs'],
     detailUrl: 'projects/publicis-dashboard.html',
     repoUrl: 'https://github.com/angra8410/my-new-portfolio'
   },

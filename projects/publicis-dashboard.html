@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Análisis de datos para publicis-dashboard" />
-  <title>publicis-dashboard - Portfolio</title>
+  <meta name="description" content="Publicis Advertising & Performance Analysis Case Study" />
+  <title>Publicis - Análisis de Publicidad y Rendimiento</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,7 +39,6 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: "Inter", sans-serif; background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%), radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%), var(--case-bg); color: var(--case-text); transition: background-color 0.25s ease, color 0.25s ease; }
     a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
     .case-page { min-height: 100vh; }
     .case-topbar { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--case-bg) 86%, transparent); border-bottom: 1px solid var(--case-border); }
     .case-topbar-inner { max-width: var(--case-max); margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
@@ -58,7 +57,7 @@
     .case-chip { padding: 10px 14px; border-radius: 999px; background: var(--case-surface-alt); border: 1px solid var(--case-border); color: var(--case-text); font-size: 0.92rem; font-weight: 600; }
     .case-hero-side { padding: 26px; display: flex; flex-direction: column; gap: 18px; justify-content: space-between; }
     .meta-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    .meta-card { border: 1px solid var(--case-border); background: var(--case-surface-alt); border-radius: 18px; padding: 16px; }
+    .meta-card, .overview-card, .chart-card { border: 1px solid var(--case-border); background: var(--case-surface-alt); border-radius: 18px; padding: 16px; }
     .meta-label { display: block; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--case-text-soft); font-weight: 700; }
     .meta-value { margin: 0; line-height: 1.6; color: var(--case-text); font-weight: 600; }
     .case-actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -70,59 +69,54 @@
     .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 30px; }
     .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent-strong); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.03em; }
-    .section-intro { margin: 0; color: var(--case-text-soft); line-height: 1.8; font-size: 1rem; }
+    .section-intro, .overview-card p, .overview-card li { color: var(--case-text-soft); line-height: 1.75; }
+    .section-intro { margin: 0; font-size: 1rem; }
     .overview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
-    .overview-card { background: var(--case-surface-alt); border: 1px solid var(--case-border); border-radius: 18px; padding: 18px; }
     .overview-card h3 { margin: 0 0 10px; font-size: 1rem; }
-    .overview-card p, .overview-card li { margin: 0; color: var(--case-text-soft); line-height: 1.75; }
-    .overview-card ul { margin: 0; padding-left: 18px; }
-    .chart-group { margin-top: 30px; }
-    .chart-group-title { margin: 0 0 8px; font-size: 1.25rem; letter-spacing: -0.02em; }
-    .chart-group-copy { margin: 0 0 18px; color: var(--case-text-soft); line-height: 1.75; }
-    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .overview-card p { margin: 0; }
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+    .kpi-box { background: var(--case-surface-alt); padding: 16px; border-radius: 16px; border: 1px solid var(--case-border); text-align: center; }
+    .kpi-box-val { display: block; font-size: 1.5rem; font-weight: 800; color: var(--case-accent-strong); }
+    .kpi-box-lbl { display: block; font-size: 0.75rem; color: var(--case-text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; font-weight: 600; }
+    .insight-block { margin-top: 24px; padding: 20px; background: color-mix(in srgb, var(--case-accent) 5%, transparent); border-radius: 20px; border-left: 4px solid var(--case-accent-strong); }
+    .insight-block h4 { margin: 0 0 12px; font-size: 0.9rem; color: var(--case-accent-strong); text-transform: uppercase; letter-spacing: 0.1em; }
+    .insight-list { list-style: none; padding: 0; margin: 0; }
+    .insight-list li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--case-text-soft); line-height: 1.6; font-size: 0.95rem; }
+    .insight-list li::before { content: "→"; position: absolute; left: 0; color: var(--case-accent-strong); font-weight: 800; }
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
     .chart-card { overflow: hidden; border-radius: 22px; border: 1px solid var(--case-border); background: var(--case-surface-alt); }
-    .chart-image-wrap { padding: 18px; border-bottom: 1px solid var(--case-border); background: color-mix(in srgb, var(--case-surface) 88%, transparent); }
-    .chart-image { width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--case-border); background: #ffffff; }
-    .chart-body { padding: 22px; }
+    .chart-img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--case-border); }
+    .chart-body { padding: 30px; }
     .chart-index { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; font-weight: 800; color: var(--case-accent-strong); letter-spacing: 0.08em; text-transform: uppercase; }
-    .chart-title { margin: 0 0 12px; font-size: 1.18rem; letter-spacing: -0.02em; }
-    .chart-copy { margin: 0; color: var(--case-text-soft); line-height: 1.8; }
-    .recommendations-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
-    .recommendation-card { background: var(--case-surface-alt); border: 1px solid var(--case-border); border-radius: 18px; padding: 20px; }
-    .recommendation-card h3 { margin: 0 0 10px; font-size: 1rem; }
-    .recommendation-card p { margin: 0; color: var(--case-text-soft); line-height: 1.75; }
-    .case-footer { max-width: var(--case-max); margin: 0 auto; padding: 0 20px 72px; }
-    .case-footer-box { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 26px; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .case-footer-copy { margin: 0; color: var(--case-text-soft); line-height: 1.75; max-width: 58ch; }
-    @media (max-width: 960px) { .case-hero-grid, .overview-grid, .recommendations-list { grid-template-columns: 1fr; } .case-hero-main, .case-hero-side, .content-section, .case-footer-box { padding: 22px; } }
-    @media (max-width: 640px) { .case-topbar-inner, .case-hero, .case-content, .case-footer { padding-left: 16px; padding-right: 16px; } .case-title { font-size: 2rem; } .case-summary { font-size: 1rem; } .case-actions, .case-top-actions { width: 100%; } .case-btn, .case-theme-pill, .case-lang-pill { width: 100%; } }
+    .chart-title { margin: 0 0 16px; font-size: 1.5rem; letter-spacing: -0.02em; }
+    @media (max-width: 960px) { .case-hero-grid, .overview-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="case-page">
     <header class="case-topbar">
       <div class="case-topbar-inner">
-        <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">Volver al portafolio</a>
         <div class="case-top-actions">
-          <button class="case-lang-pill" id="langIndicator" aria-label="Toggle language">ES</button>
-          <button class="case-theme-pill" id="themeIndicator" aria-label="Toggle theme">🌙 Dark</button>
+          <button class="case-lang-pill" id="langIndicator">ES</button>
+          <button class="case-theme-pill" id="themeIndicator">Dark</button>
         </div>
       </div>
     </header>
 
     <main>
       <section class="case-hero">
-        <div class="case-badge" id="heroBadge">Caso de estudio de Análisis de Datos</div>
-
+        <div class="case-badge" id="heroBadge">Caso de estudio de Marketing Analytics</div>
         <div class="case-hero-grid">
           <div class="case-hero-main">
-            <h1 class="case-title" id="heroTitle">publicis-dashboard</h1>
-            <p class="case-summary" id="heroSummary">Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre publicis-dashboard.</p>
-
+            <h1 class="case-title" id="heroTitle">Publicis - Análisis de Publicidad y Rendimiento</h1>
+            <p class="case-summary" id="heroSummary">Análisis integral de campañas publicitarias y métricas de rendimiento para optimizar el retorno de inversión (ROI) en medios digitales.</p>
             <div class="case-key-metrics">
               <span class="case-chip">Power BI</span>
               <span class="case-chip">DAX</span>
-              <span class="case-chip">Business Intelligence</span>
+              <span class="case-chip">SQL</span>
+              <span class="case-chip">Marketing Analytics</span>
+              <span class="case-chip">Optimización ROI</span>
             </div>
           </div>
 
@@ -130,111 +124,97 @@
             <div class="meta-grid">
               <div class="meta-card">
                 <span class="meta-label" id="metaLabelRole">Enfoque</span>
-                <p class="meta-value" id="metaValueRole">Analítica de Datos</p>
+                <p class="meta-value" id="metaValueRole">Estrategia de medios y optimización de pauta</p>
               </div>
               <div class="meta-card">
                 <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
-                <p class="meta-value" id="metaValueQuestion">¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?</p>
+                <p class="meta-value" id="metaValueQuestion">¿Cómo distribuir eficientemente el presupuesto publicitario para maximizar las conversiones?</p>
               </div>
             </div>
             <div class="case-actions">
-              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/my-new-portfolio" target="_blank" id="repoButton">Ver repositorio</a>
+              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/my-new-portfolio" id="repoButton">Ver repositorio</a>
             </div>
           </aside>
         </div>
       </section>
 
       <div class="case-content">
-        <!-- Overview Section -->
         <section class="content-section">
           <span class="section-kicker" id="overviewKicker">Overview</span>
           <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
-          <p class="section-intro" id="overviewIntro">Introducción detallada sobre el origen de los datos y el propósito del análisis.</p>
+          <p class="section-intro" id="overviewIntro">Este proyecto visualiza el rendimiento multicanal de campañas publicitarias, permitiendo a los equipos de marketing ajustar sus estrategias en tiempo real basándose en datos de conversión y costo.</p>
           <div class="overview-grid">
             <article class="overview-card">
-              <h3 id="overviewCard1Title">Objetivo</h3>
-              <p id="overviewCard1Body">Definir el objetivo principal alcanzado con este reporte.</p>
+              <h3 id="goalTitle">Objetivo</h3>
+              <p id="goalBody">Centralizar métricas de diferentes plataformas para ofrecer una visión única del rendimiento publicitario y la eficiencia del gasto.</p>
             </article>
             <article class="overview-card">
-              <h3 id="overviewCard2Title">Metodología</h3>
-              <ul id="overviewCard2Body">
-                <li>Extracción y limpieza</li>
-                <li>Modelado de datos</li>
-                <li>Creación de medidas DAX</li>
-                <li>Diseño de interfaz</li>
-              </ul>
+              <h3 id="techTitle">Tecnología</h3>
+              <p id="techBody">Modelado de datos complejo en Power BI con medidas DAX avanzadas para el cálculo de ROAS, CPA y tendencias de rendimiento.</p>
             </article>
             <article class="overview-card">
-              <h3 id="overviewCard3Title">Resultados</h3>
-              <p id="overviewCard3Body">Resumen del impacto de los hallazgos encontrados.</p>
+              <h3 id="impactTitle">Impacto</h3>
+              <p id="impactBody">Mejora en la toma de decisiones para la asignación de presupuestos, identificando canales con bajo rendimiento y escalando los de mayor impacto.</p>
             </article>
           </div>
         </section>
 
-        <!-- Main Dashboard View -->
         <section class="content-section">
-          <span class="section-kicker" id="overviewGeneralKicker">Vista General</span>
-          <h2 class="section-title" id="overviewGeneralTitle">Dashboard Overview</h2>
-          <div class="chart-card">
-            <div class="chart-image-wrap">
-              <img class="chart-image" src="../img/publicis-dashboard.png" alt="Dashboard Overview" loading="lazy" />
-            </div>
-            <div class="chart-body">
-              <p class="chart-copy" id="overviewGeneralText">Esta vista consolidada permite entender las métricas de un vistazo.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Visual Analysis -->
-        <section class="content-section">
-          <span class="section-kicker" id="visualsKicker">Análisis Visual</span>
-          <h2 class="section-title" id="visualsTitle">Detalles y Visualizaciones</h2>
+          <span class="section-kicker" id="visualsKicker">Análisis de Datos por Pestaña</span>
+          <h2 class="section-title" id="visualsTitle">Dashboard Deep Dive</h2>
+          
           <div class="chart-grid">
             <article class="chart-card">
-              <div class="chart-image-wrap">
-                <img class="chart-image" src="../img/publicis-dashboard-2.png" alt="Detalle del Reporte 2" loading="lazy" />
-              </div>
+              <img src="../img/publicis-dashboard.png" class="chart-img" alt="Vista General Ejecutiva" />
               <div class="chart-body">
-                <span class="chart-index" id="chart1Index">Gráfico 01</span>
-                <h3 class="chart-title" id="chart1Title">Tendencia Temporal</h3>
-                <p class="chart-copy" id="chart1Text1">Descripción de la primera visualización clave.</p>
+                <span class="chart-index" id="tab1Index">Pestaña 01</span>
+                <h3 class="chart-title" id="tab1Title">Resumen Ejecutivo de Campañas</h3>
+                <div class="kpi-row" id="tab1Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">ROAS</span><span class="kpi-box-lbl" id="kpiSales">Eficiencia</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">CPA</span><span class="kpi-box-lbl" id="kpiMargin">Costo Adq.</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">CTR</span><span class="kpi-box-lbl" id="kpiSkus">Relevancia</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader1">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab1Insights"></ul>
+                </div>
               </div>
             </article>
-            <article class="chart-card">
-              <div class="chart-image-wrap">
-                <img class="chart-image" src="../img/publicis-dashboard-3.png" alt="Detalle del Reporte 3" loading="lazy" />
-              </div>
-              <div class="chart-body">
-                <span class="chart-index" id="chart2Index">Gráfico 02</span>
-                <h3 class="chart-title" id="chart2Title">Distribución de Categorías</h3>
-                <p class="chart-copy" id="chart2Text1">Descripción de la segunda visualización clave.</p>
-              </div>
-            </article>
-            <article class="chart-card">
-              <div class="chart-image-wrap">
-                <img class="chart-image" src="../img/publicis-dashboard-4.png" alt="Detalle del Reporte 4" loading="lazy" />
-              </div>
-              <div class="chart-body">
-                <span class="chart-index">Gráfico 03</span>
-                <h3 class="chart-title">Métricas de Rendimiento</h3>
-                <p class="chart-copy">Análisis detallado de indicadores clave.</p>
-              </div>
-            </article>
-          </div>
-        </section>
 
-        <!-- Recommendations -->
-        <section class="content-section">
-          <span class="section-kicker" id="recKicker">Conclusiones</span>
-          <h2 class="section-title" id="recTitle">Recomendaciones del Analista</h2>
-          <div class="recommendations-list">
-            <article class="recommendation-card">
-              <h3 id="rec1Title">Acción 1</h3>
-              <p id="rec1Text">Recomendación basada en los datos analizados.</p>
+            <article class="chart-card">
+              <img src="../img/publicis-dashboard-2.png" class="chart-img" alt="Análisis de Canales" />
+              <div class="chart-body">
+                <span class="chart-index" id="tab2Index">Pestaña 02</span>
+                <h3 class="chart-title" id="tab2Title">Análisis Detallado por Canal</h3>
+                <div class="insight-block">
+                  <h4 id="insightsHeader2">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab2Insights"></ul>
+                </div>
+              </div>
             </article>
-            <article class="recommendation-card">
-              <h3 id="rec2Title">Acción 2</h3>
-              <p id="rec2Text">Segunda recomendación estratégica.</p>
+
+            <article class="chart-card">
+              <img src="../img/publicis-dashboard-3.png" class="chart-img" alt="Tendencias Temporales" />
+              <div class="chart-body">
+                <span class="chart-index" id="tab3Index">Pestaña 03</span>
+                <h3 class="chart-title" id="tab3Title">Tendencias y Estacionalidad</h3>
+                <div class="insight-block">
+                  <h4 id="insightsHeader3">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab3Insights"></ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <img src="../img/publicis-dashboard-4.png" class="chart-img" alt="Métricas Operativas" />
+              <div class="chart-body">
+                <span class="chart-index" id="tab4Index">Pestaña 04</span>
+                <h3 class="chart-title" id="tab4Title">Optimización de Audiencias</h3>
+                <div class="insight-block">
+                  <h4 id="insightsHeader4">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab4Insights"></ul>
+                </div>
+              </div>
             </article>
           </div>
         </section>
@@ -243,7 +223,7 @@
 
     <footer class="case-footer">
       <div class="case-footer-box">
-        <p class="case-footer-copy" id="footerCopy">Portafolio de Análisis de Datos profesional.</p>
+        <p class="case-footer-copy" id="footerCopy">Este proyecto demuestra la capacidad de transformar datos publicitarios complejos en insights accionables para el negocio.</p>
         <div class="case-actions">
           <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
         </div>
@@ -255,88 +235,134 @@
     (function () {
       const translations = {
         es: {
-          backToPortfolio: "← Volver al portafolio",
-          heroBadge: "Caso de estudio de Análisis de Datos",
-          heroTitle: "publicis-dashboard",
-          heroSummary: "Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre publicis-dashboard.",
+          backToPortfolio: "Volver al portafolio",
+          heroBadge: "Caso de estudio de Marketing Analytics",
+          heroTitle: "Publicis - Análisis de Publicidad y Rendimiento",
+          heroSummary: "Análisis integral de campañas publicitarias y métricas de rendimiento para optimizar el retorno de inversión (ROI) en medios digitales.",
           metaLabelRole: "Enfoque",
-          metaValueRole: "Analítica de Datos",
+          metaValueRole: "Estrategia de medios y optimización de pauta",
           metaLabelQuestion: "Pregunta de negocio",
-          metaValueQuestion: "¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?",
+          metaValueQuestion: "¿Cómo distribuir eficientemente el presupuesto publicitario para maximizar las conversiones?",
           repoButton: "Ver repositorio",
           overviewKicker: "Overview",
           overviewTitle: "Marco del proyecto",
-          overviewIntro: "Introducción detallada sobre el origen de los datos y el propósito del análisis.",
-          overviewCard1Title: "Objetivo",
-          overviewCard1Body: "Definir el objetivo principal alcanzado con este reporte.",
-          overviewCard2Title: "Metodología",
-          overviewCard2Body: ["Extracción y limpieza", "Modelado de datos", "DAX", "Diseño"],
-          overviewCard3Title: "Resultados",
-          overviewCard3Body: "Resumen del impacto de los hallazgos encontrados.",
-          overviewGeneralKicker: "Vista General",
-          overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "Esta vista consolidada permite entender las métricas de un vistazo.",
-          visualsKicker: "Análisis Visual",
-          visualsTitle: "Detalles y Visualizaciones",
-          chart1Index: "Gráfico 01",
-          chart1Title: "Tendencia Temporal",
-          chart1Text1: "Descripción de la primera visualización clave.",
-          chart2Index: "Gráfico 02",
-          chart2Title: "Distribución de Categorías",
-          chart2Text1: "Descripción de la segunda visualización clave.",
-          recKicker: "Conclusiones",
-          recTitle: "Recomendaciones",
-          rec1Title: "Acción 1",
-          rec1Text: "Recomendación basada en los datos analizados.",
-          rec2Title: "Acción 2",
-          rec2Text: "Segunda recomendación estratégica.",
-          footerCopy: "Portafolio de Análisis de Datos profesional.",
+          overviewIntro: "Este proyecto visualiza el rendimiento multicanal de campañas publicitarias, permitiendo a los equipos de marketing ajustar sus estrategias en tiempo real basándose en datos de conversión y costo.",
+          goalTitle: "Objetivo",
+          goalBody: "Centralizar métricas de diferentes plataformas para ofrecer una visión única del rendimiento publicitario y la eficiencia del gasto.",
+          techTitle: "Tecnología",
+          techBody: "Modelado de datos complejo en Power BI con medidas DAX avanzadas para el cálculo de ROAS, CPA y tendencias de rendimiento.",
+          impactTitle: "Impacto",
+          impactBody: "Mejora en la toma de decisiones para la asignación de presupuestos, identificando canales con bajo rendimiento y escalando los de mayor impacto.",
+          visualsKicker: "Deep Dive por Pestaña",
+          visualsTitle: "Análisis Detallado del Dashboard",
+          insightsHeader1: "Hallazgos Clave",
+          insightsHeader2: "Hallazgos Clave",
+          insightsHeader3: "Hallazgos Clave",
+          insightsHeader4: "Hallazgos Clave",
+          kpiSales: "Eficiencia",
+          kpiMargin: "Costo Adq.",
+          kpiSkus: "Relevancia",
+          tab1Index: "Pestaña 01",
+          tab1Title: "Resumen Ejecutivo de Campañas",
+          tab1Insights: [
+            "Visualización de las principales métricas de rendimiento (Spend, Clicks, Conversions).",
+            "Identificación del ROAS general para validar la rentabilidad de la pauta.",
+            "Comparativa de rendimiento contra objetivos establecidos."
+          ],
+          tab2Index: "Pestaña 02",
+          tab2Title: "Análisis Detallado por Canal",
+          tab2Insights: [
+            "Desglose de eficiencia por plataforma (Facebook, Google, LinkedIn).",
+            "Identificación del CPA por canal para optimizar la distribución del presupuesto.",
+            "Análisis de la calidad del tráfico a través del CTR y tasa de rebote."
+          ],
+          tab3Index: "Pestaña 03",
+          tab3Title: "Tendencias y Estacionalidad",
+          tab3Insights: [
+            "Análisis temporal para identificar días y horas de mayor conversión.",
+            "Seguimiento de tendencias de costo (CPC/CPM) a lo largo del tiempo.",
+            "Identificación de patrones estacionales para planificar futuras campañas."
+          ],
+          tab4Index: "Pestaña 04",
+          tab4Title: "Optimización de Audiencias",
+          tab4Insights: [
+            "Evaluación del rendimiento por segmentos demográficos y geográficos.",
+            "Identificación de audiencias con mayor propensión a la conversión.",
+            "Insights para el ajuste de pujas y creatividades basadas en el comportamiento."
+          ],
+          footerCopy: "Este proyecto demuestra la capacidad de transformar datos publicitarios complejos en insights accionables para el negocio.",
           footerBackButton: "Volver a proyectos",
-          themeDark: "🌙 Dark",
-          themeLight: "☀️ Light"
+          themeDark: "Dark",
+          themeLight: "Light"
         },
         en: {
-          backToPortfolio: "← Back to portfolio",
-          heroBadge: "Data Analysis Case Study",
-          heroTitle: "publicis-dashboard",
-          heroSummary: "Detailed data analysis developed in Power BI to extract actionable insights about publicis-dashboard.",
+          backToPortfolio: "Back to portfolio",
+          heroBadge: "Marketing Analytics Case Study",
+          heroTitle: "Publicis - Advertising & Performance Analysis",
+          heroSummary: "Comprehensive analysis of advertising campaigns and performance metrics to optimize ROI in digital media.",
           metaLabelRole: "Focus",
-          metaValueRole: "Data Analytics",
+          metaValueRole: "Media strategy and ad optimization",
           metaLabelQuestion: "Business question",
-          metaValueQuestion: "What are the main findings and trends identified in the dataset?",
-          repoButton: "Open repository",
+          metaValueQuestion: "How to efficiently distribute the advertising budget to maximize conversions?",
+          repoButton: "View repository",
           overviewKicker: "Overview",
           overviewTitle: "Project Framework",
-          overviewIntro: "Detailed introduction about data origin and analysis purpose.",
-          overviewCard1Title: "Objective",
-          overviewCard1Body: "Define the main goal achieved with this report.",
-          overviewCard2Title: "Methodology",
-          overviewCard2Body: ["Extraction & Cleaning", "Data Modeling", "DAX", "Design"],
-          overviewCard3Title: "Results",
-          overviewCard3Body: "Summary of the impact of the findings.",
-          overviewGeneralKicker: "General Overview",
-          overviewGeneralTitle: "Dashboard Overview",
-          overviewGeneralText: "This consolidated view allows understanding metrics at a glance.",
-          visualsKicker: "Visual Analysis",
-          visualsTitle: "Details & Visualizations",
-          chart1Index: "Chart 01",
-          chart1Title: "Temporal Trend",
-          chart1Text1: "Description of the first key visualization.",
-          chart2Index: "Chart 02",
-          chart2Title: "Category Distribution",
-          chart2Text1: "Description of the second key visualization.",
-          recKicker: "Conclusions",
-          recTitle: "Recommendations",
-          rec1Title: "Action 1",
-          rec1Text: "Recommendation based on the analyzed data.",
-          rec2Title: "Action 2",
-          rec2Text: "Second strategic recommendation.",
-          footerCopy: "Professional Data Analysis Portfolio.",
+          overviewIntro: "This project visualizes multi-channel performance of advertising campaigns, allowing marketing teams to adjust strategies in real-time based on conversion and cost data.",
+          goalTitle: "Objective",
+          goalBody: "Centralize metrics from different platforms to offer a single view of advertising performance and spending efficiency.",
+          techTitle: "Technology",
+          techBody: "Complex data modeling in Power BI with advanced DAX measures for calculating ROAS, CPA, and performance trends.",
+          impactTitle: "Impact",
+          impactBody: "Improved decision-making for budget allocation, identifying underperforming channels and scaling high-impact ones.",
+          visualsKicker: "Tab-by-Tab Deep Dive",
+          visualsTitle: "Detailed Dashboard Analysis",
+          insightsHeader1: "Key Insights",
+          insightsHeader2: "Key Insights",
+          insightsHeader3: "Key Insights",
+          insightsHeader4: "Key Insights",
+          kpiSales: "Efficiency",
+          kpiMargin: "Acq. Cost",
+          kpiSkus: "Relevance",
+          tab1Index: "Tab 01",
+          tab1Title: "Campaign Executive Summary",
+          tab1Insights: [
+            "Visualization of key performance metrics (Spend, Clicks, Conversions).",
+            "Identification of overall ROAS to validate ad profitability.",
+            "Performance comparison against established goals."
+          ],
+          tab2Index: "Tab 02",
+          tab2Title: "Detailed Channel Analysis",
+          tab2Insights: [
+            "Efficiency breakdown by platform (Facebook, Google, LinkedIn).",
+            "CPA identification by channel to optimize budget distribution.",
+            "Traffic quality analysis through CTR and bounce rate."
+          ],
+          tab3Index: "Tab 03",
+          tab3Title: "Trends & Seasonality",
+          tab3Insights: [
+            "Temporal analysis to identify peak conversion days and times.",
+            "Cost trend tracking (CPC/CPM) over time.",
+            "Identification of seasonal patterns to plan future campaigns."
+          ],
+          tab4Index: "Tab 04",
+          tab4Title: "Audience Optimization",
+          tab4Insights: [
+            "Performance evaluation by demographic and geographic segments.",
+            "Identification of audiences with higher conversion propensity.",
+            "Insights for bid and creative adjustments based on behavior."
+          ],
+          footerCopy: "This project demonstrates the ability to transform complex advertising data into actionable business insights.",
           footerBackButton: "Back to projects",
-          themeDark: "🌙 Dark",
-          themeLight: "☀️ Light"
+          themeDark: "Dark",
+          themeLight: "Light"
         }
       };
+
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
+      }
 
       function applySavedTheme() {
         const savedTheme = localStorage.getItem("theme") || "light";
@@ -353,25 +379,18 @@
         if (el) el.textContent = value;
       }
 
-      function setList(id, items) {
-        const el = document.getElementById(id);
-        if (!el || !Array.isArray(items)) return;
-        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
-      }
-
       function applyLanguage(lang) {
         const t = translations[lang] || translations.es;
         document.documentElement.lang = lang;
-        const langIndicator = document.getElementById("langIndicator");
-        if(langIndicator) langIndicator.textContent = lang.toUpperCase();
-
+        setText("langIndicator", lang.toUpperCase());
+        
         Object.keys(t).forEach(function(key) {
           if (typeof t[key] === 'string') {
             setText(key, t[key]);
+          } else if (key.endsWith('Insights')) {
+            setList(key, t[key]);
           }
         });
-
-        setList("overviewCard2Body", t.overviewCard2Body);
 
         const theme = localStorage.getItem("theme") || "light";
         setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
@@ -380,7 +399,6 @@
       document.addEventListener("DOMContentLoaded", function () {
         const langIndicator = document.getElementById("langIndicator");
         const themeIndicator = document.getElementById("themeIndicator");
-
         if (langIndicator) {
           langIndicator.addEventListener("click", function () {
             const currentLang = localStorage.getItem("language") || "es";
@@ -389,7 +407,6 @@
             applyLanguage(newLang);
           });
         }
-
         if (themeIndicator) {
           themeIndicator.addEventListener("click", function () {
             const currentTheme = localStorage.getItem("theme") || "light";
@@ -398,7 +415,6 @@
             applySavedTheme();
           });
         }
-
         const lang = localStorage.getItem("language") || "es";
         applySavedTheme();
         applyLanguage(lang);
