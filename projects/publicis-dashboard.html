@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Análisis de datos para publicis-dashboard" />
+  <title>publicis-dashboard - Portfolio</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --case-bg: var(--bg-primary, #f8fafc);
+      --case-surface: var(--bg-secondary, #ffffff);
+      --case-surface-alt: var(--bg-tertiary, #f1f5f9);
+      --case-text: var(--text-primary, #0f172a);
+      --case-text-soft: var(--text-secondary, #475569);
+      --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
+      --case-accent: var(--accent-color, #22d3ee);
+      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --case-radius: 24px;
+      --case-max: 1180px;
+    }
+
+    html.dark {
+      --case-bg: #0b1220;
+      --case-surface: #111a2b;
+      --case-surface-alt: #162135;
+      --case-text: #e5eef8;
+      --case-text-soft: #a8b7cc;
+      --case-border: rgba(148, 163, 184, 0.18);
+      --case-accent: #67e8f9;
+      --case-accent-strong: #22d3ee;
+      --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", sans-serif; background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%), radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%), var(--case-bg); color: var(--case-text); transition: background-color 0.25s ease, color 0.25s ease; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .case-page { min-height: 100vh; }
+    .case-topbar { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--case-bg) 86%, transparent); border-bottom: 1px solid var(--case-border); }
+    .case-topbar-inner { max-width: var(--case-max); margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .case-back { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--case-text); opacity: 0.94; }
+    .case-top-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .case-theme-pill, .case-lang-pill { border: 1px solid var(--case-border); background: var(--case-surface); color: var(--case-text); padding: 10px 14px; border-radius: 999px; font-size: 0.92rem; font-weight: 600; box-shadow: var(--case-shadow); cursor: pointer; transition: background-color 0.2s ease; }
+    .case-theme-pill:hover, .case-lang-pill:hover { background: var(--case-surface-alt); }
+    .case-hero { max-width: var(--case-max); margin: 0 auto; padding: 56px 20px 28px; }
+    .case-badge { display: inline-flex; align-items: center; gap: 10px; background: color-mix(in srgb, var(--case-accent) 18%, transparent); color: var(--case-accent-strong); border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent); border-radius: 999px; padding: 10px 16px; font-weight: 700; font-size: 0.92rem; margin-bottom: 20px; }
+    .case-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: stretch; }
+    .case-hero-main, .case-hero-side { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); }
+    .case-hero-main { padding: 34px; }
+    .case-title { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.06; letter-spacing: -0.04em; }
+    .case-summary { margin: 0; font-size: 1.08rem; line-height: 1.75; color: var(--case-text-soft); max-width: 62ch; }
+    .case-key-metrics { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .case-chip { padding: 10px 14px; border-radius: 999px; background: var(--case-surface-alt); border: 1px solid var(--case-border); color: var(--case-text); font-size: 0.92rem; font-weight: 600; }
+    .case-hero-side { padding: 26px; display: flex; flex-direction: column; gap: 18px; justify-content: space-between; }
+    .meta-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .meta-card { border: 1px solid var(--case-border); background: var(--case-surface-alt); border-radius: 18px; padding: 16px; }
+    .meta-label { display: block; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--case-text-soft); font-weight: 700; }
+    .meta-value { margin: 0; line-height: 1.6; color: var(--case-text); font-weight: 600; }
+    .case-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .case-btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 14px; font-weight: 700; border: 1px solid transparent; transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease; }
+    .case-btn:hover { transform: translateY(-1px); opacity: 0.96; }
+    .case-btn-primary { background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent)); color: #06202b; }
+    .case-btn-secondary { background: transparent; border-color: var(--case-border); color: var(--case-text); }
+    .case-content { max-width: var(--case-max); margin: 0 auto; padding: 10px 20px 72px; }
+    .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 30px; }
+    .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent-strong); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.03em; }
+    .section-intro { margin: 0; color: var(--case-text-soft); line-height: 1.8; font-size: 1rem; }
+    .overview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .overview-card { background: var(--case-surface-alt); border: 1px solid var(--case-border); border-radius: 18px; padding: 18px; }
+    .overview-card h3 { margin: 0 0 10px; font-size: 1rem; }
+    .overview-card p, .overview-card li { margin: 0; color: var(--case-text-soft); line-height: 1.75; }
+    .overview-card ul { margin: 0; padding-left: 18px; }
+    .chart-group { margin-top: 30px; }
+    .chart-group-title { margin: 0 0 8px; font-size: 1.25rem; letter-spacing: -0.02em; }
+    .chart-group-copy { margin: 0 0 18px; color: var(--case-text-soft); line-height: 1.75; }
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .chart-card { overflow: hidden; border-radius: 22px; border: 1px solid var(--case-border); background: var(--case-surface-alt); }
+    .chart-image-wrap { padding: 18px; border-bottom: 1px solid var(--case-border); background: color-mix(in srgb, var(--case-surface) 88%, transparent); }
+    .chart-image { width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--case-border); background: #ffffff; }
+    .chart-body { padding: 22px; }
+    .chart-index { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; font-weight: 800; color: var(--case-accent-strong); letter-spacing: 0.08em; text-transform: uppercase; }
+    .chart-title { margin: 0 0 12px; font-size: 1.18rem; letter-spacing: -0.02em; }
+    .chart-copy { margin: 0; color: var(--case-text-soft); line-height: 1.8; }
+    .recommendations-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .recommendation-card { background: var(--case-surface-alt); border: 1px solid var(--case-border); border-radius: 18px; padding: 20px; }
+    .recommendation-card h3 { margin: 0 0 10px; font-size: 1rem; }
+    .recommendation-card p { margin: 0; color: var(--case-text-soft); line-height: 1.75; }
+    .case-footer { max-width: var(--case-max); margin: 0 auto; padding: 0 20px 72px; }
+    .case-footer-box { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 26px; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .case-footer-copy { margin: 0; color: var(--case-text-soft); line-height: 1.75; max-width: 58ch; }
+    @media (max-width: 960px) { .case-hero-grid, .overview-grid, .recommendations-list { grid-template-columns: 1fr; } .case-hero-main, .case-hero-side, .content-section, .case-footer-box { padding: 22px; } }
+    @media (max-width: 640px) { .case-topbar-inner, .case-hero, .case-content, .case-footer { padding-left: 16px; padding-right: 16px; } .case-title { font-size: 2rem; } .case-summary { font-size: 1rem; } .case-actions, .case-top-actions { width: 100%; } .case-btn, .case-theme-pill, .case-lang-pill { width: 100%; } }
+  </style>
+</head>
+<body>
+  <div class="case-page">
+    <header class="case-topbar">
+      <div class="case-topbar-inner">
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">← Volver al portafolio</a>
+        <div class="case-top-actions">
+          <button class="case-lang-pill" id="langIndicator" aria-label="Toggle language">ES</button>
+          <button class="case-theme-pill" id="themeIndicator" aria-label="Toggle theme">🌙 Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-hero">
+        <div class="case-badge" id="heroBadge">Caso de estudio de Análisis de Datos</div>
+
+        <div class="case-hero-grid">
+          <div class="case-hero-main">
+            <h1 class="case-title" id="heroTitle">publicis-dashboard</h1>
+            <p class="case-summary" id="heroSummary">Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre publicis-dashboard.</p>
+
+            <div class="case-key-metrics">
+              <span class="case-chip">Power BI</span>
+              <span class="case-chip">DAX</span>
+              <span class="case-chip">Business Intelligence</span>
+            </div>
+          </div>
+
+          <aside class="case-hero-side">
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelRole">Enfoque</span>
+                <p class="meta-value" id="metaValueRole">Analítica de Datos</p>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
+                <p class="meta-value" id="metaValueQuestion">¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?</p>
+              </div>
+            </div>
+            <div class="case-actions">
+              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/my-new-portfolio" target="_blank" id="repoButton">Ver repositorio</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="case-content">
+        <!-- Overview Section -->
+        <section class="content-section">
+          <span class="section-kicker" id="overviewKicker">Overview</span>
+          <h2 class="section-title" id="overviewTitle">Marco del proyecto</h2>
+          <p class="section-intro" id="overviewIntro">Introducción detallada sobre el origen de los datos y el propósito del análisis.</p>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="overviewCard1Title">Objetivo</h3>
+              <p id="overviewCard1Body">Definir el objetivo principal alcanzado con este reporte.</p>
+            </article>
+            <article class="overview-card">
+              <h3 id="overviewCard2Title">Metodología</h3>
+              <ul id="overviewCard2Body">
+                <li>Extracción y limpieza</li>
+                <li>Modelado de datos</li>
+                <li>Creación de medidas DAX</li>
+                <li>Diseño de interfaz</li>
+              </ul>
+            </article>
+            <article class="overview-card">
+              <h3 id="overviewCard3Title">Resultados</h3>
+              <p id="overviewCard3Body">Resumen del impacto de los hallazgos encontrados.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Main Dashboard View -->
+        <section class="content-section">
+          <span class="section-kicker" id="overviewGeneralKicker">Vista General</span>
+          <h2 class="section-title" id="overviewGeneralTitle">Dashboard Overview</h2>
+          <div class="chart-card">
+            <div class="chart-image-wrap">
+              <img class="chart-image" src="../img/publicis-dashboard.png" alt="Dashboard Overview" loading="lazy" />
+            </div>
+            <div class="chart-body">
+              <p class="chart-copy" id="overviewGeneralText">Esta vista consolidada permite entender las métricas de un vistazo.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Visual Analysis -->
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Análisis Visual</span>
+          <h2 class="section-title" id="visualsTitle">Detalles y Visualizaciones</h2>
+          <div class="chart-grid">
+            <article class="chart-card">
+              <div class="chart-image-wrap"><div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">[Imagen 2]</div></div>
+              <div class="chart-body">
+                <span class="chart-index" id="chart1Index">Gráfico 01</span>
+                <h3 class="chart-title" id="chart1Title">Tendencia Temporal</h3>
+                <p class="chart-copy" id="chart1Text1">Descripción de la primera visualización clave.</p>
+              </div>
+            </article>
+            <article class="chart-card">
+              <div class="chart-image-wrap"><div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">[Imagen 3]</div></div>
+              <div class="chart-body">
+                <span class="chart-index" id="chart2Index">Gráfico 02</span>
+                <h3 class="chart-title" id="chart2Title">Distribución de Categorías</h3>
+                <p class="chart-copy" id="chart2Text1">Descripción de la segunda visualización clave.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="content-section">
+          <span class="section-kicker" id="recKicker">Conclusiones</span>
+          <h2 class="section-title" id="recTitle">Recomendaciones del Analista</h2>
+          <div class="recommendations-list">
+            <article class="recommendation-card">
+              <h3 id="rec1Title">Acción 1</h3>
+              <p id="rec1Text">Recomendación basada en los datos analizados.</p>
+            </article>
+            <article class="recommendation-card">
+              <h3 id="rec2Title">Acción 2</h3>
+              <p id="rec2Text">Segunda recomendación estratégica.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">Portafolio de Análisis de Datos profesional.</p>
+        <div class="case-actions">
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const translations = {
+        es: {
+          backToPortfolio: "← Volver al portafolio",
+          heroBadge: "Caso de estudio de Análisis de Datos",
+          heroTitle: "publicis-dashboard",
+          heroSummary: "Análisis de datos detallado desarrollado en Power BI para extraer insights accionables sobre publicis-dashboard.",
+          metaLabelRole: "Enfoque",
+          metaValueRole: "Analítica de Datos",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion: "¿Cuáles son los principales hallazgos y tendencias identificadas en el set de datos?",
+          repoButton: "Ver repositorio",
+          overviewKicker: "Overview",
+          overviewTitle: "Marco del proyecto",
+          overviewIntro: "Introducción detallada sobre el origen de los datos y el propósito del análisis.",
+          overviewCard1Title: "Objetivo",
+          overviewCard1Body: "Definir el objetivo principal alcanzado con este reporte.",
+          overviewCard2Title: "Metodología",
+          overviewCard2Body: ["Extracción y limpieza", "Modelado de datos", "DAX", "Diseño"],
+          overviewCard3Title: "Resultados",
+          overviewCard3Body: "Resumen del impacto de los hallazgos encontrados.",
+          overviewGeneralKicker: "Vista General",
+          overviewGeneralTitle: "Dashboard Overview",
+          overviewGeneralText: "Esta vista consolidada permite entender las métricas de un vistazo.",
+          visualsKicker: "Análisis Visual",
+          visualsTitle: "Detalles y Visualizaciones",
+          chart1Index: "Gráfico 01",
+          chart1Title: "Tendencia Temporal",
+          chart1Text1: "Descripción de la primera visualización clave.",
+          chart2Index: "Gráfico 02",
+          chart2Title: "Distribución de Categorías",
+          chart2Text1: "Descripción de la segunda visualización clave.",
+          recKicker: "Conclusiones",
+          recTitle: "Recomendaciones",
+          rec1Title: "Acción 1",
+          rec1Text: "Recomendación basada en los datos analizados.",
+          rec2Title: "Acción 2",
+          rec2Text: "Segunda recomendación estratégica.",
+          footerCopy: "Portafolio de Análisis de Datos profesional.",
+          footerBackButton: "Volver a proyectos",
+          themeDark: "🌙 Dark",
+          themeLight: "☀️ Light"
+        },
+        en: {
+          backToPortfolio: "← Back to portfolio",
+          heroBadge: "Data Analysis Case Study",
+          heroTitle: "publicis-dashboard",
+          heroSummary: "Detailed data analysis developed in Power BI to extract actionable insights about publicis-dashboard.",
+          metaLabelRole: "Focus",
+          metaValueRole: "Data Analytics",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion: "What are the main findings and trends identified in the dataset?",
+          repoButton: "Open repository",
+          overviewKicker: "Overview",
+          overviewTitle: "Project Framework",
+          overviewIntro: "Detailed introduction about data origin and analysis purpose.",
+          overviewCard1Title: "Objective",
+          overviewCard1Body: "Define the main goal achieved with this report.",
+          overviewCard2Title: "Methodology",
+          overviewCard2Body: ["Extraction & Cleaning", "Data Modeling", "DAX", "Design"],
+          overviewCard3Title: "Results",
+          overviewCard3Body: "Summary of the impact of the findings.",
+          overviewGeneralKicker: "General Overview",
+          overviewGeneralTitle: "Dashboard Overview",
+          overviewGeneralText: "This consolidated view allows understanding metrics at a glance.",
+          visualsKicker: "Visual Analysis",
+          visualsTitle: "Details & Visualizations",
+          chart1Index: "Chart 01",
+          chart1Title: "Temporal Trend",
+          chart1Text1: "Description of the first key visualization.",
+          chart2Index: "Chart 02",
+          chart2Title: "Category Distribution",
+          chart2Text1: "Description of the second key visualization.",
+          recKicker: "Conclusions",
+          recTitle: "Recommendations",
+          rec1Title: "Action 1",
+          rec1Text: "Recommendation based on the analyzed data.",
+          rec2Title: "Action 2",
+          rec2Text: "Second strategic recommendation.",
+          footerCopy: "Professional Data Analysis Portfolio.",
+          footerBackButton: "Back to projects",
+          themeDark: "🌙 Dark",
+          themeLight: "☀️ Light"
+        }
+      };
+
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (themeIndicator) {
+          const activeLang = localStorage.getItem("language") || "es";
+          themeIndicator.textContent = savedTheme === "dark" ? translations[activeLang].themeDark : translations[activeLang].themeLight;
+        }
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
+      }
+
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations.es;
+        document.documentElement.lang = lang;
+        const langIndicator = document.getElementById("langIndicator");
+        if(langIndicator) langIndicator.textContent = lang.toUpperCase();
+
+        Object.keys(t).forEach(function(key) {
+          if (typeof t[key] === 'string') {
+            setText(key, t[key]);
+          }
+        });
+
+        setList("overviewCard2Body", t.overviewCard2Body);
+
+        const theme = localStorage.getItem("theme") || "light";
+        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const langIndicator = document.getElementById("langIndicator");
+        const themeIndicator = document.getElementById("themeIndicator");
+
+        if (langIndicator) {
+          langIndicator.addEventListener("click", function () {
+            const currentLang = localStorage.getItem("language") || "es";
+            const newLang = currentLang === "es" ? "en" : "es";
+            localStorage.setItem("language", newLang);
+            applyLanguage(newLang);
+          });
+        }
+
+        if (themeIndicator) {
+          themeIndicator.addEventListener("click", function () {
+            const currentTheme = localStorage.getItem("theme") || "light";
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            applySavedTheme();
+          });
+        }
+
+        const lang = localStorage.getItem("language") || "es";
+        applySavedTheme();
+        applyLanguage(lang);
+      });
+    })();
+  </script>
+</body>
+</html>

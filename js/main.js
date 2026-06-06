@@ -80,6 +80,21 @@ const blogPosts = [
 
 const projects = [
   {
+    title: 'publicis-dashboard',
+    title_en: 'publicis-dashboard',
+    category: 'Caso de estudio',
+    category_en: 'Case Study',
+    date: '2026-06-06',
+    image: 'img/publicis-dashboard.png',
+    excerpt: 'Análisis de datos detallado para publicis-dashboard.',
+    excerpt_en: 'Detailed data analysis for publicis-dashboard.',
+    tech: ['Power BI', 'SQL', 'DAX'],
+    metrics: ['Análisis en progreso'],
+    metrics_en: ['Analysis in progress'],
+    detailUrl: 'projects/publicis-dashboard.html',
+    repoUrl: 'https://github.com/angra8410/my-new-portfolio'
+  },
+  {
     title: 'Velykapet - Inteligencia de Negocios para Microempresas',
     title_en: 'Velykapet - Business Intelligence for Micro-Enterprises',
     category: 'Caso de estudio',
@@ -372,6 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 
 
