@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LinkedIn Metrics Analysis Case Study" />
+  <title>LinkedIn Metrics - Análisis de Rendimiento y Engagement</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --case-bg: var(--bg-primary, #f8fafc);
+      --case-surface: var(--bg-secondary, #ffffff);
+      --case-surface-alt: var(--bg-tertiary, #f1f5f9);
+      --case-text: var(--text-primary, #0f172a);
+      --case-text-soft: var(--text-secondary, #475569);
+      --case-border: var(--border-color, rgba(15, 23, 42, 0.12));
+      --case-accent: var(--accent-color, #22d3ee);
+      --case-accent-strong: var(--primary-color, #0ea5e9);
+      --case-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --case-radius: 24px;
+      --case-max: 1180px;
+    }
+
+    html.dark {
+      --case-bg: #0b1220;
+      --case-surface: #111a2b;
+      --case-surface-alt: #162135;
+      --case-text: #e5eef8;
+      --case-text-soft: #a8b7cc;
+      --case-border: rgba(148, 163, 184, 0.18);
+      --case-accent: #67e8f9;
+      --case-accent-strong: #22d3ee;
+      --case-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", sans-serif; background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 22%), radial-gradient(circle at top left, rgba(14, 165, 233, 0.1), transparent 28%), var(--case-bg); color: var(--case-text); transition: background-color 0.25s ease, color 0.25s ease; }
+    a { color: inherit; text-decoration: none; }
+    .case-page { min-height: 100vh; }
+    .case-topbar { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--case-bg) 86%, transparent); border-bottom: 1px solid var(--case-border); }
+    .case-topbar-inner { max-width: var(--case-max); margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .case-back { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--case-text); opacity: 0.94; }
+    .case-top-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .case-theme-pill, .case-lang-pill { border: 1px solid var(--case-border); background: var(--case-surface); color: var(--case-text); padding: 10px 14px; border-radius: 999px; font-size: 0.92rem; font-weight: 600; box-shadow: var(--case-shadow); cursor: pointer; transition: background-color 0.2s ease; }
+    .case-theme-pill:hover, .case-lang-pill:hover { background: var(--case-surface-alt); }
+    .case-hero { max-width: var(--case-max); margin: 0 auto; padding: 56px 20px 28px; }
+    .case-badge { display: inline-flex; align-items: center; gap: 10px; background: color-mix(in srgb, var(--case-accent) 18%, transparent); color: var(--case-accent-strong); border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent); border-radius: 999px; padding: 10px 16px; font-weight: 700; font-size: 0.92rem; margin-bottom: 20px; }
+    .case-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: stretch; }
+    .case-hero-main, .case-hero-side { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: var(--case-radius); box-shadow: var(--case-shadow); }
+    .case-hero-main { padding: 34px; }
+    .case-title { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.06; letter-spacing: -0.04em; }
+    .case-summary { margin: 0; font-size: 1.08rem; line-height: 1.75; color: var(--case-text-soft); max-width: 62ch; }
+    .case-key-metrics { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .case-chip { padding: 10px 14px; border-radius: 999px; background: var(--case-surface-alt); border: 1px solid var(--case-border); color: var(--case-text); font-size: 0.92rem; font-weight: 600; }
+    .case-hero-side { padding: 26px; display: flex; flex-direction: column; gap: 18px; justify-content: space-between; }
+    .meta-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .meta-card, .overview-card, .chart-card { border: 1px solid var(--case-border); background: var(--case-surface-alt); border-radius: 18px; padding: 16px; }
+    .meta-label { display: block; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--case-text-soft); font-weight: 700; }
+    .meta-value { margin: 0; line-height: 1.6; color: var(--case-text); font-weight: 600; }
+    .case-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .case-btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 14px; font-weight: 700; border: 1px solid transparent; transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease; }
+    .case-btn:hover { transform: translateY(-1px); opacity: 0.96; }
+    .case-btn-primary { background: linear-gradient(135deg, var(--case-accent-strong), var(--case-accent)); color: #06202b; }
+    .case-btn-secondary { background: transparent; border-color: var(--case-border); color: var(--case-text); }
+    .case-content { max-width: var(--case-max); margin: 0 auto; padding: 10px 20px 72px; }
+    .content-section { margin-top: 26px; background: var(--case-surface); border: 1px solid var(--border-color); border-radius: var(--case-radius); box-shadow: var(--case-shadow); padding: 30px; }
+    .section-kicker { display: inline-block; margin-bottom: 12px; color: var(--case-accent-strong); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .section-title { margin: 0 0 12px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -0.03em; }
+    .section-intro, .overview-card p, .overview-card li { color: var(--case-text-soft); line-height: 1.75; }
+    .section-intro { margin: 0; font-size: 1rem; }
+    .overview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .overview-card h3 { margin: 0 0 10px; font-size: 1rem; }
+    .overview-card p { margin: 0; }
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+    .kpi-box { background: var(--case-surface-alt); padding: 16px; border-radius: 16px; border: 1px solid var(--case-border); text-align: center; }
+    .kpi-box-val { display: block; font-size: 1.5rem; font-weight: 800; color: var(--case-accent-strong); }
+    .kpi-box-lbl { display: block; font-size: 0.75rem; color: var(--case-text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; font-weight: 600; }
+    .insight-block { margin-top: 24px; padding: 20px; background: color-mix(in srgb, var(--case-accent) 5%, transparent); border-radius: 20px; border-left: 4px solid var(--case-accent-strong); }
+    .insight-block h4 { margin: 0 0 12px; font-size: 0.9rem; color: var(--case-accent-strong); text-transform: uppercase; letter-spacing: 0.1em; }
+    .insight-list { list-style: none; padding: 0; margin: 0; }
+    .insight-list li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--case-text-soft); line-height: 1.6; font-size: 0.95rem; }
+    .insight-list li::before { content: "→"; position: absolute; left: 0; color: var(--case-accent-strong); font-weight: 800; }
+    .chart-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
+    .chart-card { overflow: hidden; border-radius: 22px; border: 1px solid var(--case-border); background: var(--case-surface-alt); }
+    .chart-img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--case-border); }
+    .chart-body { padding: 30px; }
+    .chart-index { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; font-weight: 800; color: var(--case-accent-strong); letter-spacing: 0.08em; text-transform: uppercase; }
+    .chart-title { margin: 0 0 16px; font-size: 1.5rem; letter-spacing: -0.02em; }
+    @media (max-width: 960px) { .case-hero-grid, .overview-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="case-page">
+    <header class="case-topbar">
+      <div class="case-topbar-inner">
+        <a class="case-back" href="../index.html#projects" id="backToPortfolio">Volver al portafolio</a>
+        <div class="case-top-actions">
+          <button class="case-lang-pill" id="langIndicator">ES</button>
+          <button class="case-theme-pill" id="themeIndicator">Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-hero">
+        <div class="case-badge" id="heroBadge">Caso de estudio de Social Media Analytics</div>
+        <div class="case-hero-grid">
+          <div class="case-hero-main">
+            <h1 class="case-title" id="heroTitle">LinkedIn Metrics - Análisis de Rendimiento</h1>
+            <p class="case-summary" id="heroSummary">Análisis detallado de métricas de LinkedIn para optimizar la estrategia de contenido, el engagement y el crecimiento de la red profesional.</p>
+            <div class="case-key-metrics">
+              <span class="case-chip">Power BI</span>
+              <span class="case-chip">DAX</span>
+              <span class="case-chip">LinkedIn API</span>
+              <span class="case-chip">Trend Analysis</span>
+            </div>
+          </div>
+
+          <aside class="case-hero-side">
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelRole">Enfoque</span>
+                <p class="meta-value" id="metaValueRole">Estrategia de Contenido y Growth</p>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label" id="metaLabelQuestion">Pregunta de negocio</span>
+                <p class="meta-value" id="metaValueQuestion">¿Qué tipos de publicaciones generan mayor impacto y cómo ha evolucionado el alcance orgánico?</p>
+              </div>
+            </div>
+            <div class="case-actions">
+              <a class="case-btn case-btn-primary" href="https://github.com/angra8410/my-new-portfolio" id="repoButton">Ver repositorio</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="case-content">
+        <section class="content-section">
+          <span class="section-kicker" id="goalTitle">Objetivo</span>
+          <p id="goalBody">Identificar los pilares de contenido más efectivos y optimizar los horarios de publicación para maximizar el engagement.</p>
+        </section>
+
+        <!-- STRATEGY SECTION -->
+        <section class="content-section">
+          <span class="section-kicker" id="strategyKicker">Estrategia</span>
+          <h2 class="section-title" id="strategyTitle">Estrategia por métrica</h2>
+          <p class="section-intro" id="strategyIntro">Acciones recomendadas para optimizar el rendimiento de la cuenta basadas en los datos analizados.</p>
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3 id="strat1Title">Impressions</h3>
+              <p id="strat1Body"></p>
+            </article>
+            <article class="overview-card">
+              <h3 id="strat2Title">Engagement Rate</h3>
+              <p id="strat2Body"></p>
+            </article>
+            <article class="overview-card">
+              <h3 id="strat3Title">New Followers</h3>
+              <p id="strat3Body"></p>
+            </article>
+            <article class="overview-card">
+              <h3 id="strat4Title">Demographics</h3>
+              <p id="strat4Body"></p>
+            </article>
+          </div>
+        </section>
+
+        <!-- DASHBOARD DEEP DIVE SECTION -->
+        <section class="content-section">
+          <span class="section-kicker" id="visualsKicker">Análisis Detallado</span>
+          <h2 class="section-title" id="visualsTitle">Dashboard Deep Dive</h2>
+          
+          <div class="chart-grid">
+            <article class="chart-card">
+              <img src="../img/linkedin-metrics.png" class="chart-img" alt="Vista General de Métricas de LinkedIn" />
+              <div class="chart-body">
+                <span class="chart-index" id="tab1Index">Pestaña 01</span>
+                <h3 class="chart-title" id="tab1Title">Resumen de Engagement e Impresiones</h3>
+                <div class="kpi-row" id="tab1Kpis">
+                  <div class="kpi-box"><span class="kpi-box-val">Analytics</span><span class="kpi-box-lbl" id="kpiImpressions">Insights</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">Growth</span><span class="kpi-box-lbl" id="kpiCtr">Followers</span></div>
+                  <div class="kpi-box"><span class="kpi-box-val">Reach</span><span class="kpi-box-lbl" id="kpiMobile">Engagement</span></div>
+                </div>
+                <div class="insight-block">
+                  <h4 id="insightsHeader1">Hallazgos Clave</h4>
+                  <ul class="insight-list" id="tab1Insights">
+                    <li>Seguimiento de tendencias de crecimiento mensual.</li>
+                    <li>Identificación de las publicaciones con mayor tasa de interacción.</li>
+                    <li>Análisis demográfico de las visualizaciones del perfil.</li>
+                    <li>Correlación entre frecuencia de publicación y alcance total.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="case-footer">
+      <div class="case-footer-box">
+        <p class="case-footer-copy" id="footerCopy">Portafolio de Social Media Analytics profesional.</p>
+        <div class="case-actions">
+          <a class="case-btn case-btn-secondary" href="../index.html#projects" id="footerBackButton">Volver a proyectos</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const translations = {
+        es: {
+          backToPortfolio: "Volver al portafolio",
+          heroBadge: "Caso de estudio de Social Media Analytics",
+          heroTitle: "LinkedIn Metrics - Análisis de Rendimiento",
+          heroSummary: "Análisis detallado de métricas de LinkedIn para optimizar la estrategia de contenido, el engagement y el crecimiento de la red profesional.",
+          metaLabelRole: "Enfoque",
+          metaValueRole: "Estrategia de Contenido y Growth",
+          metaLabelQuestion: "Pregunta de negocio",
+          metaValueQuestion: "¿Qué tipos de publicaciones generan mayor impacto y cómo ha evolucionado el alcance orgánico?",
+          repoButton: "Ver repositorio",
+          strategyKicker: "Estrategia",
+          strategyTitle: "Estrategia por métrica",
+          strategyIntro: "Acciones recomendadas para optimizar el rendimiento de la cuenta basadas en los datos analizados.",
+          strat1Title: "Impressions",
+          strat1Body: "El alcance es bajo pero crece. El algoritmo premia la consistencia y la velocidad de interacción temprana. Publica entre Martes y Jueves, 7-9am o 12-1pm (hora Colombia). Mínimo 3-4 posts por semana.",
+          strat2Title: "Engagement Rate (1.13%)",
+          strat2Body: "El benchmark de la industria es 2-3%. Tus posts personales superan a los técnicos. Consejo: lidera con una historia, termina con el insight (\"Casi dejo la ingeniería de datos el año pasado...\"). Evita el dump de hashtags sin interacción.",
+          strat3Title: "New Followers",
+          strat3Body: "El pico del 3 de junio sugiere tráfico externo. Interactúa con 5-10 cuentas grandes (5K+ seguidores) diariamente con comentarios de valor (no solo \"buen post\").",
+          strat4Title: "Demographics Mismatch",
+          strat4Body: "RRHH y Deportes son top, lo que sugiere una red no alineada. Conecta intencionalmente con Ingenieros de Datos, Desarrolladores BI y CTOs de empresas medianas (201-1,000 empleados).",
+          goalTitle: "Objetivo",
+          goalBody: "Identificar los pilares de contenido más efectivos y optimizar los horarios de publicación para maximizar el engagement.",
+          visualsKicker: "Análisis Detallado",
+          visualsTitle: "Dashboard Deep Dive",
+          insightsHeader1: "Hallazgos Clave",
+          kpiImpressions: "Insights",
+          kpiCtr: "Followers",
+          kpiMobile: "Engagement",
+          tab1Index: "Pestaña 01",
+          tab1Title: "Resumen de Engagement e Impresiones",
+          tab1Insights: [
+            "Seguimiento de tendencias de crecimiento mensual.",
+            "Identificación de las publicaciones con mayor tasa de interacción.",
+            "Análisis demográfico de las visualizaciones del perfil.",
+            "Correlación entre frecuencia de publicación y alcance total."
+          ],
+          footerCopy: "Portafolio de Social Media Analytics profesional.",
+          footerBackButton: "Volver a proyectos",
+          themeDark: "Dark",
+          themeLight: "Light"
+        },
+        en: {
+          backToPortfolio: "Back to portfolio",
+          heroBadge: "Social Media Analytics Case Study",
+          heroTitle: "LinkedIn Metrics - Performance Analysis",
+          heroSummary: "Detailed analysis of LinkedIn metrics to optimize content strategy, engagement, and professional network growth.",
+          metaLabelRole: "Focus",
+          metaValueRole: "Content Strategy & Growth",
+          metaLabelQuestion: "Business question",
+          metaValueQuestion: "What types of posts generate the most impact and how has organic reach evolved?",
+          repoButton: "View repository",
+          strategyKicker: "Strategy",
+          strategyTitle: "Strategy by metric",
+          strategyIntro: "Recommended actions to optimize account performance based on the analyzed data.",
+          strat1Title: "Impressions",
+          strat1Body: "Reach is low but growing. The algorithm rewards consistency and early engagement velocity. Post Tue–Thu, 7–9am or 12–1pm Colombia time. 3–4 posts/week minimum.",
+          strat2Title: "Engagement Rate (1.13%)",
+          strat2Body: "Industry benchmark is 2–3%. Personal posts outperform technical ones. Lead with story, end with insight (\"I almost quit data engineering last year…\"). Avoid hashtag dumps.",
+          strat3Title: "New Followers",
+          strat3Body: "Jun 3 spike suggests external traffic. Engage with 5–10 large accounts (5K+) daily with thoughtful comments.",
+          strat4Title: "Demographics Mismatch",
+          strat4Body: "HR and Sports top industries. Connect intentionally with Data Engineers, BI Devs, and CTOs at mid-size companies (201–1,000 employees).",
+          goalTitle: "Objective",
+          goalBody: "Identify most effective content pillars and optimize posting schedules.",
+          visualsKicker: "Detailed Analysis",
+          visualsTitle: "Dashboard Deep Dive",
+          insightsHeader1: "Key Findings",
+          kpiImpressions: "Insights",
+          kpiCtr: "Followers",
+          kpiMobile: "Engagement",
+          tab1Index: "Tab 01",
+          tab1Title: "Engagement & Impressions Summary",
+          tab1Insights: [
+            "Monthly growth trend tracking.",
+            "Identification of posts with the highest interaction rate.",
+            "Demographic analysis of profile views.",
+            "Correlation between posting frequency and total reach."
+          ],
+          footerCopy: "Professional Social Media Analytics Portfolio.",
+          footerBackButton: "Back to projects",
+          themeDark: "Dark",
+          themeLight: "Light"
+        }
+      };
+
+      function setList(id, items) {
+        const el = document.getElementById(id);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = items.map(function(item) { return "<li>" + item + "</li>"; }).join("");
+      }
+
+      function applySavedTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (themeIndicator) {
+          const activeLang = localStorage.getItem("language") || "es";
+          themeIndicator.textContent = savedTheme === "dark" ? translations[activeLang].themeDark : translations[activeLang].themeLight;
+        }
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations.es;
+        document.documentElement.lang = lang;
+        setText("langIndicator", lang.toUpperCase());
+        
+        Object.keys(t).forEach(function(key) {
+          if (typeof t[key] === 'string') {
+            setText(key, t[key]);
+          } else if (key.endsWith('Insights')) {
+            setList(key, t[key]);
+          }
+        });
+
+        const theme = localStorage.getItem("theme") || "light";
+        setText("themeIndicator", theme === "dark" ? t.themeDark : t.themeLight);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const langIndicator = document.getElementById("langIndicator");
+        const themeIndicator = document.getElementById("themeIndicator");
+        if (langIndicator) {
+          langIndicator.addEventListener("click", function () {
+            const currentLang = localStorage.getItem("language") || "es";
+            const newLang = currentLang === "es" ? "en" : "es";
+            localStorage.setItem("language", newLang);
+            applyLanguage(newLang);
+          });
+        }
+        if (themeIndicator) {
+          themeIndicator.addEventListener("click", function () {
+            const currentTheme = localStorage.getItem("theme") || "light";
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            applySavedTheme();
+          });
+        }
+        const lang = localStorage.getItem("language") || "es";
+        applySavedTheme();
+        applyLanguage(lang);
+      });
+    })();
+  </script>
+</body>
+</html>

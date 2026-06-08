@@ -80,6 +80,21 @@ const blogPosts = [
 
 const projects = [
   {
+    title: 'LinkedIn Metrics - Análisis de Rendimiento',
+    title_en: 'LinkedIn Metrics - Performance Analysis',
+    category: 'Caso de estudio',
+    category_en: 'Case Study',
+    date: '2026-06-08',
+    image: 'img/linkedin-metrics.png',
+    excerpt: 'Análisis detallado de métricas de LinkedIn para optimizar la estrategia de contenido, el engagement y el crecimiento de la red profesional.',
+    excerpt_en: 'Detailed analysis of LinkedIn metrics to optimize content strategy, engagement, and professional network growth.',
+    tech: ['Power BI', 'SQL', 'DAX', 'LinkedIn API'],
+    metrics: ['Análisis de Engagement', 'Crecimiento de Red', 'Insights de Contenido'],
+    metrics_en: ['Engagement Analysis', 'Network Growth', 'Content Insights'],
+    detailUrl: 'projects/linkedin-metrics.html',
+    repoUrl: 'https://github.com/angra8410/my-new-portfolio'
+  },
+  {
     title: 'Análisis de Publicidad y Rendimiento - Publicis',
     title_en: 'Publicis - Advertising & Performance Analysis',
     category: 'Caso de estudio',
